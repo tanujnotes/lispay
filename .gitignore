@@ -1,0 +1,5 @@
+*.pyc
+*.swp
+.DS_Store
+regapp/__pycache__
+userregistration/__pycache__
