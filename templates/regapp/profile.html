@@ -1,0 +1,15 @@
+{% extends "regapp/base.html" %}
+{% load i18n %}
+
+{% block content %}
+Profile page
+<br />
+{% if user_profile %}
+    {{ user_profile.username }} <br />
+    {{ user_profile.email }}
+{% else %}
+    Profile not found
+{% endif %}
+
+{% endblock %}
+

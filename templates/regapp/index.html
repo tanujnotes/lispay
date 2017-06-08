@@ -3,4 +3,13 @@
 
 {% block content %}
 Index page
+
+{% if creator_list %}
+<ul>
+    {% for creator in creator_list %}
+        <li><a href="{% url 'show_user_profile' creator.username %}">{{ creator.username }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% endblock %}
