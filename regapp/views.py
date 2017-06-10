@@ -4,7 +4,7 @@ from regapp.models import MyUser
 
 
 def index(request):
-    creator_list = MyUser.objects.all()
+    creator_list = MyUser.objects.order_by('-date_joined')[:3]
     return render(request, 'regapp/index.html', {'creator_list': creator_list})
 
 def new_index(request):

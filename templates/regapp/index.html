@@ -1,200 +1,206 @@
 {% extends "regapp/base.html" %}
 {% load staticfiles %}
-{% load i18n %}
+
+{% block title %}Lisplay - Home{% endblock %}
 
 {% block content %}
-<!--Index page
 
-{% if creator_list %}
-<ul>
-    {% for creator in creator_list %}
-    <li><a href="{% url 'show_user_profile' creator.username %}">{{ creator.username }}</a></li>
-    {% endfor %}
-</ul>
-{% endif %} -->
+<body class="landing-page">
+<nav class="navbar navbar-transparent navbar-absolute">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Lisplay</a>
+        </div>
 
-<div class="fh5co-cover fh5co-cover-style-2 js-full-height" data-stellar-background-ratio="0.5" data-next="yes"
-     style="background-image: url(/static/images/full_1.jpg);">
-		  	<span class="scroll-btn wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.4s">
-				<a href="#">
-					<span class="mouse"><span></span></span>
-				</a>
-			</span>
-    <div class="fh5co-overlay"></div>
-    <div class="fh5co-cover-text">
+        <div class="collapse navbar-collapse" id="navigation-example">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="../components-documentation.html" target="_blank">
+                        Components
+                    </a>
+                </li>
+                <li>
+                    <a href="http://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-freebie"
+                       target="_blank">
+                        <i class="material-icons">unarchive</i> Upgrade to PRO
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/CreativeTim" target="_blank"
+                       class="btn btn-simple btn-white btn-just-icon">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/CreativeTim" target="_blank"
+                       class="btn btn-simple btn-white btn-just-icon">
+                        <i class="fa fa-facebook-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/CreativeTimOfficial" target="_blank"
+                       class="btn btn-simple btn-white btn-just-icon">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <div class="header header-filter"
+         style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
         <div class="container">
             <div class="row">
-                <div class="col-md-push-6 col-md-6 full-height js-full-height">
-                    <div class="fh5co-cover-intro">
-                        <h1 class="cover-text-lead wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Create
-                            Amazing Things</h1>
-                        <h2 class="cover-text-sublead wow fadeInUp" data-wow-duration="1s" data-wow-delay=".8s">Far
-                            far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                            there live the blind texts. Separated they live in Bookmarksgrove right at the coast of
-                            the Semantics.</h2>
-                        <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.1s"><a
-                                href="http://freehtml5.co/" class="btn btn-primary btn-outline btn-lg">See Our
-                            Work</a></p>
-                    </div>
+                <div class="col-md-6">
+                    <h1 class="title">Write the best title for your page.</h1>
+                    <h4>Every landing page needs a small description after the big bold title, that's why we added this
+                        text here. Add here all the information that can make you or your product create the first
+                        impression.</h4>
+                    <br/>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="btn btn-danger btn-raised btn-lg">
+                        <i class="fa fa-play"></i> Watch video
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="fh5co-project-style-2">
-    <div class="container">
-        <div class="row p-b">
-            <div class="col-md-6 col-md-offset-3 text-center">
-                <h2 class="fh5co-heading wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Are you a
-                    creator?</h2>
-                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".8s">Far far away, behind the word
-                    mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated
-                    they live in Bookmarksgrove right at the coast of the Semantics.</p>
-                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.1s"><a href="#"
-                                                                                        class="btn btn-success btn-lg">Register
-                    Today</a></p>
-            </div>
-        </div>
-    </div>
-    <div class="fh5co-projects">
-        <ul>
-            <li class="wow fadeInUp" style="background-image: url(/static/images/full_4.jpg);"
-                data-wow-duration="1s"
-                data-wow-delay="1.4s" data-stellar-background-ratio="0.5">
-                <a href="#">
-                    <div class="fh5co-overlay"></div>
-                    <div class="container">
-                        <div class="fh5co-text">
-                            <div class="fh5co-text-inner">
-                                <div class="row">
-                                    <div class="col-md-6"><h3>Step 1</h3></div>
-                                    <div class="col-md-6"><p>Far far away, behind the word mountains, far from the
-                                        countries Vokalia and Consonantia, there live the blind texts.</p></div>
+    <div class="main main-raised">
+        <div class="container">
+            <div class="section text-center section-landing">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h2 class="title">Let's talk product</h2>
+                        <h5 class="description">This is the paragraph where you can write more details about your
+                            product. Keep you user engaged by providing meaningful information. Remember that by this
+                            time, the user is curious, otherwise he wouldn't scroll to get here. Add a button if you
+                            want the user to see more.</h5>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="info">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">chat</i>
                                 </div>
+                                <h4 class="info-title">First Feature</h4>
+                                <p>Divide details about your product or agency work into parts. Write a few lines about
+                                    each one. A paragraph describing a feature will be enough.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info">
+                                <div class="icon icon-success">
+                                    <i class="material-icons">verified_user</i>
+                                </div>
+                                <h4 class="info-title">Second Feature</h4>
+                                <p>Divide details about your product or agency work into parts. Write a few lines about
+                                    each one. A paragraph describing a feature will be enough.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info">
+                                <div class="icon icon-danger">
+                                    <i class="material-icons">fingerprint</i>
+                                </div>
+                                <h4 class="info-title">Third Feature</h4>
+                                <p>Divide details about your product or agency work into parts. Write a few lines about
+                                    each one. A paragraph describing a feature will be enough.</p>
                             </div>
                         </div>
                     </div>
-                </a>
-            </li>
-            <li class="wow fadeInUp" style="background-image: url(/static/images/full_2.jpg);"
-                data-wow-duration="1s"
-                data-wow-delay="1.7s" data-stellar-background-ratio="0.5">
-                <a href="#">
-                    <div class="fh5co-overlay"></div>
-                    <div class="container">
-                        <div class="fh5co-text">
-                            <div class="fh5co-text-inner">
-                                <div class="row">
-                                    <div class="col-md-6"><h3>Step 2</h3></div>
-                                    <div class="col-md-6"><p>Far far away, behind the word mountains, far from the
-                                        countries Vokalia and Consonantia, there live the blind texts.</p></div>
-                                </div>
+                </div>
+            </div>
+
+            <div class="section text-center">
+                <h2 class="title">Look who has joined us</h2>
+
+                <div class="team">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="team-player">
+                                <img src="{% static '/img/avatar.jpg' %}" alt="Thumbnail Image"
+                                     class="img-raised img-circle">
+                                <h4 class="title">Gigi Hadid <br/>
+                                    <small class="text-muted">Model</small>
+                                </h4>
+                                <p class="description">You can write here details about one of your team members. You
+                                    can give more details about what they do. Feel free to add some <a
+                                            href="#">links</a> for people to be able to follow them outside the site.
+                                </p>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-twitter"></i></a>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon"><i
+                                        class="fa fa-instagram"></i></a>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon btn-default"><i
+                                        class="fa fa-facebook-square"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="team-player">
+                                <img src="{% static '/img/christian.jpg' %}" alt="Thumbnail Image"
+                                     class="img-raised img-circle">
+                                <h4 class="title">Christian Louboutin<br/>
+                                    <small class="text-muted">Designer</small>
+                                </h4>
+                                <p class="description">You can write here details about one of your team members. You
+                                    can give more details about what they do. Feel free to add some <a
+                                            href="#">links</a> for people to be able to follow them outside the site.
+                                </p>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-twitter"></i></a>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="team-player">
+                                <img src="{% static '/img/kendall.jpg' %}" alt="Thumbnail Image"
+                                     class="img-raised img-circle">
+                                <h4 class="title">Kendall Jenner<br/>
+                                    <small class="text-muted">Model</small>
+                                </h4>
+                                <p>You can write here details about one of your team members. You can give more details
+                                    about what they do. Feel free to add some <a href="#">links</a> for people to be
+                                    able to follow them outside the site.</p>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-google-plus"></i></a>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-youtube-play"></i></a>
+                                <a href="#pablo" class="btn btn-simple btn-just-icon btn-default"><i
+                                        class="fa fa-twitter"></i></a>
                             </div>
                         </div>
                     </div>
-                </a>
-            </li>
-            <li class="wow fadeInUp" style="background-image: url(/static/images/full_1.jpg)" data-wow-duration="1s"
-                data-wow-delay="2s" data-stellar-background-ratio="0.5">
-                <a href="#">
-                    <div class="fh5co-overlay"></div>
-                    <div class="container">
-                        <div class="fh5co-text">
-                            <div class="fh5co-text-inner">
-                                <div class="row">
-                                    <div class="col-md-6"><h3>Step 3</h3></div>
-                                    <div class="col-md-6"><p>Far far away, behind the word mountains, far from the
-                                        countries Vokalia and Consonantia, there live the blind texts.</p></div>
-                                </div>
+                </div>
+
+            </div>
+
+
+            <div class="section landing-section">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4 text-center">
+                                <button class="btn btn-primary btn-raised">
+                                    See all creators
+                                </button>
                             </div>
                         </div>
                     </div>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
+                </div>
+            </div>
+        </div>
 
-<div class="fh5co-blog-style-1">
-    <div class="container">
-        <div class="row p-b">
-            <div class="col-md-6 col-md-offset-3 text-center">
-                <h2 class="fh5co-heading wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Look who has joined
-                    us</h2>
-                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".8s">Far far away, behind the word
-                    mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-            </div>
-        </div>
-        <div class="row p-b">
-            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
-                <div class="fh5co-post wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1.1s">
-                    <div class="fh5co-post-image">
-                        <div class="fh5co-overlay"></div>
-                        <div class="fh5co-category"><a href="#">Tutorial</a></div>
-                        <img src="{% static 'images/img_same_dimension_2.jpg' %}" alt="Image"
-                             class="img-responsive">
-                    </div>
-                    <div class="fh5co-post-text">
-                        <h3><a href="#">How to Create Cards</a></h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                            there live the blind texts...</p>
-                    </div>
-                    <div class="fh5co-post-meta">
-                        <a href="#"><i class="icon-chat"></i> 33</a>
-                        <a href="#"><i class="icon-clock2"></i> 2 hours ago</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
-                <div class="fh5co-post wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1.4s">
-                    <div class="fh5co-post-image">
-                        <div class="fh5co-overlay"></div>
-                        <div class="fh5co-category"><a href="#">Health</a></div>
-                        <img src="{% static 'images/img_same_dimension_3.jpg' %}" alt="Image"
-                             class="img-responsive">
-                    </div>
-                    <div class="fh5co-post-text">
-                        <h3><a href="#">Drinking Ginger and Lemon Tea</a></h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                            there live the blind texts...</p>
-                    </div>
-                    <div class="fh5co-post-meta">
-                        <a href="#"><i class="icon-chat"></i> 33</a>
-                        <a href="#"><i class="icon-clock2"></i> 2 hours ago</a>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix visible-sm-block"></div>
-            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
-                <div class="fh5co-post wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1.7s">
-                    <div class="fh5co-post-image">
-                        <div class="fh5co-overlay"></div>
-                        <div class="fh5co-category"><a href="#">Tips</a></div>
-                        <img src="{% static 'images/img_same_dimension_4.jpg' %}" alt="Image"
-                             class="img-responsive">
-                    </div>
-                    <div class="fh5co-post-text">
-                        <h3><a href="#">4 Easy Steps to Create a Soup</a></h3>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                            there live the blind texts...</p>
-                    </div>
-                    <div class="fh5co-post-meta">
-                        <a href="#"><i class="icon-chat"></i> 33</a>
-                        <a href="#"><i class="icon-clock2"></i> 2 hours ago</a>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix visible-sm-block"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4 text-center wow fadeInUp" data-wow-duration="1s"
-                 data-wow-delay="2s">
-                <a href="#" class="btn btn-primary btn-lg">View All Artists</a>
-            </div>
-        </div>
     </div>
-</div>
 
+</div>
+</body>
 
 {% endblock %}
