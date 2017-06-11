@@ -1,0 +1,42 @@
+{% extends "regapp/base.html" %}
+{% load i18n %}
+
+{% block title %}
+Lisplay - Login
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+{% if user.is_authenticated %}
+You are already logged in!
+{% else %}
+<form class="form-signin" method="post" action=".">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" name="username" id="id_username" class="form-control"
+           placeholder="Username" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">
+        Sign in
+    </button>
+</form>
+
+<p class="form-signin">{% trans "Forgot password" %}?
+    <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!
+</p>
+<p class="form-signin">{% trans "Not member" %}?
+    <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!
+</p>
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
