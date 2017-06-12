@@ -19,7 +19,15 @@ def show_user_profile(request, profile_username):
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 
+def update_profile(request):
+    user_profile = MyUser.objects.get(username=request.user.username)
+    return render(request, 'regapp/update_profile.html', {'user_profile': user_profile})
+
+
 @login_required
 def login_redirect(request):
-    url = '/regapp/%s/' % request.user.username
+    if request.user.full_name and request.user.short_bio:
+        url = '/regapp/%s/' % request.user.username
+    else:
+        url = '/regapp/update_profile/'
     return HttpResponseRedirect(url)
