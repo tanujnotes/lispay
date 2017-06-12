@@ -17,7 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from registration.backends.default.views import RegistrationView
 from regapp.forms import CustomUserForm
-#from regapp.views import MyRegistrationView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

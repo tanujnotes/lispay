@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from regapp.models import MyUser
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -15,3 +17,9 @@ def new_index(request):
 def show_user_profile(request, profile_username):
     user_profile = MyUser.objects.get(username=profile_username)
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
+
+
+@login_required
+def login_redirect(request):
+    url = '/regapp/%s/' % request.user.username
+    return HttpResponseRedirect(url)

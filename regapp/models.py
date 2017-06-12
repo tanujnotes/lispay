@@ -41,8 +41,11 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
+    full_name = models.CharField(max_length=30, blank=True)
+    short_bio = models.CharField(max_length=50, blank=True)
+    profile_description = models.CharField(max_length=1000, blank=True)
+    featured_video = models.URLField(blank=True)
+    social_links = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -53,15 +56,11 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'username'
-    #REQUIRED_FIELDS = 'username'
+
+    # REQUIRED_FIELDS = 'username'
 
     def get_full_name(self):
-        # The user is identified by their email address
-        return self.first_name + " " + self.last_name
-
-    def get_short_name(self):
-        # The user is identified by their email address
-        return self.first_name
+        return self.full_name
 
     def get_username(self):
         return self.username
@@ -69,7 +68,7 @@ class MyUser(AbstractBaseUser):
     def get_email(self):
         return self.email
 
-    def __str__(self):              # __unicode__ on Python 2
+    def __str__(self):  # __unicode__ on Python 2
         return self.first_name
 
     def has_perm(self, perm, obj=None):

@@ -22,14 +22,14 @@ ACCOUNT_ACTIVATION_DAYS = 1
 INCLUDE_AUTH_URLS = True
 INCLUDE_REGISTER_URL = True
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = '/regapp/'
+LOGIN_REDIRECT_URL = '/regapp/login_redirect/'
 LOGIN_URL = '/accounts/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST ='smtp.gmail.com'                                   
-EMAIL_PORT = 587                                                             
-EMAIL_HOST_USER = 'thetanuj1@gmail.com'                              
-EMAIL_HOST_PASSWORD = '<mainhoondon>90' #This is not your gmail password.
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'thetanuj1@gmail.com'
+EMAIL_HOST_PASSWORD = '<mainhoondon>90'  # This is not your gmail password.
 EMAIL_USE_TLS = True
 
 # Quick-start development settings - unsuitable for production
@@ -42,7 +42,6 @@ SECRET_KEY = '14zdnto(!mol6dpj-c8_#^hd2*nl6@&k1^3+d4(car6_*)n)x8'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -88,7 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'userregistration.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -98,7 +96,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -118,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -131,7 +127,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
