@@ -5,20 +5,307 @@
 
 {% block content %}
 
-<div class="profile-page">
+<div class="components-page">
+
     <div class="wrapper">
-        <div class="header header-filter" style="background-image: url('/static/img/examples/city.jpg');"></div>
+        <div class="header header-filter"
+             style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1 class="title text-center">Update Profile</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="main main-raised">
-            <div class="profile-content">
+            <div class="section">
                 <div class="container">
-                    <h1>Welcome!</h1>
-                    <h3>Update your profile</h3>
-                    <h4>{{ user.username }}</h4>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="fixed-section" data-spy="affix" data-offset-top="340">
+                                <ul>
+                                    <li><a href="#creator">Creator On/Off</a></li>
+                                    <li><a href="#personal-details">Personal details</a></li>
+                                    <li><a href="#social-details">Social details</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-md-offset-1">
+                            <div class="tim-container">
+
+                                <!-- creator on/off row -->
+                                <div class="tim-row" id="creator">
+                                    <h2>Are you a creator</h2>
+                                    <legend></legend>
+                                    <p>If you're a creator and want to accept gifts from your fans, turn this on.</p>
+
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox">
+                                            This is a creator account
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <!-- end row -->
+
+
+                                <!-- personal details row -->
+                                <div class="tim-row" id="personal-details">
+                                    <h2>Personal details</h2>
+                                    <legend></legend>
+                                    <h4>Full name</h4>
+                                    <p>Please enter the full name here</p>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Full name"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Short bio</h4>
+                                    <p>Enter a small description of what you do:</p>
+                                    <div class="row">
+
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="I/We"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Do/Make/Create"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="e. g. Music Videos"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Description</h4>
+                                    <p>Please write a short description about what you do:</p>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <textarea class="form-control" placeholder="Your description here"
+                                                          rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end row -->
+
+
+                                <!-- social details row -->
+                                <div class="tim-row" id="social-details">
+                                    <h2>Social details</h2>
+                                    <legend></legend>
+                                    <p>Please enter the following details as applicable</p>
+
+                                    <h4>Facebook</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Twitter</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Instagram</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Snapchat</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Blog</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Website</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Merchandise</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Dribble</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Github</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4>Other</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" value="" placeholder="Link"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+
+                                <!-- end container -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section landing-section">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-4 text-center">
+                                        <button class="btn btn-primary btn-raised btn-lg">
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
