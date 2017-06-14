@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from regapp.models import MyUser
+from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
 
@@ -20,8 +22,33 @@ def show_user_profile(request, profile_username):
 
 
 def update_profile(request):
-    user_profile = MyUser.objects.get(username=request.user.username)
-    return render(request, 'regapp/update_profile.html', {'user_profile': user_profile})
+    user = request.user
+    print("***********************************UPDATE")
+    form = UpdateProfileForm(request.POST or None,
+                             initial={'full_name': user.full_name,
+                                      'short_bio': user.short_bio,
+                                      'profile_description': user.profile_description,
+                                      'featured_video': user.featured_video,
+                                      'social_links': user.social_links,
+                                      'is_creator': user.is_creator})
+
+    if request.method == 'POST':
+        print("***********************************POST")
+        if form.is_valid():
+            print("***********************************VALID")
+            user.full_name = request.POST['full_name']
+
+            user.save()
+            print("***********************************REDIRECT")
+            return HttpResponseRedirect('regapp/%s/' % user.username)
+        else:
+            print(form.errors)
+
+    context = {
+        "form": form
+    }
+    print("***********************************RETURN")
+    return render(request, 'regapp/update_profile.html', context)
 
 
 @login_required
