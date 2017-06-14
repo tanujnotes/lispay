@@ -37,6 +37,9 @@ def update_profile(request):
         if form.is_valid():
             print("***********************************VALID")
             user.full_name = request.POST['full_name']
+            user.short_bio = request.POST['short_bio']
+            # user.profile_description = request.POST['profile_description']
+            user.is_creator = ("is_creator" in request.POST)
 
             user.save()
             print("***********************************REDIRECT")

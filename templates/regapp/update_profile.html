@@ -46,7 +46,8 @@
 
                                         <div class="togglebutton">
                                             <label>
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="is_creator" id="id_is_creator"
+                                                       {% if form.is_creator.value %}checked="" {% endif %}>
                                                 This is a creator account
                                             </label>
                                         </div>
@@ -64,7 +65,8 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" name="full_name" id="id_full_name" value=""
+                                                    <input type="text" name="full_name" id="id_full_name"
+                                                           value="{{ form.full_name.value }}"
                                                            placeholder="Full name" class="form-control"/>
                                                 </div>
                                             </div>
@@ -73,24 +75,11 @@
                                         <h4>Short bio</h4>
                                         <p>Enter a small description of what you do:</p>
                                         <div class="row">
-
-                                            <div class="col-sm-1">
+                                            <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" value="" placeholder="I/We"
-                                                           class="form-control"/>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <input type="text" value="" placeholder="Do/Make/Create"
-                                                           class="form-control"/>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <input type="text" value="" placeholder="e. g. Music Videos"
+                                                    <input type="text" name="short_bio" id="id_short_bio"
+                                                           value="{{ form.short_bio.value }}"
+                                                           placeholder="e.g. I create music videos"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
