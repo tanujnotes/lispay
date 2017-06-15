@@ -21,9 +21,9 @@ def show_user_profile(request, profile_username):
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 
+@login_required
 def update_profile(request):
     user = request.user
-    print("***********************************UPDATE")
     form = UpdateProfileForm(request.POST or None,
                              initial={'full_name': user.full_name,
                                       'short_bio': user.short_bio,
@@ -33,16 +33,14 @@ def update_profile(request):
                                       'is_creator': user.is_creator})
 
     if request.method == 'POST':
-        print("***********************************POST")
         if form.is_valid():
-            print("***********************************VALID")
             user.full_name = request.POST['full_name']
             user.short_bio = request.POST['short_bio']
-            # user.profile_description = request.POST['profile_description']
+            user.featured_video = request.POST.get('featured_video', "")
+            user.profile_description = request.POST.get('profile_description', "")
             user.is_creator = ("is_creator" in request.POST)
 
             user.save()
-            print("***********************************REDIRECT")
             return HttpResponseRedirect('regapp/%s/' % user.username)
         else:
             print(form.errors)
@@ -50,7 +48,6 @@ def update_profile(request):
     context = {
         "form": form
     }
-    print("***********************************RETURN")
     return render(request, 'regapp/update_profile.html', context)
 
 
