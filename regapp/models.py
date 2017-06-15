@@ -44,6 +44,7 @@ class MyUser(AbstractBaseUser):
     full_name = models.CharField(max_length=30, blank=True)
     short_bio = models.CharField(max_length=50, blank=True)
     profile_description = models.CharField(max_length=1000, blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
     featured_video = models.URLField(blank=True)
     social_links = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)

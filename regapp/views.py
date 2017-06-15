@@ -42,6 +42,8 @@ def update_profile(request):
             user.profile_description = request.POST.get('profile_description', "")
             user.is_creator = ("is_creator" in request.POST)
             user.social_links = get_social_details(request)
+            if 'picture' in request.FILES:
+                user.picture = request.FILES['picture']
 
             user.save()
             return HttpResponseRedirect('/regapp/%s/' % user.username)

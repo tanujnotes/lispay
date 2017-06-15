@@ -22,7 +22,7 @@
         <div class="main main-raised">
             <div class="section">
                 <div class="container">
-                    <form class="form" method="post" action=".">
+                    <form class="form" method="post" enctype="multipart/form-data" action=".">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-2">
@@ -49,6 +49,21 @@
                                                     <input type="text" name="full_name" id="id_full_name"
                                                            value="{{ form.full_name.value }}"
                                                            placeholder="Full name" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4>Profile picture</h4>
+                                        <p>Upload a profile picture</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-raised" type="button"
+                                                            value="Submit">
+                                                        <input type="file" name="picture" id="id_profile_picture"
+                                                               placeholder="Upload Image" class="form-control"/>
+                                                        Select picture
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
