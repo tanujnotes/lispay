@@ -44,7 +44,7 @@ def update_profile(request):
             user.social_links = get_social_details(request)
 
             user.save()
-            return HttpResponseRedirect('regapp/%s/' % user.username)
+            return HttpResponseRedirect('/regapp/%s/' % user.username)
         else:
             print(form.errors)
 
