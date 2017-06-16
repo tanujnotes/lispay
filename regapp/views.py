@@ -38,7 +38,8 @@ def update_profile(request):
         if form.is_valid():
             user.full_name = request.POST['full_name']
             user.short_bio = request.POST['short_bio']
-            user.featured_video = request.POST.get('featured_video', "")
+            featured_video = request.POST.get('featured_video', "")
+            user.featured_video = featured_video.replace('watch?v=', 'embed/')
             user.profile_description = request.POST.get('profile_description', "")
             user.is_creator = ("is_creator" in request.POST)
             user.social_links = get_social_details(request)
