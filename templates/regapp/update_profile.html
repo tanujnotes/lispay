@@ -238,6 +238,48 @@
                                             </div>
                                         </div>
 
+                                        <h4>Google Plus</h4>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="text" placeholder="Username"
+                                                           value="{{ form.social_links.value|get_item:'googleplus_details,googleplus_username' }}"
+                                                           name="googleplus_username" id="id_googleplus_username"
+                                                           class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" placeholder="Link"
+                                                           value="{{ form.social_links.value|get_item:'googleplus_details,googleplus_link' }}"
+                                                           name="googleplus_link" id="id_googleplus_link"
+                                                           class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4>Linkedin</h4>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="text" placeholder="Username"
+                                                           value="{{ form.social_links.value|get_item:'linkedin_details,linkedin_username' }}"
+                                                           name="linkedin_username" id="id_linkedin_username"
+                                                           class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" placeholder="Link"
+                                                           value="{{ form.social_links.value|get_item:'linkedin_details,linkedin_link' }}"
+                                                           name="linkedin_link" id="id_linkedin_link"
+                                                           class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <h4>Blog</h4>
                                         <div class="row">
                                             <div class="col-sm-4">
