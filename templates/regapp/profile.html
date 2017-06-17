@@ -21,41 +21,43 @@
                             <h3 class="title">{{ user_profile.full_name }}</h3>
                             <h6>{{ user_profile.short_bio }}</h6>
                         </div>
-                        {% if user_profile.social_links|get_item:'facebook_details,facebook_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'facebook_details,facebook_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                            <i class="fa fa-facebook"></i></a>
-                        {% endif %}
-                        {% if user_profile.social_links|get_item:'twitter_details,twitter_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'twitter_details,twitter_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                            <i class="fa fa-twitter"></i></a>
-                        {% endif %}
-                        {% if user_profile.social_links|get_item:'instagram_details,instagram_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'instagram_details,instagram_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                            <i class="fa fa-instagram"></i></a>
-                        {% endif %}
-                        {% if user_profile.social_links|get_item:'youtube_details,youtube_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'youtube_details,youtube_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon">
-                            <i class="fa fa-youtube-play"></i></a>
-                        {% endif %}
-                        {% if user_profile.social_links|get_item:'googleplus_details,googleplus_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'googleplus_details,googleplus_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                            <i class="fa fa-googleplus"></i></a>
-                        {% endif %}
-                        {% if user_profile.social_links|get_item:'linkedin_details,linkedin_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'linkedin_details,linkedin_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                            <i class="fa fa-linkedin"></i></a>
-                        {% endif %}
-                        {% if user_profile.social_links|get_item:'github_details,github_link' %}
-                        <a href="{{ user_profile.social_links|get_item:'github_details,github_link' }}"
-                           target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                            <i class="fa fa-github"></i></a>
-                        {% endif %}
+                        <div>
+                            {% if user_profile.social_links|get_item:'facebook_details,facebook_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'facebook_details,facebook_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                <i class="fa fa-facebook"></i></a>
+                            {% endif %}
+                            {% if user_profile.social_links|get_item:'twitter_details,twitter_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'twitter_details,twitter_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                <i class="fa fa-twitter"></i></a>
+                            {% endif %}
+                            {% if user_profile.social_links|get_item:'instagram_details,instagram_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'instagram_details,instagram_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                <i class="fa fa-instagram"></i></a>
+                            {% endif %}
+                            {% if user_profile.social_links|get_item:'youtube_details,youtube_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'youtube_details,youtube_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon">
+                                <i class="fa fa-youtube-play"></i></a>
+                            {% endif %}
+                            {% if user_profile.social_links|get_item:'googleplus_details,googleplus_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'googleplus_details,googleplus_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                <i class="fa fa-googleplus"></i></a>
+                            {% endif %}
+                            {% if user_profile.social_links|get_item:'linkedin_details,linkedin_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'linkedin_details,linkedin_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                <i class="fa fa-linkedin"></i></a>
+                            {% endif %}
+                            {% if user_profile.social_links|get_item:'github_details,github_link' %}
+                            <a href="{{ user_profile.social_links|get_item:'github_details,github_link' }}"
+                               target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                <i class="fa fa-github"></i></a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="description text-center">
@@ -75,11 +77,11 @@
                         <div class="section col-md-2 col-md-offset-2">
                             <h3>Your Gift</h3>
                             <div class="radio">
-                                <label> <input type="radio" name="optionsRadios" checked="checked"> 20 Rs. </label>
+                                <label> <input type="radio" name="optionsRadios"> 20 Rs. </label>
                             </div>
                             <legend></legend>
                             <div class="radio">
-                                <label> <input type="radio" name="optionsRadios"> 50 Rs. </label>
+                                <label> <input type="radio" name="optionsRadios" checked="checked"> 50 Rs. </label>
                             </div>
                             <legend></legend>
                             <div class="radio">

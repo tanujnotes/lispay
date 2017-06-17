@@ -113,10 +113,13 @@ def get_social_details(request):
 
 @register.filter
 def get_item(dictionary, args):
-    if args is None:
+    if args is None or dictionary is None:
         return ""
     arg_list = [arg.strip() for arg in args.split(',')]
-    dictionary = ast.literal_eval(dictionary)
+    try:
+        dictionary = ast.literal_eval(dictionary)
+    except:
+        return None
     if dictionary.get(arg_list[0]) is None:
         return ""
     return dictionary.get(arg_list[0]).get(arg_list[1])
