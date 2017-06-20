@@ -4,6 +4,20 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
+CATEGORY_CHOICES = (
+    ("OTHERS", 'Others'),
+    ("VIDEOS & FILMS", 'Videos & Films'),
+    ("MUSIC", 'Music'),
+    ("WRITING", 'Writing'),
+    ("ARTS & CRAFTS", 'Arts & Crafts'),
+    ("GAMES", 'Games'),
+    ("PHOTOGRAPHY", 'Photography'),
+    ("SCIENCE & TECHNOLOGY", 'Science & Technology'),
+    ("EDUCATION", 'Education'),
+    ("DANCE & THEATER", 'Dance & Theater'),
+    ("CODING", 'Coding'),
+)
+
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -45,6 +59,12 @@ class MyUser(AbstractBaseUser):
     short_bio = models.CharField(max_length=50, blank=True)
     profile_description = models.CharField(max_length=1000, blank=True)
     picture = models.ImageField(upload_to='profile_images', default="profile_images/profile_b.jpg")
+    category = models.CharField(
+        max_length=30,
+        choices=CATEGORY_CHOICES,
+        default="Coding",
+        blank=False,
+    )
     featured_video = models.URLField(blank=True)
     social_links = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)

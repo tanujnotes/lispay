@@ -1,6 +1,6 @@
 import ast
 from django.shortcuts import render
-from regapp.models import MyUser
+from regapp.models import MyUser, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -19,7 +19,10 @@ def new_index(request):
 
 
 def show_user_profile(request, profile_username):
-    user_profile = MyUser.objects.get(username=profile_username)
+    try:
+        user_profile = MyUser.objects.get(username=profile_username)
+    except:
+        return HttpResponseRedirect('/regapp/')
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 
@@ -30,6 +33,7 @@ def update_profile(request):
                              initial={'full_name': user.full_name,
                                       'short_bio': user.short_bio,
                                       'profile_description': user.profile_description,
+                                      'category': user.category,
                                       'featured_video': user.featured_video,
                                       'social_links': user.social_links,
                                       'is_creator': user.is_creator})
@@ -41,6 +45,7 @@ def update_profile(request):
             featured_video = request.POST.get('featured_video', "")
             user.featured_video = featured_video.replace('watch?v=', 'embed/')
             user.profile_description = request.POST.get('profile_description', "")
+            user.category = request.POST.get('category', "")
             user.is_creator = ("is_creator" in request.POST)
             user.social_links = get_social_details(request)
             if 'picture' in request.FILES:
@@ -52,7 +57,8 @@ def update_profile(request):
             print(form.errors)
 
     context = {
-        "form": form
+        "form": form,
+        "categories": CATEGORY_CHOICES
     }
     return render(request, 'regapp/update_profile.html', context)
 
