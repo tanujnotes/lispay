@@ -6,15 +6,15 @@ from django.contrib.auth.models import (
 
 CATEGORY_CHOICES = (
     ("OTHERS", 'Others'),
-    ("VIDEOS & FILMS", 'Videos & Films'),
+    ("VIDEOS AND FILMS", 'Videos and Films'),
     ("MUSIC", 'Music'),
     ("WRITING", 'Writing'),
-    ("ARTS & CRAFTS", 'Arts & Crafts'),
+    ("ARTS AND CRAFTS", 'Arts and Crafts'),
     ("GAMES", 'Games'),
     ("PHOTOGRAPHY", 'Photography'),
-    ("SCIENCE & TECHNOLOGY", 'Science & Technology'),
+    ("SCIENCE AND TECHNOLOGY", 'Science and Technology'),
     ("EDUCATION", 'Education'),
-    ("DANCE & THEATER", 'Dance & Theater'),
+    ("DANCE AND THEATER", 'Dance and Theater'),
     ("CODING", 'Coding'),
 )
 

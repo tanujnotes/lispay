@@ -26,6 +26,19 @@ def show_user_profile(request, profile_username):
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 
+def show_creators(request, category):
+    category = category.replace("-", " ").upper()
+    try:
+        if category == "ALL":
+            creators = MyUser.objects.all()[:5]
+        else:
+            creators = MyUser.objects.filter(category=category)
+    except:
+        creators = MyUser.objects.all()[:5]
+    context = {"creators": creators}
+    return render(request, 'regapp/show_creators.html', context)
+
+
 @login_required
 def update_profile(request):
     user = request.user

@@ -1,0 +1,55 @@
+{% extends "regapp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Lisplay - Creators{% endblock %}
+
+{% block content %}
+
+
+<div class="components-page">
+
+    <div class="wrapper">
+        <div class="header header-filter"
+             style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1 class="title text-center">All Creators</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main main-raised">
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="fixed-section" data-spy="affix" data-offset-top="340">
+                                <ul>
+                                    <li><a href="#personal-details">Personal details</a></li>
+                                    <li><a href="#creator-details">Creator details</a></li>
+                                    <li><a href="#social-details">Social details</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-md-offset-1">
+                            <div class="tim-container">
+
+                                <!-- personal details row -->
+                                <div class="tim-row" id="personal-details">
+                                    <h3>Creators</h3>
+                                    {% for creator in creators %}
+                                        {{ creator.username }}
+                                    {% endfor %}
+                                </div>
+                                <!-- end row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
