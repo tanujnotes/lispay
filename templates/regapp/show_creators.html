@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h1 class="title text-center">All Creators</h1>
+                        <h1 class="title text-center">Creators</h1>
                     </div>
                 </div>
             </div>
@@ -27,24 +27,41 @@
                         <div class="col-md-2">
                             <div class="fixed-section" data-spy="affix" data-offset-top="340">
                                 <ul>
-                                    <li><a href="#personal-details">Personal details</a></li>
-                                    <li><a href="#creator-details">Creator details</a></li>
-                                    <li><a href="#social-details">Social details</a></li>
+                                    <li><a href="/regapp/show_creators/all">All</a></li>
+                                    <li><a href="/regapp/show_creators/videos-and-films">Videos and Films</a></li>
+                                    <li><a href="/regapp/show_creators/music">Music</a></li>
+                                    <li><a href="/regapp/show_creators/writing">Writing</a></li>
+                                    <li><a href="/regapp/show_creators/arts-and-crafts">Arts and Crafts</a></li>
+                                    <li><a href="/regapp/show_creators/games">Games</a></li>
+                                    <li><a href="/regapp/show_creators/photography">Photography</a></li>
+                                    <li><a href="/regapp/show_creators/science and-technology">Science and
+                                        Technology</a></li>
+                                    <li><a href="/regapp/show_creators/education">Education</a></li>
+                                    <li><a href="/regapp/show_creators/dance-and-theater">Dance and Theater</a></li>
+                                    <li><a href="/regapp/show_creators/coding">Coding</a></li>
+                                    <li><a href="/regapp/show_creators/others">Others</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-md-8 col-md-offset-1">
-                            <div class="tim-container">
 
-                                <!-- personal details row -->
-                                <div class="tim-row" id="personal-details">
-                                    <h3>Creators</h3>
-                                    {% for creator in creators %}
-                                        {{ creator.username }}
-                                    {% endfor %}
+                            <!-- personal details row -->
+                            <h3>Creators</h3>
+                            <legend></legend>
+                            <legend></legend>
+                            {% for creator in creators %}
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/media/{{ creator.picture }}" alt="Thumbnail Image" width="100px"
+                                         height="100px" class="img-raised img-circle">
                                 </div>
-                                <!-- end row -->
+                                <div class="col-md-4">
+                                    <h4>{{ creator.full_name }}</h4>
+                                    <p>{{ creator.short_bio }}</p>
+                                </div>
                             </div>
+                            <hr/>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

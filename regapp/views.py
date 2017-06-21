@@ -30,9 +30,9 @@ def show_creators(request, category):
     category = category.replace("-", " ").upper()
     try:
         if category == "ALL":
-            creators = MyUser.objects.all()[:5]
+            creators = MyUser.objects.filter(is_creator=True)[:5]
         else:
-            creators = MyUser.objects.filter(category=category)
+            creators = MyUser.objects.filter(category=category, is_creator=True)
     except:
         creators = MyUser.objects.all()[:5]
     context = {"creators": creators}
