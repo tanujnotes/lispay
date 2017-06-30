@@ -37,12 +37,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{% url 'index' %}">Lisplay</a>
             </div>
 
             <div class="collapse navbar-collapse" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><input type="text" name="search" id="id_search" class="form-control"
+                               placeholder="Search..."></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'auth_logout' %}">Logout</a></li>
                     <li><a class="btn btn-primary btn-primary" href="{% url 'show_user_profile' user.username %}">
@@ -118,6 +121,21 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>

@@ -11,6 +11,7 @@ CATEGORY_CHOICES = (
     ("WRITING", 'Writing'),
     ("ARTS AND CRAFTS", 'Arts and Crafts'),
     ("GAMES", 'Games'),
+    ("MEDIA", 'Media'),
     ("PHOTOGRAPHY", 'Photography'),
     ("SCIENCE AND TECHNOLOGY", 'Science and Technology'),
     ("EDUCATION", 'Education'),
@@ -59,6 +60,7 @@ class MyUser(AbstractBaseUser):
     short_bio = models.CharField(max_length=50, blank=True)
     profile_description = models.CharField(max_length=1000, blank=True)
     picture = models.ImageField(upload_to='profile_images', default="profile_images/profile_b.jpg")
+    thumbnail = models.ImageField(upload_to='profile_images', default="profile_images/profile_b.jpg")
     category = models.CharField(
         max_length=30,
         choices=CATEGORY_CHOICES,
@@ -68,6 +70,7 @@ class MyUser(AbstractBaseUser):
     featured_video = models.URLField(blank=True)
     social_links = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
+    is_verified = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_creator = models.BooleanField(default=False)

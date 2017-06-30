@@ -1,4 +1,5 @@
 import ast
+from io import StringIO, BytesIO
 from django.shortcuts import render
 from regapp.models import MyUser, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
@@ -6,6 +7,9 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.template.defaulttags import register
+from PIL import Image, ImageOps
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
 
 
 def index(request):
@@ -30,7 +34,7 @@ def show_creators(request, category):
     category = category.replace("-", " ").upper()
     try:
         if category == "ALL":
-            creators = MyUser.objects.filter(is_creator=True)[:5]
+            creators = MyUser.objects.filter()[:5]
         else:
             creators = MyUser.objects.filter(category=category, is_creator=True)
     except:
@@ -62,7 +66,24 @@ def update_profile(request):
             user.is_creator = ("is_creator" in request.POST)
             user.social_links = get_social_details(request)
             if 'picture' in request.FILES:
-                user.picture = request.FILES['picture']
+                picture = request.FILES['picture']
+                user.picture = picture
+                image = Image.open(BytesIO(request.FILES['picture'].read()))
+                buffer = BytesIO()
+                if image.mode != "RGB":
+                    image = image.convert("RGB")
+
+                image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
+                image.save(buffer, format='JPEG')
+                im = InMemoryUploadedFile(
+                    buffer,
+                    None,
+                    user.picture.url,
+                    'image/jpeg',
+                    buffer.tell(),
+                    None)
+
+                user.thumbnail = im
 
             user.save()
             return HttpResponseRedirect('/regapp/%s/' % user.username)

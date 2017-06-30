@@ -42,7 +42,7 @@ SECRET_KEY = '14zdnto(!mol6dpj-c8_#^hd2*nl6@&k1^3+d4(car6_*)n)x8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',]
 
 # Application definition
 
@@ -93,8 +93,12 @@ WSGI_APPLICATION = 'userregistration.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'regappdb',
+        'USER': 'tan',
+        'PASSWORD': 'toor99',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
