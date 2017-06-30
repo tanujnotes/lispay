@@ -3,3 +3,4 @@
 .DS_Store
 regapp/__pycache__
 userregistration/__pycache__
+media/*
