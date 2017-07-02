@@ -22,6 +22,29 @@
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
+
+    <style>
+    input[type=search] {
+        width: 160px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+
+    input[type=search]:focus {
+        width: 100%;
+        color: grey;
+    }
+
+    </style>
 </head>
 
 <body>
@@ -44,8 +67,13 @@
 
             <div class="collapse navbar-collapse" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><input type="text" name="search" id="id_search" class="form-control"
-                               placeholder="Search..."></li>
+                    <!--<li><input type="text" name="search" id="id_search" class="form-control"-->
+                    <!--placeholder="Search..."></li>-->
+                    <li>
+                        <form>
+                            <input type="search" name="search" id="id_search" placeholder="Search...">
+                        </form>
+                    </li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'auth_logout' %}">Logout</a></li>
                     <li><a class="btn btn-primary btn-primary" href="{% url 'show_user_profile' user.username %}">
@@ -53,7 +81,7 @@
                     </a></li>
                     {% else %}
                     <li><a href="{% url 'auth_login' %}">Login</a></li>
-                    <li><a class="btn btn-primary btn-primary" href="{% url 'registration_register' %}">Sign up</a></li>
+                    <li><a href="{% url 'registration_register' %}">Sign up</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -121,23 +149,6 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 </body>
