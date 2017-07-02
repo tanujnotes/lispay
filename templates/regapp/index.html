@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h1 class="title">Write the best title for your page.</h1>
+                        <h1 class="title">Create Amazing Things. Together.</h1>
                         <h4>Every landing page needs a small description after the big bold title, that's why we added
                             this
                             text here. Add here all the information that can make you or your product create the first
@@ -85,62 +85,39 @@
 
                     <div class="team">
                         <div class="row">
+                            {% for key, featured_user in featured_list.items %}
                             <div class="col-md-4">
                                 <div class="team-player">
-                                    <img src="{% static '/img/avatar.jpg' %}" alt="Thumbnail Image"
-                                         class="img-raised img-circle">
-                                    <h4 class="title">Gigi Hadid <br/>
-                                        <small class="text-muted">Model</small>
-                                    </h4>
-                                    <p class="description">You can write here details about one of your team members.
-                                        You
-                                        can give more details about what they do. Feel free to add some <a
-                                                href="#">links</a> for people to be able to follow them outside the
-                                        site.
-                                    </p>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon"><i
-                                            class="fa fa-instagram"></i></a>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon btn-default"><i
-                                            class="fa fa-facebook-square"></i></a>
+                                    <a href="{% url 'show_user_profile' featured_user.username %}">
+                                        <img src="/media/{{ featured_user.thumbnail }}" alt="Thumbnail Image"
+                                             class="img-raised img-circle">
+                                        <h4 class="title">{{ featured_user.full_name }}<br/>
+                                            <small class="text-muted">{{ featured_user.short_bio }}</small>
+                                        </h4>
+                                    </a>
+                                    {% if featured_user.social_links|get_item:'facebook_details,facebook_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'facebook_details,facebook_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                        <i class="fa fa-facebook"></i></a>
+                                    {% endif %}
+                                    {% if featured_user.social_links|get_item:'twitter_details,twitter_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'twitter_details,twitter_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                        <i class="fa fa-twitter"></i></a>
+                                    {% endif %}
+                                    {% if featured_user.social_links|get_item:'instagram_details,instagram_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'instagram_details,instagram_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                        <i class="fa fa-instagram"></i></a>
+                                    {% endif %}
+                                    {% if featured_user.social_links|get_item:'youtube_details,youtube_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'youtube_details,youtube_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon">
+                                        <i class="fa fa-youtube-play"></i></a>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="team-player">
-                                    <img src="{% static '/img/christian.jpg' %}" alt="Thumbnail Image"
-                                         class="img-raised img-circle">
-                                    <h4 class="title">Christian Louboutin<br/>
-                                        <small class="text-muted">Designer</small>
-                                    </h4>
-                                    <p class="description">You can write here details about one of your team members.
-                                        You
-                                        can give more details about what they do. Feel free to add some <a
-                                                href="#">links</a> for people to be able to follow them outside the
-                                        site.
-                                    </p>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon"><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="team-player">
-                                    <img src="{% static '/img/kendall.jpg' %}" alt="Thumbnail Image"
-                                         class="img-raised img-circle">
-                                    <h4 class="title">Kendall Jenner<br/>
-                                        <small class="text-muted">Model</small>
-                                    </h4>
-                                    <p>You can write here details about one of your team members. You can give more
-                                        details
-                                        about what they do. Feel free to add some <a href="#">links</a> for people to be
-                                        able to follow them outside the site.</p>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon"><i
-                                            class="fa fa-google-plus"></i></a>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon"><i
-                                            class="fa fa-youtube-play"></i></a>
-                                    <a href="#pablo" class="btn btn-simple btn-just-icon btn-default"><i
-                                            class="fa fa-twitter"></i></a>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 

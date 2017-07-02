@@ -1,20 +1,21 @@
 import ast
-from io import StringIO, BytesIO
+from io import BytesIO
 from django.shortcuts import render
 from regapp.models import MyUser, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.template.defaulttags import register
 from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.files.base import ContentFile
 
 
 def index(request):
-    creator_list = MyUser.objects.order_by('-date_joined')[:3]
-    return render(request, 'regapp/index.html', {'creator_list': creator_list})
+    user1 = MyUser.objects.get(username="user1")
+    user2 = MyUser.objects.get(username="user2")
+    user3 = MyUser.objects.get(username="user3")
+    featured_list = {'user1': user1, 'user2': user2, 'user3': user3}
+    return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
 def new_index(request):
