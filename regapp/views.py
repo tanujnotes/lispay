@@ -37,11 +37,12 @@ def show_user_profile(request, profile_username):
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 
+# TODO: Pagination in creators
 def show_creators(request, category):
     category = category.replace("-", " ").upper()
     try:
         if category == "ALL":
-            creators = MyUser.objects.filter()[:5]
+            creators = MyUser.objects.filter(is_creator=True)[:5]
         else:
             creators = MyUser.objects.filter(category=category, is_creator=True)
     except:

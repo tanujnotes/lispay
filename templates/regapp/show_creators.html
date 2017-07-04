@@ -45,22 +45,30 @@
                         </div>
                         <div class="col-md-8 col-md-offset-1">
 
-                            <!-- personal details row -->
+                            {% if not creators.exists %}
+                            <h4>No creators found in this category!</h4>
+                            {% else %}
                             <h3>Creators</h3>
-                            <legend></legend>
-                            <legend></legend>
+                            {% endif %}
+                            <br/>
+                            <br/>
                             {% for creator in creators %}
                             <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/media/{{ creator.picture }}" alt="Thumbnail Image" width="100px"
-                                         height="100px" class="img-raised img-circle">
-                                </div>
-                                <div class="col-md-4">
-                                    <h4>{{ creator.full_name }}</h4>
-                                    <p>{{ creator.short_bio }}</p>
-                                </div>
+                                <a href="{% url 'show_user_profile' creator.username %}">
+
+                                    <div class="col-md-2">
+                                        <img src="/media/{{ creator.thumbnail }}" alt="Thumbnail Image" width="100px"
+                                             height="100px" class="img-raised img-circle">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4>{{ creator.full_name }}<br/>
+                                            <small class="text-muted">{{ creator.short_bio }}</small>
+                                        </h4>
+                                    </div>
+                                </a>
                             </div>
-                            <hr/>
+                            <br/>
+                            <br/>
                             {% endfor %}
                         </div>
                     </div>
