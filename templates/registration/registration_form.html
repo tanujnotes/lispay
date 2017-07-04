@@ -34,7 +34,7 @@ Lisplay - Sign up
                                 </div>
                                 <!--<p class="text-divider">Or Be Classical</p>-->
                                 <div class="content">
-
+                                    {{ form.errors }}
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="material-icons">face</i></span>
                                         <input type="text" name="username" id="id_username" class="form-control"
@@ -77,7 +77,7 @@ Lisplay - Sign up
                                 </div>
                             </form>
                         </div>
-                        <p class="description">Already a member?
+                        <p class="description text-center">Already a member?
                             <a href="{% url 'auth_login' %}">{% trans "Login here!" %}</a>
                         </p>
                     </div>
