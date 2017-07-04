@@ -47,6 +47,7 @@ ALLOWED_HOSTS = ['127.0.0.1',]
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.postgres',
     'django.contrib.admin',
     'registration',
     'django.contrib.auth',

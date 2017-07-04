@@ -1,0 +1,60 @@
+{% extends "regapp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+Lisplay - Search
+{% endblock %}
+
+{% block content %}
+
+
+<div class="components-page">
+
+    <div class="wrapper">
+        <div class="header header-filter"
+             style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1 class="title text-center">Search Results</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main main-raised">
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            {% if not search_results.exists %}
+                            <h3>No results found!</h3>
+                            {% else %}
+                            <h3>Creators</h3>
+                            {% endif %}
+                            <br/>
+                            <br/>
+                            {% for creator in search_results %}
+                            <div class="row">
+                                <a href="{% url 'show_user_profile' creator.username %}">
+                                    <div class="col-md-2">
+                                        <img src="/media/{{ creator.thumbnail }}" alt="Thumbnail Image" width="100px"
+                                             height="100px" class="img-raised img-circle">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4>{{ creator.full_name }}<br/>
+                                            <small class="text-muted">{{ creator.short_bio }}</small>
+                                        </h4>
+                                    </div>
+                                </a>
+                            </div>
+                            <hr/>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

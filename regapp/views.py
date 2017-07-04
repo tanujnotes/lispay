@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.defaulttags import register
 from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.contrib.postgres.search import SearchVector
 
 
 def index(request):
@@ -18,9 +19,14 @@ def index(request):
     return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
-def new_index(request):
-    creator_list = MyUser.objects.all()
-    return render(request, 'regapp/new_profile.html', {'creator_list': creator_list})
+def search(request):
+    search_query = request.POST.get("search", "").strip()
+    if search_query is None:
+        return render(request, 'regapp/index.html', {})
+
+    search_results = MyUser.objects.annotate(
+        search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
+    return render(request, 'regapp/search.html', {'search_results': search_results})
 
 
 def show_user_profile(request, profile_username):

@@ -44,6 +44,10 @@
         color: grey;
     }
 
+
+
+
+
     </style>
 </head>
 
@@ -70,7 +74,8 @@
                     <!--<li><input type="text" name="search" id="id_search" class="form-control"-->
                     <!--placeholder="Search..."></li>-->
                     <li>
-                        <form>
+                        <form class="form" method="post" action="{% url 'search' %}">
+                            {% csrf_token %}
                             <input type="search" name="search" id="id_search" placeholder="Search...">
                         </form>
                     </li>
@@ -149,6 +154,10 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
+
+
 </script>
 
 </body>

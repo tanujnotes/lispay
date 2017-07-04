@@ -3,7 +3,7 @@ from regapp import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^new/$', views.new_index, name='new_index'),
+    url(r'^search/$', views.search, name='search'),
     url(r'^login_redirect/$', views.login_redirect, name='login_redirect'),
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^show_creators/(?P<category>[\w\-]+)/$', views.show_creators, name='show_creators'),
