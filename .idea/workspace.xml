@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60cc057c-390b-4a15-80fb-7f10a9383f11" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/regapp/urls.py" afterPath="$PROJECT_DIR$/regapp/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/regapp/views.py" afterPath="$PROJECT_DIR$/regapp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/regapp/index.html" afterPath="$PROJECT_DIR$/templates/regapp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/regapp/show_creators.html" afterPath="$PROJECT_DIR$/templates/regapp/show_creators.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,44 +16,36 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="show_creators.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/regapp/show_creators.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="945">
-              <caret line="63" column="43" lean-forward="false" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/regapp/search.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/regapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="49" column="56" lean-forward="false" selection-start-line="49" selection-start-column="56" selection-end-line="49" selection-end-column="56" />
+            <state relative-caret-position="205">
+              <caret line="49" column="61" lean-forward="false" selection-start-line="49" selection-start-column="61" selection-end-line="49" selection-end-column="61" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#4693#8074#0" expanded="false" />
+                <element signature="e#4748#8129#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/regapp/urls.py">
+      <file leaf-file-name="show_creators.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/regapp/show_creators.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="461">
+              <caret line="83" column="78" lean-forward="false" selection-start-line="83" selection-start-column="78" selection-end-line="83" selection-end-column="78" />
+              <folding>
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/regapp/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="130" column="73" lean-forward="false" selection-start-line="130" selection-start-column="45" selection-end-line="130" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -63,7 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>creative</find>
       <find>required</find>
       <find>HttpResponseRedirect</find>
       <find>see a</find>
@@ -88,11 +79,12 @@
       <find>Please ch</find>
       <find>P</find>
       <find>Please</find>
-      <find>Please</find>
       <find>Please c</find>
       <find>Please che</find>
       <find>Please chec</find>
       <find>pict</find>
+      <find>show_</find>
+      <find>url</find>
     </findStrings>
     <replaceStrings>
       <replace>{% static 'images</replace>
@@ -135,7 +127,6 @@
         <option value="$PROJECT_DIR$/templates/regapp/show_all_creators.html" />
         <option value="$PROJECT_DIR$/regapp/models.py" />
         <option value="$PROJECT_DIR$/templates/regapp/profile.html" />
-        <option value="$PROJECT_DIR$/templates/regapp/index.html" />
         <option value="$PROJECT_DIR$/templates/registration/logout.html" />
         <option value="$PROJECT_DIR$/templates/registration/activation_complete.html" />
         <option value="$PROJECT_DIR$/templates/registration/password_change_form.html" />
@@ -151,8 +142,9 @@
         <option value="$PROJECT_DIR$/templates/regapp/base.html" />
         <option value="$PROJECT_DIR$/userregistration/settings.py" />
         <option value="$PROJECT_DIR$/templates/regapp/search.html" />
-        <option value="$PROJECT_DIR$/templates/regapp/show_creators.html" />
         <option value="$PROJECT_DIR$/regapp/urls.py" />
+        <option value="$PROJECT_DIR$/templates/regapp/index.html" />
+        <option value="$PROJECT_DIR$/templates/regapp/show_creators.html" />
         <option value="$PROJECT_DIR$/regapp/views.py" />
       </list>
     </option>
@@ -570,20 +562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/regapp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="95" column="45" lean-forward="true" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/sass/material-kit/_checkboxes.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
@@ -591,17 +569,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/regapp/show_creators.html">
+    <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="63" column="43" lean-forward="false" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
+        <state relative-caret-position="244">
+          <caret line="21" column="50" lean-forward="true" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/regapp/search.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
+        <state relative-caret-position="171">
           <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
           <folding />
         </state>
@@ -615,13 +593,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/regapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="130" column="73" lean-forward="false" selection-start-line="130" selection-start-column="45" selection-end-line="130" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/regapp/show_creators.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="83" column="78" lean-forward="false" selection-start-line="83" selection-start-column="78" selection-end-line="83" selection-end-column="78" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/regapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="49" column="56" lean-forward="false" selection-start-line="49" selection-start-column="56" selection-end-line="49" selection-end-column="56" />
+        <state relative-caret-position="205">
+          <caret line="49" column="61" lean-forward="false" selection-start-line="49" selection-start-column="61" selection-end-line="49" selection-end-column="61" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#4693#8074#0" expanded="false" />
+            <element signature="e#4748#8129#0" expanded="false" />
           </folding>
         </state>
       </provider>

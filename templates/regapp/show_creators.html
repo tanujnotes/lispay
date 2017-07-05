@@ -72,6 +72,21 @@
                             {% endfor %}
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <br/>
+                            <hr/>
+                            <ul class="pagination pagination-primary">
+                                {% for i in 1|range:total_pages %}
+                                {% if i == page %}
+                                <li class="active"><a href="{% url 'show_creators' 'all' i %}">{{ i }}</a></li>
+                                {% else %}
+                                <li><a href="{% url 'show_creators' 'all' i %}">{{ i }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -57,13 +57,14 @@ def show_creators(request, category, page="1"):
     try:
         creators = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        creators = paginator.page(1)
+        page = 1
+        creators = paginator.page(page)
     except EmptyPage:
         # If page is out of range, deliver last page of results.
-        creators = paginator.page(paginator.num_pages)
+        page = paginator.num_pages
+        creators = paginator.page(page)
 
-    context = {"creators": creators}
+    context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages}
     return render(request, 'regapp/show_creators.html', context)
 
 
@@ -175,6 +176,15 @@ def get_social_details(request):
     return social_details
 
 
+@login_required
+def login_redirect(request):
+    if request.user.full_name and request.user.short_bio:
+        url = '/regapp/%s/' % request.user.username
+    else:
+        url = '/regapp/update_profile/'
+    return HttpResponseRedirect(url)
+
+
 @register.filter
 def get_item(dictionary, args):
     if args is None or dictionary is None or dictionary is "":
@@ -189,10 +199,11 @@ def get_item(dictionary, args):
     return dictionary.get(arg_list[0]).get(arg_list[1])
 
 
-@login_required
-def login_redirect(request):
-    if request.user.full_name and request.user.short_bio:
-        url = '/regapp/%s/' % request.user.username
-    else:
-        url = '/regapp/update_profile/'
-    return HttpResponseRedirect(url)
+@register.filter(name='times')
+def times(number):
+    return range(number)  # Usage {% for i in 15|times %}  {% endfor %}
+
+
+@register.filter(name='range')
+def filter_range(start, end):
+    return range(start, end + 1)  # Usage {% for i in 1|range:10 %}  {% endfor %}
