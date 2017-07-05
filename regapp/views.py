@@ -9,6 +9,7 @@ from django.template.defaulttags import register
 from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.postgres.search import SearchVector
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
@@ -37,16 +38,31 @@ def show_user_profile(request, profile_username):
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 
-# TODO: Pagination in creators
-def show_creators(request, category):
+def show_creators(request, category, page="1"):
+    try:
+        page = int(page)
+    except:
+        page = 1
+
     category = category.replace("-", " ").upper()
     try:
         if category == "ALL":
-            creators = MyUser.objects.filter(is_creator=True)[:5]
+            creators = MyUser.objects.filter(is_creator=True)
         else:
             creators = MyUser.objects.filter(category=category, is_creator=True)
     except:
-        creators = MyUser.objects.all()[:5]
+        creators = MyUser.objects.filter(is_creator=True)
+
+    paginator = Paginator(creators, 20)
+    try:
+        creators = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        creators = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver last page of results.
+        creators = paginator.page(paginator.num_pages)
+
     context = {"creators": creators}
     return render(request, 'regapp/show_creators.html', context)
 
