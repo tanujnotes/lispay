@@ -77,6 +77,7 @@ def update_profile(request):
                                       'profile_description': user.profile_description,
                                       'category': user.category,
                                       'featured_video': user.featured_video,
+                                      'featured_text': user.featured_text,
                                       'social_links': user.social_links,
                                       'is_creator': user.is_creator})
 
@@ -86,6 +87,7 @@ def update_profile(request):
             user.short_bio = request.POST['short_bio']
             featured_video = request.POST.get('featured_video', "")
             user.featured_video = featured_video.replace('watch?v=', 'embed/')
+            user.featured_text = request.POST.get('featured_text', "")
             user.profile_description = request.POST.get('profile_description', "")
             user.category = request.POST.get('category', "")
             user.is_creator = ("is_creator" in request.POST)

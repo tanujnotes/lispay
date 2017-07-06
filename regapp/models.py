@@ -68,6 +68,7 @@ class MyUser(AbstractBaseUser):
         blank=False,
     )
     featured_video = models.URLField(blank=True)
+    featured_text = models.CharField(max_length=1000, blank=True)
     social_links = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
