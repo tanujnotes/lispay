@@ -2903,6 +2903,7 @@ h2.title {
   margin-right: 20px;
   margin-top: -40px;
   padding: 20px 0;
+  max-height: 80px;
 }
 .card-signup .text-divider {
   margin-top: 30px;
