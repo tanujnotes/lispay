@@ -19,6 +19,27 @@ CATEGORY_CHOICES = (
     ("CODING", 'Coding'),
 )
 
+SUBS_STATUS = (
+    ("unknown", 'unknown'),
+    ("live", 'live'),
+    ("trial", 'trial'),
+    ("dunning", 'dunning'),
+    ("unpaid", 'unpaid'),
+    ("non_renewing", 'non_renewing'),
+    ("cancelled", 'cancelled'),
+    ("creation_failed", 'creation_failed'),
+    ("cancelled_from_dunning", 'cancelled_from_dunning'),
+    ("expired", 'expired'),
+    ("trial_expired", 'trial_expired'),
+    ("future", 'future')
+)
+
+SUBS_CHANNEL = (
+    ("NA", "na"),
+    ("ZOHO", "zoho"),
+    ("PAYTM", "paytm")
+)
+
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -100,17 +121,38 @@ class MyUser(AbstractBaseUser):
         return self.full_name
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
+        """Does the user have a specific permission?"""
         # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
+        """Does the user have permissions to view the app `app_label`?"""
         # Simplest possible answer: Yes, always
         return True
 
     @property
     def is_staff(self):
-        "Is the user a member of staff?"
+        """Is the user a member of staff?"""
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class SubscriptionModel(models.Model):
+    subs_from = models.CharField(max_length=20, blank=False)
+    subs_to = models.CharField(max_length=20, blank=False)
+    status = models.CharField(
+        max_length=30,
+        choices=SUBS_STATUS,
+        default="unknown",
+        blank=False,
+    )
+    subs_channel = models.CharField(
+        max_length=10,
+        choices=SUBS_CHANNEL,
+        default="NA",
+        blank=False,
+    )
+    amount = models.PositiveSmallIntegerField(blank=False)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    ended_at = models.DateTimeField()
