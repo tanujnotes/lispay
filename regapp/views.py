@@ -20,6 +20,10 @@ def index(request):
     return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
+def payment(request):
+    return render(request, 'regapp/payment.html', {})
+
+
 def search(request):
     search_query = request.POST.get("search", "").strip()
     if search_query is None:
