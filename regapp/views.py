@@ -1,15 +1,27 @@
-import ast
+import ast, json, requests
 from io import BytesIO
 from django.shortcuts import render
 from regapp.models import MyUser, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.template.defaulttags import register
 from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+ZOHO_AUTH_TOKEN = 'Zoho-authtoken 7ec76e4d322836b915698ec30fa4a2d5'
+ZOHO_ORGANIZATION_ID = '650065656'
+
+
+@csrf_exempt
+@require_POST
+def webhook(request):
+    jsondata = request.body
+    print(jsondata)
 
 
 def index(request):
@@ -20,7 +32,20 @@ def index(request):
     return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
+@login_required
 def payment(request):
+    if not request.user.customer_id:
+        url = 'https://subscriptions.zoho.com/api/v1/customers'
+        headers = {'Authorization': ZOHO_AUTH_TOKEN,
+                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
+        data = {"display_name": request.user.username, "email": request.user.email}
+
+        r = requests.post(url, headers=headers, data=json.dumps(data))
+        jsondata = json.loads(r.text)
+        # TODO: check if customer has been added successfully
+        request.user.customer_id = jsondata['customer']['customer_id']
+        request.user.save()
+
     return render(request, 'regapp/payment.html', {})
 
 
@@ -184,7 +209,7 @@ def get_social_details(request):
 
 @login_required
 def login_redirect(request):
-    if request.user.full_name and request.user.short_bio:
+    if request.user.full_name:
         url = '/regapp/%s/' % request.user.username
     else:
         url = '/regapp/update_profile/'

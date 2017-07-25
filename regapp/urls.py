@@ -4,6 +4,7 @@ from regapp import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^login_redirect/$', views.login_redirect, name='login_redirect'),
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^payment/$', views.payment, name='payment'),
