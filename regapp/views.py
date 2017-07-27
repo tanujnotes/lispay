@@ -33,7 +33,7 @@ def index(request):
 
 
 @login_required
-def payment(request):
+def checkout(request):
     if not request.user.customer_id:
         url = 'https://subscriptions.zoho.com/api/v1/customers'
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
@@ -46,7 +46,7 @@ def payment(request):
         request.user.customer_id = jsondata['customer']['customer_id']
         request.user.save()
 
-    return render(request, 'regapp/payment.html', {})
+    return render(request, 'regapp/checkout.html', {})
 
 
 def search(request):
