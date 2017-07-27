@@ -89,7 +89,7 @@ class MyUser(AbstractBaseUser):
         default="Coding",
         blank=False,
     )
-    card_ids = ArrayField(models.CharField(max_length=50), blank=True, null=True)
+    card_ids = ArrayField(models.CharField(max_length=50), blank=True, default=list)
     customer_id = models.CharField(max_length=20, blank=True)
     featured_video = models.URLField(blank=True)
     featured_text = models.CharField(max_length=1000, blank=True)
