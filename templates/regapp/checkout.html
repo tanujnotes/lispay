@@ -27,7 +27,7 @@
                                 {% for card in cards_json.cards %}
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" value="{{card.card_id}}">
+                                        <input type="radio" name="card_id" value="{{card.card_id}}">
                                         {{"xxxx xxxx xxxx "|add:card.last_four_digits}}
                                     </label>
                                 </div>

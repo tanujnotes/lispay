@@ -55,21 +55,37 @@ def checkout(request):
     cards_response_json = json.loads(cards_response.text)
 
     if request.method == 'POST':
-        card_number = request.POST['card_number']
-        card_cvv = request.POST['card_cvv']
-        card_expiry = request.POST['card_expiry']
-        expiry_month = card_expiry.split('/')[0]
-        expiry_year = card_expiry.split('/')[1]
+        card_id = request.POST.get('card_id', "")
+        if card_id is None:
+            card_number = request.POST['card_number']
+            card_cvv = request.POST['card_cvv']
+            card_expiry = request.POST['card_expiry']
+            expiry_month = card_expiry.split('/')[0]
+            expiry_year = card_expiry.split('/')[1]
 
-        url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
+            url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
+            headers = {'Authorization': ZOHO_AUTH_TOKEN,
+                       'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
+            data = {"card_number": card_number, "cvv_number": card_cvv, "expiry_month": "07",
+                    "expiry_year": "2018", "payment_gateway": "test_gateway", "street": "DLF Phase 3",
+                    "city": "Gurugram",
+                    "state": "Haryana", "zip": "122002", "country": "India"}
+
+            r = requests.post(url, headers=headers, data=json.dumps(data))
+            # TODO: Check if card is successfully saved
+            jsondata = json.loads(r.text)
+            card_id = jsondata['card']['card_id']
+
+        url = "https://subscriptions.zoho.com/api/v1/subscriptions"
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
-                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
-        data = {"card_number": card_number, "cvv_number": card_cvv, "expiry_month": "07",
-                "expiry_year": "2018", "payment_gateway": "test_gateway", "street": "DLF Phase 3", "city": "Gurugram",
-                "state": "Haryana", "zip": "122002", "country": "India"}
-
-        requests.post(url, headers=headers, data=json.dumps(data))
-        # TODO: Check if card is successfully saved
+                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
+                   'Content-Type': ZOHO_CONTENT_TYPE}
+        subscription_data = {'customer_id': request.user.customer_id, 'card_id': card_id, 'auto_collect': True,
+                             'plan': {'plan_code': "club2"}}
+        r = requests.post(url, headers=headers, data=json.dumps(subscription_data))
+        # jsondata = json.loads(r.text)
+        # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        # print(jsondata)
 
     return render(request, 'regapp/checkout.html', {"cards_json": cards_response_json})
 
