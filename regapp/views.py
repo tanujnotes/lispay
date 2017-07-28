@@ -15,6 +15,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 ZOHO_AUTH_TOKEN = 'Zoho-authtoken 7ec76e4d322836b915698ec30fa4a2d5'
 ZOHO_ORGANIZATION_ID = '650065656'
+ZOHO_CONTENT_TYPE = 'application/json;charset=UTF-8'
 
 
 @csrf_exempt
@@ -46,8 +47,14 @@ def checkout(request):
         request.user.customer_id = jsondata['customer']['customer_id']
         request.user.save()
 
+    url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
+    headers = {'Authorization': ZOHO_AUTH_TOKEN,
+               'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
+               'Content-Type': ZOHO_CONTENT_TYPE}
+    cards_response = requests.get(url, headers=headers)
+    cards_response_json = json.loads(cards_response.text)
+
     if request.method == 'POST':
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         card_number = request.POST['card_number']
         card_cvv = request.POST['card_cvv']
         card_expiry = request.POST['card_expiry']
@@ -61,15 +68,10 @@ def checkout(request):
                 "expiry_year": "2018", "payment_gateway": "test_gateway", "street": "DLF Phase 3", "city": "Gurugram",
                 "state": "Haryana", "zip": "122002", "country": "India"}
 
-        r = requests.post(url, headers=headers, data=json.dumps(data))
-        jsondata = json.loads(r.text)
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        print(jsondata)
-        card_id = jsondata["card"]["card_id"]
-        request.user.card_ids.append(card_id)
-        request.user.save()
+        requests.post(url, headers=headers, data=json.dumps(data))
+        # TODO: Check if card is successfully saved
 
-    return render(request, 'regapp/checkout.html', {})
+    return render(request, 'regapp/checkout.html', {"cards_json": cards_response_json})
 
 
 def search(request):
