@@ -16,10 +16,11 @@ class UpdateProfileForm(forms.ModelForm):
     profile_description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea)
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, required=False)
     featured_video = forms.URLField(required=False)
+    featured_text = forms.URLField(required=False)
     social_links = forms.CharField(required=False)
     is_creator = forms.BooleanField(required=False)
 
     class Meta:
         model = MyUser
         fields = ('full_name', 'short_bio', 'profile_description', 'category',
-                  'featured_video', 'social_links', 'is_creator')
+                  'featured_video', 'featured_text', 'social_links', 'is_creator')
