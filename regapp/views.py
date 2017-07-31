@@ -144,6 +144,7 @@ def show_creators(request, category, page="1"):
 
 @login_required
 def update_profile(request):
+    error = ""
     user = request.user
     form = UpdateProfileForm(request.POST or None,
                              initial={'full_name': user.full_name,
@@ -189,11 +190,13 @@ def update_profile(request):
             user.save()
             return HttpResponseRedirect('/regapp/%s/' % user.username)
         else:
+            error = "Please fill all the required fields!"
             print(form.errors)
 
     context = {
         "form": form,
-        "categories": CATEGORY_CHOICES
+        "categories": CATEGORY_CHOICES,
+        "errors": error
     }
     return render(request, 'regapp/update_profile.html', context)
 
