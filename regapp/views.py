@@ -160,7 +160,7 @@ def update_profile(request):
             user.full_name = request.POST['full_name']
             user.short_bio = request.POST['short_bio']
             featured_video = request.POST.get('featured_video', "")
-            user.featured_video = featured_video.replace('watch?v=', 'embed/')
+            user.featured_video = clean_youtube_link(featured_video)
             user.featured_text = request.POST.get('featured_text', "")
             user.profile_description = request.POST.get('profile_description', "")
             user.category = request.POST.get('category', "")
@@ -259,6 +259,22 @@ def login_redirect(request):
     else:
         url = '/regapp/update_profile/'
     return HttpResponseRedirect(url)
+
+
+def clean_youtube_link(youtube_link):
+    if "watch" in youtube_link and "&" in youtube_link:
+        key_values = youtube_link.split("?")[1]
+        key_values = key_values.split("&")
+        for pair in key_values:
+            if "v=" in pair:
+                return "https://www.youtube.com/embed/" + pair.split("=")[1]
+    elif "watch" in youtube_link:
+        return youtube_link.replace('watch?v=', 'embed/')
+    elif "youtu.be" in youtube_link:
+        video_id = youtube_link.split("/")[1]
+        return "https://www.youtube.com/embed/" + video_id
+    else:
+        return youtube_link
 
 
 @register.filter
