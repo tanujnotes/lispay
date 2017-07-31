@@ -35,6 +35,10 @@ def index(request):
 
 @login_required
 def checkout(request, creator):
+    user = MyUser.objects.get(username=creator)
+    if not user.is_creator:
+        return render(request, 'regapp/profile.html', {'user_profile': user})
+
     if not request.user.customer_id:
         url = 'https://subscriptions.zoho.com/api/v1/customers'
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
