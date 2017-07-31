@@ -34,7 +34,7 @@ def index(request):
 
 
 @login_required
-def checkout(request):
+def checkout(request, creator):
     if not request.user.customer_id:
         url = 'https://subscriptions.zoho.com/api/v1/customers'
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
