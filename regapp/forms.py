@@ -16,7 +16,7 @@ class UpdateProfileForm(forms.ModelForm):
     profile_description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea)
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, required=False)
     featured_video = forms.URLField(required=False)
-    featured_text = forms.URLField(required=False)
+    featured_text = forms.CharField(required=False)
     social_links = forms.CharField(required=False)
     is_creator = forms.BooleanField(required=False)
 
