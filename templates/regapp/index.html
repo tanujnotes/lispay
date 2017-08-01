@@ -80,6 +80,36 @@
                     </div>
                 </div>
 
+                <div class="section text-center" style="padding-left:10em; padding-right:10em;
+                 background-image: url('https://images.unsplash.com/photo-1489556222275-c026a4c4142b');
+                 background-size: cover; background-attachment: fixed; margin-right:-30px; margin-left:-30px; ">
+                    <h2 class="title">Low, transparent fees</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="info-title" style="float: left;">You keep 90%</h4>
+                        </div>
+                        <div class="col-md-4" style="float: right; margin-right: 4%">
+                            <h4 class="info-title" style="float: right;">We keep 5%</h4>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-danger" style="width: 90%;">
+                            <span class="sr-only">90%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-info" style="width: 5%">
+                            <span class="sr-only">5%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-warning" style="width: 5%">
+                            <span class="sr-only">5%</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="float: right;">
+                            <h4 class="info-title" style="float: right;">Transaction fees average 5%</h4>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="section text-center">
                     <h2 class="title">Look who has joined us</h2>
 
@@ -120,24 +150,19 @@
                             {% endfor %}
                         </div>
                     </div>
-
                 </div>
 
-                <div class="section landing-section">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <div class="row">
-                                <div class="col-md-4 col-md-offset-4 text-center">
-                                    <a href="{% url 'show_creators' 'all' %}">
-                                        <button class="btn btn-primary btn-raised btn-lg btn-round">
-                                            See all creators
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <a href="{% url 'show_creators' 'all' %}">
+                            <button class="btn btn-primary btn-raised btn-lg btn-round">
+                                See all creators
+                            </button>
+                        </a>
                     </div>
                 </div>
+                <br/>
+                <br/>
             </div>
 
         </div>
