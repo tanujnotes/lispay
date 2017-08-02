@@ -45,11 +45,11 @@
                         </div>
                         <div class="col-md-8 col-md-offset-1">
 
-                            {% if not creators.exists %}
+                            {% ifequal creators.start_index 0 %}
                             <h4>No creators found in this category!</h4>
                             {% else %}
                             <h3>Creators</h3>
-                            {% endif %}
+                            {% endifequal %}
                             <br/>
                             <br/>
                             {% for creator in creators %}
