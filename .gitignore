@@ -4,3 +4,4 @@
 regapp/__pycache__
 userregistration/__pycache__
 media/*
+.idea/*
