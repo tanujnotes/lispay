@@ -39,8 +39,8 @@
         -->
 
         <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
-                Creative Tim
+            <a href="{% url 'index' %}" class="simple-text">
+                Lisplay
             </a>
         </div>
 
@@ -71,9 +71,9 @@
                     </a>
                 </li>
                 <li class="active-pro">
-                    <a href="upgrade.html">
-                        <i class="material-icons">unarchive</i>
-                        <p>Upgrade to PRO</p>
+                    <a href="{% url 'index' %}">
+                        <i class="material-icons">arrow_back</i>
+                        <p>Back to profile</p>
                     </a>
                 </li>
             </ul>
@@ -137,7 +137,6 @@
         </nav>
 
         <div class="content" id="content">
-            <h1>Hello</h1>
             {% block content %}{% endblock %}
         </div>
     </div>
