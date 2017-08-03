@@ -3,6 +3,52 @@
 
 {% block title %}Lisplay - Home{% endblock %}
 
+{% block sidebar %}
+<div class="sidebar" data-color="purple" data-image="{% static '/img/sidebar-1.jpg' %}">
+
+    <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+
+    <div class="logo">
+        <a href="{% url 'index' %}" class="simple-text">
+            Lisplay
+        </a>
+    </div>
+
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li class="active">
+                <a href="{% url 'dashboard' %}">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'update_profile' %}">
+                    <i class="material-icons">person</i>
+                    <p>User Profile</p>
+                </a>
+            </li>
+            <li>
+                <a href="table.html">
+                    <i class="material-icons">pie_chart</i>
+                    <p>Creator Details</p>
+                </a>
+            </li>
+            <li class="active-pro">
+                <a href="{% url 'index' %}">
+                    <i class="material-icons">arrow_back</i>
+                    <p>Back to profile</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <div class="container-fluid">
