@@ -1,7 +1,7 @@
 {% extends "dash/base_dash.html" %}
 {% load staticfiles %}
 
-{% block title %}Lisplay - Home{% endblock %}
+{% block title %}Lisplay - Creator Details{% endblock %}
 
 {% block sidebar %}
 <div class="sidebar" data-color="purple" data-image="{% static '/img/sidebar-4.jpg' %}">
@@ -39,7 +39,7 @@
                 </a>
             </li>
             <li class="active-pro">
-                <a href="{% url 'index' %}">
+                <a href="{% url 'show_user_profile' user.username %}">
                     <i class="material-icons">arrow_back</i>
                     <p>Back to profile</p>
                 </a>
