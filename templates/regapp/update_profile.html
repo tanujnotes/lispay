@@ -80,7 +80,8 @@
 
                                         <div class="togglebutton">
                                             <label>
-                                                <input type="checkbox" name="is_creator" id="id_is_creator">
+                                                <input type="checkbox" name="is_creator" id="id_is_creator"
+                                                {% if user.is_creator %}checked{% endif %}>
                                                 This is a creator account
                                             </label>
                                         </div>
@@ -89,7 +90,7 @@
                                         <h4>Category</h4>
                                         <p>Choose a category that best defines your work</p>
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     {{ form.category }}
                                                 </div>

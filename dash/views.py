@@ -1,8 +1,9 @@
-import json
 from utils import *
 from io import BytesIO
 from django.shortcuts import render
 from regapp.forms import UpdateProfileForm
+from regapp.models import CATEGORY_CHOICES
+from dash.forms import UpdateCreatorForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
@@ -54,3 +55,39 @@ def update_profile(request):
         "errors": error,
     }
     return render(request, 'dash/update_profile.html', context)
+
+
+# @login_required
+def creator_details(request):
+    error = ""
+    user = request.user
+    form = UpdateCreatorForm(request.POST or None,
+                             initial={'is_creator': user.is_creator,
+                                      'short_bio': user.short_bio,
+                                      'profile_description': user.profile_description,
+                                      'category': user.category,
+                                      'featured_video': user.featured_video,
+                                      'featured_text': user.featured_text})
+
+    if request.method == 'POST':
+        if form.is_valid():
+            user.is_creator = ("is_creator" in request.POST)
+            user.short_bio = request.POST.get('short_bio', "")
+            user.profile_description = request.POST.get('profile_description', "")
+            featured_video = request.POST.get('featured_video', "")
+            user.featured_video = clean_youtube_link(featured_video)
+            user.featured_text = request.POST.get('featured_text', "")
+            user.category = request.POST.get('category', "")
+
+            user.save()
+            return HttpResponseRedirect('/dash/creator_details/')
+        else:
+            error = "Please fill all the required fields!"
+            print(form.errors)
+
+    context = {
+        "form": form,
+        "categories": CATEGORY_CHOICES,
+        "errors": error,
+    }
+    return render(request, 'dash/creator_details.html', context)

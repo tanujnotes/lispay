@@ -4,7 +4,7 @@
 {% block title %}Lisplay - Home{% endblock %}
 
 {% block sidebar %}
-<div class="sidebar" data-color="purple" data-image="{% static '/img/sidebar-1.jpg' %}">
+<div class="sidebar" data-color="purple" data-image="{% static '/img/sidebar-3.jpg' %}">
 
     <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li>
-                <a href="table.html">
+                <a href="{% url 'creator_details' %}">
                     <i class="material-icons">pie_chart</i>
                     <p>Creator Details</p>
                 </a>

@@ -1,7 +1,6 @@
 from django import forms
+from regapp.models import MyUser
 from registration.forms import RegistrationForm
-
-from regapp.models import MyUser, CATEGORY_CHOICES
 
 
 class CustomUserForm(RegistrationForm):
