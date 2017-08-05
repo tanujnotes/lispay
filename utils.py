@@ -25,6 +25,10 @@ def get_social_details(request):
     snapchat_link = request.POST.get('snapchat_link', "")
     youtube_username = request.POST.get('youtube_username', "")
     youtube_link = request.POST.get('youtube_link', "")
+    twitch_username = request.POST.get('twitch_username', "")
+    twitch_link = request.POST.get('twitch_link', "")
+    dribble_username = request.POST.get('dribble_username', "")
+    dribble_link = request.POST.get('dribble_link', "")
     googleplus_username = request.POST.get('googleplus_username', "")
     googleplus_link = request.POST.get('googleplus_link', "")
     linkedin_username = request.POST.get('linkedin_username', "")
@@ -50,6 +54,10 @@ def get_social_details(request):
                                            "snapchat_link": snapchat_link},
                       "youtube_details": {"youtube_username": youtube_username,
                                           "youtube_link": youtube_link},
+                      "twitch_details": {"twitch_username": twitch_username,
+                                         "twitch_link": twitch_link},
+                      "dribble_details": {"dribble_username": dribble_username,
+                                          "dribble_link": dribble_link},
                       "googleplus_details": {"googleplus_username": googleplus_username,
                                              "googleplus_link": googleplus_link},
                       "linkedin_details": {"linkedin_username": linkedin_username,
