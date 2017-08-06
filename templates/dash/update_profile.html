@@ -50,6 +50,7 @@
 {% endblock %}
 
 {% block content %}
+<!--Script to show filename of selected file-->
 <script src="{% static '/dash/js/jquery-3.1.0.min.js' %}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -59,12 +60,14 @@
         });
     });
 
+
 </script>
 
 <div class="container-fluid">
     <form class="form" method="post" enctype="multipart/form-data" action=".">
         {% csrf_token %}
 
+        <!--Personal details row-->
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -129,7 +132,9 @@
                 </a>
             </div>
         </div>
+        <!--End row personal details-->
 
+        <!--Social details row-->
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -139,278 +144,144 @@
                     </div>
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Facebook</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="facebook_link" id="id_facebook_link"
-                                           value="{{ user.social_links|get_item:'facebook_details,facebook_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="facebook_username"
-                                           id="id_facebook_username"
-                                           value="{{ user.social_links|get_item:'facebook_details,facebook_username' }}"/>
+                                    <input type="url" class="form-control" name="facebook_link" id="id_facebook_link"
+                                           value="{{ user.social_links|get_item:'facebook_details,facebook_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Twitter</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="twitter_link" id="id_twitter_link"
-                                           value="{{ user.social_links|get_item:'twitter_details,twitter_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="twitter_username"
-                                           id="id_twitter_username"
-                                           value="{{ user.social_links|get_item:'twitter_details,twitter_username' }}"/>
+                                    <input type="url" class="form-control" name="twitter_link" id="id_twitter_link"
+                                           value="{{ user.social_links|get_item:'twitter_details,twitter_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
-
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Instagram</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="instagram_link" id="id_instagram_link"
-                                           value="{{ user.social_links|get_item:'instagram_details,instagram_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="instagram_username"
-                                           id="id_instagram_username"
-                                           value="{{ user.social_links|get_item:'instagram_details,instagram_username' }}"/>
+                                    <input type="url" class="form-control" name="instagram_link" id="id_instagram_link"
+                                           value="{{ user.social_links|get_item:'instagram_details,instagram_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
-
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Snapchat</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="snapchat_link" id="id_snapchat_link"
-                                           value="{{ user.social_links|get_item:'snapchat_details,snapchat_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="snapchat_username"
-                                           id="id_snapchat_username"
-                                           value="{{ user.social_links|get_item:'snapchat_details,snapchat_username' }}"/>
+                                    <input type="url" class="form-control" name="snapchat_link" id="id_snapchat_link"
+                                           value="{{ user.social_links|get_item:'snapchat_details,snapchat_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
-
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>YouTube</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="youtube_link" id="id_youtube_link"
-                                           value="{{ user.social_links|get_item:'youtube_details,youtube_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="youtube_username"
-                                           id="id_youtube_username"
-                                           value="{{ user.social_links|get_item:'youtube_details,youtube_username' }}"/>
+                                    <input type="url" class="form-control" name="youtube_link" id="id_youtube_link"
+                                           value="{{ user.social_links|get_item:'youtube_details,youtube_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Twitch</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="twitch_link" id="id_twitch_link"
-                                           value="{{ user.social_links|get_item:'twitch_details,twitch_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="twitch_username"
-                                           id="id_twitch_username"
-                                           value="{{ user.social_links|get_item:'twitch_details,twitch_username' }}"/>
+                                    <input type="url" class="form-control" name="twitch_link" id="id_twitch_link"
+                                           value="{{ user.social_links|get_item:'twitch_details,twitch_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Dribble</h5>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="dribble_link" id="id_dribble_link"
-                                           value="{{ user.social_links|get_item:'dribble_details,dribble_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="dribble_username"
-                                           id="id_dribble_username"
-                                           value="{{ user.social_links|get_item:'dribble_details,dribble_username' }}"/>
+                                    <input type="url" class="form-control" name="dribble_link" id="id_dribble_link"
+                                           value="{{ user.social_links|get_item:'dribble_details,dribble_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Linkedin</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="linkedin_link" id="id_linkedin_link"
-                                           value="{{ user.social_links|get_item:'linkedin_details,linkedin_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="linkedin_username"
-                                           id="id_linkedin_username"
-                                           value="{{ user.social_links|get_item:'linkedin_details,linkedin_username' }}"/>
+                                    <input type="url" class="form-control" name="linkedin_link" id="id_linkedin_link"
+                                           value="{{ user.social_links|get_item:'linkedin_details,linkedin_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <h5>Google Plus</h5>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="googleplus_link"
-                                           id="id_googleplus_link"
-                                           value="{{ user.social_links|get_item:'googleplus_details,googleplus_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="googleplus_username"
-                                           id="id_googleplus_username"
-                                           value="{{ user.social_links|get_item:'googleplus_details,googleplus_username' }}"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Github</h5>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="github_link" id="id_github_link"
-                                           value="{{ user.social_links|get_item:'github_details,github_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="github_username"
-                                           id="id_github_username"
-                                           value="{{ user.social_links|get_item:'github_details,github_username' }}"/>
+                                    <input type="url" class="form-control" name="github_link" id="id_github_link"
+                                           value="{{ user.social_links|get_item:'github_details,github_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Blog</h5>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="blog_link" id="id_blog_link"
-                                           value="{{ user.social_links|get_item:'blog_details,blog_link' }}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Username</label>
-                                    <input type="text" class="form-control" name="blog_username"
-                                           id="id_blog_username"
-                                           value="{{ user.social_links|get_item:'blog_details,blog_username' }}"/>
+                                    <input type="url" class="form-control" name="blog_link" id="id_blog_link"
+                                           value="{{ user.social_links|get_item:'blog_details,blog_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                                 <h5>Website</h5>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">URL</label>
-                                    <input type="text" class="form-control" name="website_link" id="id_website_link"
-                                           value="{{ user.social_links|get_item:'website_details,website_link' }}"/>
+                                    <input type="url" class="form-control" name="website_link" id="id_website_link"
+                                           value="{{ user.social_links|get_item:'website_details,website_link' }}"
+                                           placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
                         </div>
@@ -422,6 +293,7 @@
                 </div>
             </div>
         </div>
+        <!--End row social details-->
 
     </form>
 </div>
