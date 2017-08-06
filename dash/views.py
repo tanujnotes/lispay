@@ -24,7 +24,7 @@ def update_profile(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            user.full_name = request.POST['full_name']
+            user.full_name = request.POST['full_name'].strip()
             user.social_links = get_social_details(request)
             if 'picture' in request.FILES:
                 picture = request.FILES['picture']
@@ -72,12 +72,21 @@ def creator_details(request):
     if request.method == 'POST':
         if form.is_valid():
             user.is_creator = ("is_creator" in request.POST)
-            user.short_bio = request.POST.get('short_bio', "")
-            user.profile_description = request.POST.get('profile_description', "")
-            featured_video = request.POST.get('featured_video', "")
-            user.featured_video = clean_youtube_link(featured_video)
-            user.featured_text = request.POST.get('featured_text', "")
             user.category = request.POST.get('category', "")
+            user.short_bio = request.POST.get('short_bio', "").strip()
+            user.profile_description = request.POST.get('profile_description', "").strip()
+            user.featured_text = request.POST.get('featured_text', "").strip()
+            featured_video = request.POST.get('featured_video', "").strip()
+            user.featured_video = clean_youtube_link(featured_video)
+
+            if not user.short_bio or not user.profile_description or not user.featured_text:
+                error = "Please fill up all the required fields!"
+                context = {
+                    "form": form,
+                    "categories": CATEGORY_CHOICES,
+                    "errors": error,
+                }
+                return render(request, 'dash/creator_details.html', context)
 
             user.save()
             return HttpResponseRedirect('/dash/creator_details/')
