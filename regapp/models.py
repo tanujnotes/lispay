@@ -143,6 +143,7 @@ class MyUser(AbstractBaseUser):
 
 
 class SubscriptionModel(models.Model):
+    subscription_id = models.CharField(max_length=20, blank=False)
     subscriber = models.CharField(max_length=20, blank=False)
     creator = models.CharField(max_length=20, blank=False)
     status = models.CharField(
@@ -160,4 +161,4 @@ class SubscriptionModel(models.Model):
     amount = models.PositiveSmallIntegerField(blank=False)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
-    ended_at = models.DateTimeField()
+    ended_at = models.DateTimeField(blank=True, null=True)
