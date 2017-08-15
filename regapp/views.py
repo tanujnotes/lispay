@@ -35,9 +35,11 @@ def index(request):
 
 @login_required
 def checkout(request, creator):
+    cards_response_json = {}
     user = MyUser.objects.get(username=creator)
     if not user.is_creator:
-        return render(request, 'regapp/profile.html', {'user_profile': user})
+        return render(request, 'regapp/profile.html',
+                      {'user_profile': user, 'error': "You can pledge to creator accounts only."})
 
     if not request.user.customer_id:
         url = 'https://subscriptions.zoho.com/api/v1/customers'
@@ -46,39 +48,51 @@ def checkout(request, creator):
         data = {"display_name": request.user.username, "email": request.user.email}
 
         r = requests.post(url, headers=headers, data=json.dumps(data))
-        jsondata = json.loads(r.text)
-        # TODO: check if customer has been added successfully
-        request.user.customer_id = jsondata['customer']['customer_id']
-        request.user.save()
+        response = json.loads(r.text)
+        if response['code'] == 0:
+            request.user.customer_id = response['customer']['customer_id']
+            request.user.save()
 
-    url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
-    headers = {'Authorization': ZOHO_AUTH_TOKEN,
-               'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
-               'Content-Type': ZOHO_CONTENT_TYPE}
-    cards_response = requests.get(url, headers=headers)
-    cards_response_json = json.loads(cards_response.text)
+    if request.user.customer_id:
+        url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
+        headers = {'Authorization': ZOHO_AUTH_TOKEN,
+                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
+                   'Content-Type': ZOHO_CONTENT_TYPE}
+        cards_response = requests.get(url, headers=headers)
+        cards_response_json = json.loads(cards_response.text)
 
     if request.method == 'POST':
         card_id = request.POST.get('card_id', "")
-        if card_id is None:
-            card_number = request.POST['card_number']
-            card_cvv = request.POST['card_cvv']
-            card_expiry = request.POST['card_expiry']
-            expiry_month = card_expiry.split('/')[0]
-            expiry_year = card_expiry.split('/')[1]
+        if not card_id:
+            card_number = request.POST.get('card_number', "").strip().replace(" ", "")
+            card_cvv = request.POST.get('card_cvv', "").strip()
+            card_expiry = request.POST.get('card_expiry', "").strip()
+            print(card_number)
+            if not card_number or not card_cvv or not card_expiry:
+                return render(request, 'regapp/checkout.html', {"error": "Please fill out all the card detail fields."})
+
+            try:
+                expiry_month = card_expiry.split('/')[0]
+                expiry_year = card_expiry.split('/')[1]
+            except:
+                return render(request, 'regapp/checkout.html',
+                              {"error": "Please fill the card expiry field in correct format."})
 
             url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
             headers = {'Authorization': ZOHO_AUTH_TOKEN,
                        'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
-            data = {"card_number": card_number, "cvv_number": card_cvv, "expiry_month": "07",
-                    "expiry_year": "2018", "payment_gateway": "test_gateway", "street": "DLF Phase 3",
+            data = {"card_number": card_number, "cvv_number": card_cvv, "expiry_month": expiry_month,
+                    "expiry_year": "20" + expiry_year, "payment_gateway": "test_gateway", "street": "DLF Phase 3",
                     "city": "Gurugram",
                     "state": "Haryana", "zip": "122002", "country": "India"}
 
             r = requests.post(url, headers=headers, data=json.dumps(data))
-            # TODO: Check if card is successfully saved
-            jsondata = json.loads(r.text)
-            card_id = jsondata['card']['card_id']
+            response = json.loads(r.text)
+            if response['code'] == 0:
+                card_id = response['card']['card_id']
+            else:
+                return render(request, 'regapp/checkout.html',
+                              {"cards_json": cards_response_json, "error": response['message']})
 
         url = "https://subscriptions.zoho.com/api/v1/subscriptions"
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
@@ -87,9 +101,13 @@ def checkout(request, creator):
         subscription_data = {'customer_id': request.user.customer_id, 'card_id': card_id, 'auto_collect': True,
                              'plan': {'plan_code': "club2"}}
         r = requests.post(url, headers=headers, data=json.dumps(subscription_data))
-        # jsondata = json.loads(r.text)
-        # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        # print(jsondata)
+        response = json.loads(r.text)
+        if response['code'] == 0:
+            return render(request, 'regapp/profile.html',
+                          {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
+        else:
+            return render(request, 'regapp/checkout.html',
+                          {"cards_json": cards_response_json, "error": response['message']})
 
     return render(request, 'regapp/checkout.html', {"cards_json": cards_response_json})
 

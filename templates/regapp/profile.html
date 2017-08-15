@@ -8,6 +8,41 @@
 <div class="profile-page">
     <div class="wrapper">
         <div class="header header-filter" style="background-image: url('/static/img/examples/city.jpg');"></div>
+        {% if error %}
+        <div data-notify="container"
+             class="col-xs-11 col-sm-4 alert alert-danger alert-with-icon animated fadeInDown"
+             role="alert" data-notify-position="top-right"
+             style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out; z-index: 1031; top: 20px; right: 20px;">
+            <button type="button" class="close" aria-hidden="true" data-notify="dismiss"
+                    data-dismiss="alert" aria-label="Close"
+                    style="position: absolute; right: 10px; top: 50%; margin-top: -13px; z-index: 1033;">
+                <i class="material-icons">clear</i>
+            </button>
+            <div class="alert-icon">
+                <i data-notify="icon" class="material-icons">error_outline</i>
+            </div>
+            <!--<span data-notify="title"></span>-->
+            <span data-notify="message">{{ error }}</span>
+        </div>
+        {% endif %}
+
+        {% if message %}
+        <div data-notify="container"
+             class="col-xs-11 col-sm-4 alert alert-success alert-with-icon animated fadeInDown"
+             role="alert" data-notify-position="top-right"
+             style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out; z-index: 1031; top: 20px; right: 20px;">
+            <button type="button" class="close" aria-hidden="true" data-notify="dismiss"
+                    data-dismiss="alert" aria-label="Close"
+                    style="position: absolute; right: 10px; top: 50%; margin-top: -13px; z-index: 1033;">
+                <i class="material-icons">clear</i>
+            </button>
+            <div class="alert-icon">
+                <i data-notify="icon" class="material-icons">check</i>
+            </div>
+            <!--<span data-notify="title"></span>-->
+            <span data-notify="message">{{ message }}</span>
+        </div>
+        {% endif %}
 
         <div class="main main-raised">
             <div class="container">
@@ -172,7 +207,8 @@
                 </div>
                 {% else %}
                 <h4 class="text-center">This is not creator a profile.</h4>
-                <p class="description text-center" style="margin-top:0;">If you still want to pledge to profile, please let us know.</p>
+                <p class="description text-center" style="margin-top:0;">If you still want to pledge to profile, please
+                    let us know.</p>
                 {% endif %}
                 <br/>
             </div>

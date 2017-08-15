@@ -14,6 +14,8 @@
         $('#id_card_expiry').mask("99/99",{placeholder:"MM/YY"});
         $('#id_card_cvv').mask("999?9",{placeholder:""});
     });
+
+
 </script>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -34,8 +36,9 @@
                             </div>
                             <div class="content">
                                 {{ form.errors }}
-                                <p class="text-divider">Select a card</p>
 
+                                {% if cards_json.cards %}
+                                <p class="text-divider">Select a card</p>
                                 {% for card in cards_json.cards %}
                                 <div class="radio">
                                     <label>
@@ -44,8 +47,8 @@
                                     </label>
                                 </div>
                                 {% endfor %}
-
                                 <p class="text-divider">Or add a new one</p>
+                                {% endif %}
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="material-icons">credit_card</i></span>
@@ -88,6 +91,23 @@
 <div class="components-page">
     <div class="wrapper">
         <div class="header header-filter" style="background-image: url('/static/img/examples/city.jpg');">
+            {% if error %}
+            <div data-notify="container"
+                 class="col-xs-11 col-sm-4 alert alert-danger alert-with-icon animated fadeInDown"
+                 role="alert" data-notify-position="top-right"
+                 style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out; z-index: 1031; top: 20px; right: 20px;">
+                <button type="button" class="close" aria-hidden="true" data-notify="dismiss"
+                        data-dismiss="alert" aria-label="Close"
+                        style="position: absolute; right: 10px; top: 50%; margin-top: -13px; z-index: 1033;">
+                    <i class="material-icons">clear</i>
+                </button>
+                <div class="alert-icon">
+                    <i data-notify="icon" class="material-icons">error_outline</i>
+                </div>
+                <!--<span data-notify="title"></span>-->
+                <span data-notify="message">{{ error }}</span>
+            </div>
+            {% endif %}
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
@@ -122,6 +142,7 @@
                             i.e. from Rs. 10 to Rs.
                             99. No matter what
                             amount you choose, it will be greatly helpful to us</p>
+                        {{ cards_json }}
                     </div>
                     <div class="col-md-4 col-md-offset-1" style="margin-top: 40px;">
                         <div class="card card-signup">
