@@ -143,8 +143,8 @@ class MyUser(AbstractBaseUser):
 
 
 class SubscriptionModel(models.Model):
-    subs_from = models.CharField(max_length=20, blank=False)
-    subs_to = models.CharField(max_length=20, blank=False)
+    subscriber = models.CharField(max_length=20, blank=False)
+    creator = models.CharField(max_length=20, blank=False)
     status = models.CharField(
         max_length=30,
         choices=SUBS_STATUS,
