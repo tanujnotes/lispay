@@ -1,7 +1,7 @@
 import ast, json, requests
 from io import BytesIO
 from django.shortcuts import render
-from regapp.models import MyUser, CATEGORY_CHOICES
+from regapp.models import MyUser, SubscriptionModel, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -98,11 +98,24 @@ def checkout(request, creator):
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
                    'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
                    'Content-Type': ZOHO_CONTENT_TYPE}
-        subscription_data = {'customer_id': request.user.customer_id, 'card_id': card_id, 'auto_collect': True,
-                             'plan': {'plan_code': "club2"}}
+        subscription_data = {'customer_id': request.user.customer_id,
+                             'card_id': card_id,
+                             'auto_collect': True,
+                             'plan': {'plan_code': "club2"},
+                             'custom_fields': [{'subscriber': request.user.username, 'creator': creator}]
+                             }
+        if not request.user.customer_id:
+            subscription_data['customer'] = {'display_name': request.user.username, 'email': request.user.email}
         r = requests.post(url, headers=headers, data=json.dumps(subscription_data))
         response = json.loads(r.text)
         if response['code'] == 0:
+            s = SubscriptionModel(response['subscription']['subscription_id'],
+                                  response['subscription']['custom_fields'][0]['subscriber'],
+                                  response['subscription']['custom_fields'][0]['creator'],
+                                  response['subscription']['status'],
+                                  "zoho",
+                                  response['subscription']['amount'])
+            s.save()
             return render(request, 'regapp/profile.html',
                           {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
         else:
