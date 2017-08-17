@@ -28,7 +28,7 @@
 
         {% if message %}
         <div data-notify="container"
-             class="col-xs-11 col-sm-4 alert alert-success alert-with-icon animated fadeInDown"
+             class="col-xs-11 col-sm-4 alert alert-info alert-with-icon animated fadeInDown"
              role="alert" data-notify-position="top-right"
              style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out; z-index: 1031; top: 20px; right: 20px;">
             <button type="button" class="close" aria-hidden="true" data-notify="dismiss"
@@ -133,76 +133,93 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-4" style="margin-bottom: 80px;">
-                        <div class="card card-signup">
-                            <div class="header header-info text-center">
-                                <h4>Club 2</h4>
-                            </div>
-                            <div class="content">
-                                <p style="margin-left: 30px;">Become a member of club 2 by pledging any two digit amount
-                                    i.e. from Rs. 10 to Rs. 99. No matter what amount you choose, it will be greatly
-                                    helpful to us.</p>
-                                <div class="input-group">
-                                    <span class="input-group-addon"></span>
-                                    <input type="number" name="club2" id="id_club2" class="form-control"
-                                           placeholder="Enter your favorite number [10 - 99]" required>
+                        <form class="form" method="post" action=".">
+                            {% csrf_token %}
+                            <div class="card card-signup">
+                                <div class="header header-info text-center">
+                                    <h4>Club 2</h4>
+                                </div>
+                                <div class="content">
+                                    <p style="margin-left: 30px;">Become a member of club 2 by pledging any two digit
+                                        amount
+                                        i.e. from Rs. 10 to Rs. 99. No matter what amount you choose, it will be greatly
+                                        helpful to us.</p>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"></span>
+                                        <input type="number" name="amount" id="id_club2_amount" class="form-control"
+                                               placeholder="Enter your favorite number [10 - 99]" min="10" max="99"
+                                               onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <a href="{% url 'checkout' user_profile.username %}">
+                                        <button class="btn btn-simple btn-primary btn-lg" type="submit" value="Submit">
+                                            Continue
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="footer text-center">
-                                <a href="{% url 'checkout' user_profile.username %}">
-                                    <button class="btn btn-simple btn-primary btn-lg" type="submit" value="Submit">
-                                        Continue
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="col-md-4" style="margin-bottom: 80px;">
-                        <div class="card card-signup">
-                            <div class="header header-success text-center">
-                                <h4>Club 3</h4>
-                            </div>
-                            <div class="content">
-                                <p style="margin-left: 30px;">Become a member of club 3 by pledging any three digit
-                                    amount i.e. from Rs. 100 to Rs. 999. No matter what amount you choose, it will be
-                                    greatly helpful to us.</p>
-                                <div class="input-group">
-                                    <span class="input-group-addon"></span>
-                                    <input type="number" name="club3" id="id_club3" class="form-control"
-                                           placeholder="Enter your favorite number [100 - 999]" required>
+                        <form class="form" method="post" action=".">
+                            {% csrf_token %}
+                            <div class="card card-signup">
+                                <div class="header header-success text-center">
+                                    <h4>Club 3</h4>
+                                </div>
+                                <div class="content">
+                                    <p style="margin-left: 30px;">Become a member of club 3 by pledging any three digit
+                                        amount i.e. from Rs. 100 to Rs. 999. No matter what amount you choose, it will
+                                        be greatly helpful to us.</p>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"></span>
+                                        <input type="number" name="amount" id="id_club3_amount" class="form-control"
+                                               placeholder="Enter your favorite number [100 - 999]" min="100" max="999"
+                                               onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <a href="{% url 'checkout' user_profile.username %}">
+                                        <button class="btn btn-simple btn-primary btn-lg" type="submit" value="Submit">
+                                            Continue
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="footer text-center">
-                                <a href="{% url 'checkout' user_profile.username %}">
-                                    <button class="btn btn-simple btn-primary btn-lg" type="submit" value="Submit">
-                                        Continue
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="col-md-4" style="margin-bottom: 80px;">
-                        <div class="card card-signup">
-                            <div class="header header-warning text-center">
-                                <h4>Club 4</h4>
-                            </div>
-                            <div class="content">
-                                <p style="margin-left: 30px;">Become a member of club 4 by pledging any four digit
-                                    amount i.e. from Rs. 1000 to Rs. 9999. No matter what amount you choose, it will be
-                                    greatly helpful to us.</p>
-                                <div class="input-group">
-                                    <span class="input-group-addon"></span>
-                                    <input type="number" name="club4" id="id_club4" class="form-control"
-                                           placeholder="Enter your favorite number [1000 - 9999]" required>
+                        <form class="form" method="post" action=".">
+                            {% csrf_token %}
+                            <div class="card card-signup">
+                                <div class="header header-warning text-center">
+                                    <h4>Club 4</h4>
+                                </div>
+                                <div class="content">
+                                    <p style="margin-left: 30px;">Become a member of club 4 by pledging any four digit
+                                        amount i.e. from Rs. 1000 to Rs. 9999. No matter what amount you choose, it will
+                                        be greatly helpful to us.</p>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"></span>
+                                        <input type="number" name="amount" id="id_club4_amount" class="form-control"
+                                               placeholder="Enter your favorite number [1000 - 9999]" min="1000"
+                                               max="9999"
+                                               onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <a href="{% url 'checkout' user_profile.username %}">
+                                        <button class="btn btn-simple btn-primary btn-lg" type="submit" value="Submit">
+                                            Continue
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="footer text-center">
-                                <a href="{% url 'checkout' user_profile.username %}">
-                                    <button class="btn btn-simple btn-primary btn-lg" type="submit" value="Submit">
-                                        Continue
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 {% else %}

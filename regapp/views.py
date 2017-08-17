@@ -1,6 +1,6 @@
 import ast, json, requests
 from io import BytesIO
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from regapp.models import MyUser, SubscriptionModel, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect
@@ -35,12 +35,17 @@ def index(request):
 
 @login_required
 def checkout(request, creator):
+    amount = request.session['amount']
     cards_response_json = {}
     user = MyUser.objects.get(username=creator)
     if not user.is_creator:
         return render(request, 'regapp/profile.html',
-                      {'user_profile': user, 'error': "You can pledge to creator accounts only."})
+                      {'user_profile': user, 'message': "You can pledge to creator accounts only."})
+    if not amount or amount is None:
+        return render(request, 'regapp/profile.html',
+                      {'user_profile': user, 'message': "Please enter an amount and continue"})
 
+    # Register customer to zoho
     if not request.user.customer_id:
         url = 'https://subscriptions.zoho.com/api/v1/customers'
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
@@ -53,6 +58,7 @@ def checkout(request, creator):
             request.user.customer_id = response['customer']['customer_id']
             request.user.save()
 
+    # Get all the saved credit cards for customer from zoho
     if request.user.customer_id:
         url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
@@ -74,10 +80,17 @@ def checkout(request, creator):
             try:
                 expiry_month = card_expiry.split('/')[0]
                 expiry_year = card_expiry.split('/')[1]
+                if int(expiry_month) < 1 or int(expiry_month) > 12:
+                    return render(request, 'regapp/checkout.html',
+                                  {"cards_json": cards_response_json, 'amount': request.session['amount'],
+                                   "creator": creator,
+                                   "error": "Invalid value of month in card expiry date. Please check."})
             except:
                 return render(request, 'regapp/checkout.html',
-                              {"error": "Please fill the card expiry field in correct format."})
+                              {"cards_json": cards_response_json, 'amount': request.session['amount'],
+                               "creator": creator, "error": "Please fill the card expiry field in correct format."})
 
+            # Save the card details of customer on zoho
             url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
             headers = {'Authorization': ZOHO_AUTH_TOKEN,
                        'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
@@ -92,8 +105,10 @@ def checkout(request, creator):
                 card_id = response['card']['card_id']
             else:
                 return render(request, 'regapp/checkout.html',
-                              {"cards_json": cards_response_json, "error": response['message']})
+                              {"cards_json": cards_response_json, 'amount': request.session['amount'],
+                               "creator": creator, "error": response['message']})
 
+        # Create the subscription
         url = "https://subscriptions.zoho.com/api/v1/subscriptions"
         headers = {'Authorization': ZOHO_AUTH_TOKEN,
                    'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
@@ -102,27 +117,48 @@ def checkout(request, creator):
                              'card_id': card_id,
                              'auto_collect': True,
                              'plan': {'plan_code': "club2"},
-                             'custom_fields': [{'subscriber': request.user.username, 'creator': creator}]
+                             'custom_fields': [
+                                 {'label': 'subscriber', 'value': request.user.username},
+                                 {'label': 'creator', 'value': creator},
+                             ]
                              }
+        # If customer is not registered on zoho, register while creating the subscription
         if not request.user.customer_id:
             subscription_data['customer'] = {'display_name': request.user.username, 'email': request.user.email}
+        # Send subscription request
         r = requests.post(url, headers=headers, data=json.dumps(subscription_data))
         response = json.loads(r.text)
+
         if response['code'] == 0:
-            s = SubscriptionModel(response['subscription']['subscription_id'],
-                                  response['subscription']['custom_fields'][0]['subscriber'],
-                                  response['subscription']['custom_fields'][0]['creator'],
-                                  response['subscription']['status'],
-                                  "zoho",
-                                  response['subscription']['amount'])
+            if not request.user.customer_id:
+                request.user.customer_id = response['subscription']['customer']['customer_id']
+                request.user.save()
+
+            # Get the custom fields from subscription response
+            subscriber_value = ""
+            creator_value = ""
+            for custom_field in response['subscription']['custom_fields']:
+                if custom_field['index'] == 1:
+                    subscriber_value = custom_field['value']
+                else:
+                    creator_value = custom_field['value']
+            # Save subscription details in database
+            s = SubscriptionModel(subscription_id=response['subscription']['subscription_id'],
+                                  subscriber=subscriber_value,
+                                  creator=creator_value,
+                                  status=response['subscription']['status'],
+                                  subs_channel="zoho",
+                                  amount=response['subscription']['amount'])
             s.save()
             return render(request, 'regapp/profile.html',
                           {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
         else:
             return render(request, 'regapp/checkout.html',
-                          {"cards_json": cards_response_json, "error": response['message']})
+                          {"cards_json": cards_response_json, 'amount': request.session['amount'], 'creator': creator,
+                           "error": response['message']})
 
-    return render(request, 'regapp/checkout.html', {"cards_json": cards_response_json})
+    return render(request, 'regapp/checkout.html',
+                  {"cards_json": cards_response_json, 'amount': request.session['amount'], 'creator': creator})
 
 
 def search(request):
@@ -140,6 +176,24 @@ def show_user_profile(request, profile_username):
         user_profile = MyUser.objects.get(username=profile_username)
     except:
         return HttpResponseRedirect('/regapp/')
+
+    if request.method == 'POST':
+        try:
+            subscription_amount = request.POST.get('amount', "").strip()
+            amount = int(subscription_amount)
+            if amount < 10:
+                return render(request, 'regapp/profile.html',
+                              {'user_profile': user_profile, 'error': "Subscription amount must not be less than 10"})
+            elif amount > 9999:
+                return render(request, 'regapp/profile.html',
+                              {'user_profile': user_profile, 'error': "Subscription amount must be less than 1000"})
+            else:
+                request.session['amount'] = amount
+                return HttpResponseRedirect('/regapp/' + profile_username + '/checkout/')
+        except:
+            return render(request, 'regapp/profile.html',
+                          {'user_profile': user_profile, 'error': "Please enter a valid amount"})
+
     return render(request, 'regapp/profile.html', {'user_profile': user_profile})
 
 

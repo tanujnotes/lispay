@@ -14,8 +14,6 @@
         $('#id_card_expiry').mask("99/99",{placeholder:"MM/YY"});
         $('#id_card_cvv').mask("999?9",{placeholder:""});
     });
-
-
 </script>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -111,7 +109,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h1 class="title text-center">Payment</h1>
+                        <h1 class="title text-center">Pledge confirmation</h1>
                     </div>
                 </div>
             </div>
@@ -124,8 +122,9 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-5 col-md-offset-1" style="padding-bottom: 40px;">
-                        <h2>Featured Text</h2>
-                        <br/>
+                        <h3>Confirm you pledge to {{ creator }}</h3>
+                        <h5>Rs. {{ amount }} per month</h5>
+                        <hr/>
                         <p>user_profile.featured_textBecome a member of club 2 by pledging any two digit amount
                             i.e. from Rs. 10 to Rs.
                             99. No matter what
@@ -142,18 +141,19 @@
                             i.e. from Rs. 10 to Rs.
                             99. No matter what
                             amount you choose, it will be greatly helpful to us</p>
-                        {{ cards_json }}
                     </div>
                     <div class="col-md-4 col-md-offset-1" style="margin-top: 40px;">
                         <div class="card card-signup">
                             <div class="header header-primary text-center">
-                                <h4>Select Payment Method</h4>
+                                <h4>Payment Summary</h4>
                             </div>
-                            <div class="content" style="padding-bottom: 10px; padding-top: 10px;">
-                                <p style="margin-left: 10px;">Become a member of club 2 by pledging any two digit amount
-                                    i.e. from Rs. 10 to Rs.
-                                    99. No matter what
-                                    amount you choose, it will be greatly helpful to us.</p>
+                            <div class="content" style="padding-bottom: 10px; padding-top: 10px; margin-left: 20px;">
+                                <h5 style="color:#666"><b>Today's charge:</b> Rs. {{ amount }}/-</h5>
+                                <hr/>
+                                <p>You'll be charged Rs. {{ amount }} now and then the same
+                                    amount on the 1st of every month going forward.</p>
+                                <p>You can cancel your pledge at any time. By making this
+                                    pledge, you agree to <a href="#">Lisplay's Terms of Services.</a></p>
                             </div>
                             <div class="footer text-center">
                                 <button class="btn btn-danger btn-lg btn-round" data-toggle="modal"
