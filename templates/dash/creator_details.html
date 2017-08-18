@@ -175,7 +175,7 @@
             </form>
         </div>
         <div class="col-md-4">
-            <a href="#pablo">
+            <a href="{% url 'show_user_profile' user.username %}">
                 <div class="card card-profile">
                     <div class="card-avatar">
                         <img class="img" src="/media/{{ user.thumbnail }}"/>
