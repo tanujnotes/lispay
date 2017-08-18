@@ -101,10 +101,54 @@
                     <hr/>
                 </div>
 
-
                 {% if user.is_authenticated %}
                 {% ifequal user.username user_profile.username %}
-                <h4 class="text-center" style="background-color:#eee;">Creators you are currently supporting.</h4>
+                <div class="section text-center" style="background-color:#eee;">
+                    {% if featured_list.items %}
+                    <h3>CREATORS YOU ARE SUPPORTING</h3>
+                    <div class="team">
+                        <div class="row">
+                            {% for key, featured_user in featured_list.items %}
+                            <div class="col-md-4">
+                                <div class="team-player">
+                                    <a href="{% url 'show_user_profile' featured_user.username %}">
+                                        <img src="/media/{{ featured_user.thumbnail }}" alt="Thumbnail Image"
+                                             class="img-raised img-circle">
+                                        <h4 class="title">{{ featured_user.full_name }}<br/>
+                                            <small class="text-muted">{{ featured_user.short_bio }}</small>
+                                        </h4>
+                                    </a>
+                                    {% if featured_user.social_links|get_item:'facebook_details,facebook_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'facebook_details,facebook_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                        <i class="fa fa-facebook"></i></a>
+                                    {% endif %}
+                                    {% if featured_user.social_links|get_item:'twitter_details,twitter_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'twitter_details,twitter_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                        <i class="fa fa-twitter"></i></a>
+                                    {% endif %}
+                                    {% if featured_user.social_links|get_item:'instagram_details,instagram_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'instagram_details,instagram_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                        <i class="fa fa-instagram"></i></a>
+                                    {% endif %}
+                                    {% if featured_user.social_links|get_item:'youtube_details,youtube_link' %}
+                                    <a href="{{ featured_user.social_links|get_item:'youtube_details,youtube_link' }}"
+                                       target="_blank" class="btn btn-simple btn-just-icon">
+                                        <i class="fa fa-youtube-play"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <h3>You're not supporting any creators yet.
+                        <a href="% url 'show_creators' 'all' %}"> Explore creators.</a>
+                    </h3>
+                    {% endif %}
+                </div>
                 <hr/>
                 {% endifequal %}
                 {% endif %}

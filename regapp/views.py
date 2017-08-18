@@ -194,7 +194,12 @@ def show_user_profile(request, profile_username):
             return render(request, 'regapp/profile.html',
                           {'user_profile': user_profile, 'error': "Please enter a valid amount"})
 
-    return render(request, 'regapp/profile.html', {'user_profile': user_profile})
+    featured_list = {}
+    subscribed_to = SubscriptionModel.objects.filter(subscriber=profile_username)
+    for subscription in subscribed_to:
+        featured_list[str(subscription.subscription_id)] = MyUser.objects.get(username=subscription.creator)
+
+    return render(request, 'regapp/profile.html', {'user_profile': user_profile, 'featured_list': featured_list})
 
 
 def show_creators(request, category, page="1"):
