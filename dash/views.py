@@ -10,11 +10,12 @@ from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
+@login_required
 def dashboard(request):
     return render(request, 'dash/dashboard.html', {})
 
 
-# @login_required
+@login_required
 def update_profile(request):
     error = ""
     user = request.user
@@ -57,7 +58,7 @@ def update_profile(request):
     return render(request, 'dash/update_profile.html', context)
 
 
-# @login_required
+@login_required
 def creator_details(request):
     error = ""
     user = request.user
