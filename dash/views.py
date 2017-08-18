@@ -1,8 +1,9 @@
+import datetime
 from utils import *
 from io import BytesIO
 from django.shortcuts import render
 from regapp.forms import UpdateProfileForm
-from regapp.models import CATEGORY_CHOICES
+from regapp.models import CATEGORY_CHOICES, SubscriptionModel
 from dash.forms import UpdateCreatorForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,24 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 @login_required
 def dashboard(request):
-    return render(request, 'dash/dashboard.html', {})
+    current_month = datetime.datetime.now().month
+    current_subscribers_count = SubscriptionModel.objects.filter(creator=request.user.username).filter(
+        status="live").count()
+    last_month_revenue = 0  # TODO: Implement a transaction table
+    joined_this_month = SubscriptionModel.objects.filter(creator=request.user.username).filter(
+        created_at__month=current_month).count()
+    left_this_month = SubscriptionModel.objects.filter(creator=request.user.username).filter(
+        updated_at__month=current_month).filter(status="cancelled").count()
+    subscribers = SubscriptionModel.objects.filter(creator=request.user.username).filter(status="live")
+
+    context = {
+        'current_subscribers_count': current_subscribers_count,
+        'last_month_revenue': last_month_revenue,
+        'joined_this_month': joined_this_month,
+        'left_this_month': left_this_month,
+        'subscribers': subscribers
+    }
+    return render(request, 'dash/dashboard.html', context)
 
 
 @login_required

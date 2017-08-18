@@ -57,8 +57,6 @@
         $('[data-toggle="popover"]').popover();
     });
 
-
-
 </script>
 
 <div class="container-fluid">
@@ -70,7 +68,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">Active Supporters</p>
-                    <h3 class="title">49</h3>
+                    <h3 class="title">{{ current_subscribers_count }}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats" data-placement="right" title="Active Supporters" data-toggle="popover"
@@ -86,8 +84,8 @@
                     <i class="material-icons">attach_money</i>
                 </div>
                 <div class="card-content">
-                    <p class="category">Monthly Revenue</p>
-                    <h3 class="title">&#8377; 34000</h3>
+                    <p class="category">Last Month Revenue</p>
+                    <h3 class="title">&#8377; {{ last_month_revenue }}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats" data-placement="right" title="Monthly Revenue" data-toggle="popover"
@@ -107,7 +105,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">Supporters Joined</p>
-                    <h3 class="title">25</h3>
+                    <h3 class="title">{{ joined_this_month }}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
@@ -124,7 +122,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">Supporters Left</p>
-                    <h3 class="title">3</h3>
+                    <h3 class="title">{{ left_this_month }}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
@@ -151,30 +149,15 @@
                         <th>Started at</th>
                         </thead>
                         <tbody>
+                        {% for subscriber in subscribers %}
                         <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>&#8377;36</td>
-                            <td>Niger</td>
+                            <td>{{ subscriber.id }}</td>
+                            <td><a target="_blank" href="{% url 'show_user_profile' subscriber.subscriber %}">
+                                {{ subscriber.subscriber }}</a></td>
+                            <td>&#8377; {{ subscriber.amount }}</td>
+                            <td>{{ subscriber.created_at|date:"M d, o" }}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Minerva Hooper</td>
-                            <td>&#8377;789</td>
-                            <td>Curaçao</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sage Rodriguez</td>
-                            <td>&#8377;142</td>
-                            <td>Netherlands</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Philip Chaney</td>
-                            <td>&#8377;11</td>
-                            <td>Korea, South</td>
-                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
