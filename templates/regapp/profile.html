@@ -104,25 +104,26 @@
                 {% if user.is_authenticated %}
                 {% ifequal user.username user_profile.username %}
                 <div class="section text-center" style="background-color:#eee;">
-                    {% if featured_list.items %}
+                    {% if featured_list.exists %}
                     <h3>CREATORS YOU ARE SUPPORTING</h3>
                     <div class="team">
                         <div class="row">
-                            {% for key, featured_user in featured_list.items %}
+                            {% for subscription in featured_list %}
                             <div class="col-md-4">
                                 <div class="team-player">
-                                    <a href="{% url 'show_user_profile' featured_user.username %}">
-                                        <img src="/media/{{ featured_user.thumbnail }}" alt="Thumbnail Image"
+                                    <a href="{% url 'show_user_profile' subscription.creator.username %}">
+                                        <img src="/media/{{ subscription.creator.thumbnail }}" alt="Thumbnail Image"
                                              class="img-raised img-circle">
-                                        <h4 class="title">{{ featured_user.full_name }}<br/>
-                                            <small class="text-muted">{{ featured_user.short_bio }}</small>
+                                        <h4 class="title">{{ subscription.creator.full_name }}<br/>
+                                            <small class="text-muted">{{ subscription.creator.short_bio }}</small>
                                         </h4>
                                     </a>
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="footer text-center">
                                             <button class="btn btn-white btn-round btn-xs" name="subscription_id"
-                                                    type="submit" value="{{ key }}">Cancel Subscription
+                                                    type="submit" value="{{ subscription.subscription_id }}">
+                                                Cancel Subscription
                                             </button>
                                         </div>
                                     </form>

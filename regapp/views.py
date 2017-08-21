@@ -139,9 +139,9 @@ def checkout(request, creator):
             creator_value = ""
             for custom_field in response['subscription']['custom_fields']:
                 if custom_field['index'] == 1:
-                    subscriber_value = custom_field['value']
+                    subscriber_value = MyUser.objects.get(username=custom_field['value'])
                 else:
-                    creator_value = custom_field['value']
+                    creator_value = MyUser.objects.get(username=custom_field['value'])
             # Save subscription details in database
             s = SubscriptionModel(subscription_id=response['subscription']['subscription_id'],
                                   subscriber=subscriber_value,
@@ -172,6 +172,8 @@ def search(request):
 
 
 def show_user_profile(request, profile_username):
+    featured_list = SubscriptionModel.objects.filter(subscriber=MyUser.objects.get(username=profile_username)) \
+        .filter(status="live")
     try:
         user_profile = MyUser.objects.get(username=profile_username)
     except:
@@ -189,7 +191,7 @@ def show_user_profile(request, profile_username):
             r = requests.post(url, headers=headers)
             response = json.loads(r.text)
             if response['code'] == 0:
-                subscription = SubscriptionModel.objects.filter(subscription_id=subscription_id)
+                subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
                 subscription.status = "cancelled"
                 subscription.ended_at = datetime.datetime.now()
                 subscription.save()
@@ -214,11 +216,6 @@ def show_user_profile(request, profile_username):
         except:
             return render(request, 'regapp/profile.html',
                           {'user_profile': user_profile, 'error': "Please enter a valid amount"})
-
-    featured_list = {}
-    subscribed_to = SubscriptionModel.objects.filter(subscriber=profile_username).filter(status="live")
-    for subscription in subscribed_to:
-        featured_list[str(subscription.subscription_id)] = MyUser.objects.get(username=subscription.creator)
 
     return render(request, 'regapp/profile.html', {'user_profile': user_profile, 'featured_list': featured_list})
 

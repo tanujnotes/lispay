@@ -144,8 +144,8 @@ class MyUser(AbstractBaseUser):
 
 class SubscriptionModel(models.Model):
     subscription_id = models.CharField(max_length=20, blank=False)
-    subscriber = models.CharField(max_length=20, blank=False)
-    creator = models.CharField(max_length=20, blank=False)
+    subscriber = models.ForeignKey(MyUser, related_name='subscriber', on_delete=models.PROTECT)
+    creator = models.ForeignKey(MyUser, related_name='creator', on_delete=models.PROTECT)
     status = models.CharField(
         max_length=30,
         choices=SUBS_STATUS,
