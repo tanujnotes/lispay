@@ -1,4 +1,4 @@
-import ast, json, requests
+import ast, json, requests, datetime
 from io import BytesIO
 from django.shortcuts import render, redirect
 from regapp.models import MyUser, SubscriptionModel, CATEGORY_CHOICES
@@ -178,6 +178,27 @@ def show_user_profile(request, profile_username):
         return HttpResponseRedirect('/regapp/')
 
     if request.method == 'POST':
+        subscription_id = request.POST.get('subscription_id', "").strip()
+        if subscription_id:
+            url = "https://subscriptions.zoho.com/api/v1/subscriptions/" \
+                  + subscription_id \
+                  + "/cancel?cancel_at_end=false"
+            headers = {'Authorization': ZOHO_AUTH_TOKEN,
+                       'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
+                       'Content-Type': ZOHO_CONTENT_TYPE}
+            r = requests.post(url, headers=headers)
+            response = json.loads(r.text)
+            if response['code'] == 0:
+                subscription = SubscriptionModel.objects.filter(subscription_id=subscription_id)
+                subscription.status = "cancelled"
+                subscription.ended_at = datetime.datetime.now()
+                subscription.save()
+                return render(request, 'regapp/profile.html',
+                              {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
+            else:
+                return render(request, 'regapp/profile.html',
+                              {'user_profile': user_profile, 'error': response['message']})
+
         try:
             subscription_amount = request.POST.get('amount', "").strip()
             amount = int(subscription_amount)
@@ -195,7 +216,7 @@ def show_user_profile(request, profile_username):
                           {'user_profile': user_profile, 'error': "Please enter a valid amount"})
 
     featured_list = {}
-    subscribed_to = SubscriptionModel.objects.filter(subscriber=profile_username)
+    subscribed_to = SubscriptionModel.objects.filter(subscriber=profile_username).filter(status="live")
     for subscription in subscribed_to:
         featured_list[str(subscription.subscription_id)] = MyUser.objects.get(username=subscription.creator)
 

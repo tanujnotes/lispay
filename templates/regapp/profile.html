@@ -118,26 +118,14 @@
                                             <small class="text-muted">{{ featured_user.short_bio }}</small>
                                         </h4>
                                     </a>
-                                    {% if featured_user.social_links|get_item:'facebook_details,facebook_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'facebook_details,facebook_link' }}"
-                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                                        <i class="fa fa-facebook"></i></a>
-                                    {% endif %}
-                                    {% if featured_user.social_links|get_item:'twitter_details,twitter_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'twitter_details,twitter_link' }}"
-                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                                        <i class="fa fa-twitter"></i></a>
-                                    {% endif %}
-                                    {% if featured_user.social_links|get_item:'instagram_details,instagram_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'instagram_details,instagram_link' }}"
-                                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                                        <i class="fa fa-instagram"></i></a>
-                                    {% endif %}
-                                    {% if featured_user.social_links|get_item:'youtube_details,youtube_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'youtube_details,youtube_link' }}"
-                                       target="_blank" class="btn btn-simple btn-just-icon">
-                                        <i class="fa fa-youtube-play"></i></a>
-                                    {% endif %}
+                                    <form class="form" method="post" action=".">
+                                        {% csrf_token %}
+                                        <div class="footer text-center">
+                                            <button class="btn btn-white btn-round btn-xs" name="subscription_id"
+                                                    type="submit" value="{{ key }}">Cancel Subscription
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             {% endfor %}
