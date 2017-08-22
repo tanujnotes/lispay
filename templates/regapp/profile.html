@@ -50,8 +50,10 @@
                 <div class="row">
                     <div class="profile">
                         <div class="avatar">
-                            <img src="/media/{{ user_profile.thumbnail }}" alt="Circle Image"
-                                 class="img-circle img-responsive img-raised">
+                            <a href="/media/{{ user_profile.picture }}" target="_blank">
+                                <img src="/media/{{ user_profile.thumbnail }}" alt="Circle Image"
+                                     class="img-circle img-responsive img-raised">
+                            </a>
                         </div>
                         <div class="name">
                             <h3 class="title" style="margin-bottom:0;">{{ user_profile.full_name }}</h3>
