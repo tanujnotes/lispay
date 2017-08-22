@@ -63,8 +63,6 @@
             document.getElementById('featured_image_file_name').innerHTML = fileName;
         });
     });
-
-
 </script>
 
 <div class="container-fluid">
@@ -74,13 +72,14 @@
          class="col-xs-11 col-sm-4 alert alert-success alert-with-icon animated fadeInDown"
          role="alert" data-notify-position="top-right"
          style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out; z-index: 1031; top: 20px; right: 20px;">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        <button type="button" class="close" aria-hidden="true" data-notify="dismiss"
+                data-dismiss="alert" aria-label="Close"
+                style="position: absolute; right: 10px; top: 50%; margin-top: -13px; z-index: 1033;">
+            <i class="material-icons">clear</i>
         </button>
-        <div class="alert-icon">
-            <i data-notify="icon" class="material-icons">check</i>
-        </div>
-        {{ message }}
+        <i data-notify="icon" class="material-icons">check</i>
+        <span data-notify="title"></span>
+        <span data-notify="message">{{ message }}</span>
     </div>
     {% endfor %}
     {% endif %}
