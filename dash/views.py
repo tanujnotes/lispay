@@ -49,16 +49,33 @@ def update_profile(request):
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']
                 user.featured_image = featured_image
+                image = Image.open(BytesIO(request.FILES['featured_image'].read()))
+                image_buffer = BytesIO()
+                if image.mode != "RGB":
+                    image = image.convert("RGB")
+
+                cover_image = ImageOps.fit(image, (1000, 500), Image.ANTIALIAS)
+                cover_image.save(image_buffer, format='JPEG')
+                im = InMemoryUploadedFile(
+                    image_buffer,
+                    None,
+                    user.featured_image.url,
+                    'image/jpeg',
+                    image_buffer.tell(),
+                    None)
+                user.featured_image = im
+
             if 'picture' in request.FILES:
                 picture = request.FILES['picture']
                 user.picture = picture
                 image = Image.open(BytesIO(request.FILES['picture'].read()))
                 image_buffer = BytesIO()
+                thumbnail_image_buffer = BytesIO()
                 if image.mode != "RGB":
                     image = image.convert("RGB")
 
-                image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
-                image.save(image_buffer, format='JPEG')
+                profile_image = ImageOps.fit(image, (500, 500), Image.ANTIALIAS)
+                profile_image.save(image_buffer, format='JPEG')
                 im = InMemoryUploadedFile(
                     image_buffer,
                     None,
@@ -66,10 +83,21 @@ def update_profile(request):
                     'image/jpeg',
                     image_buffer.tell(),
                     None)
+                user.picture = im
+
+                thumbnail_image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
+                thumbnail_image.save(thumbnail_image_buffer, format='JPEG')
+                im = InMemoryUploadedFile(
+                    thumbnail_image_buffer,
+                    None,
+                    user.picture.url,
+                    'image/jpeg',
+                    thumbnail_image_buffer.tell(),
+                    None)
                 user.thumbnail = im
             user.save()
             messages.add_message(request, messages.INFO, "Profile updated successfully!")
-            return redirect(update_profile, permanent=True)
+            return redirect(update_profile)
         else:
             error = "Please fill all the required fields!"
             print(form.errors)
