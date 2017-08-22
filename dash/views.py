@@ -1,7 +1,8 @@
 import datetime
 from utils import *
 from io import BytesIO
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from regapp.forms import UpdateProfileForm
 from regapp.models import CATEGORY_CHOICES, SubscriptionModel
 from dash.forms import UpdateCreatorForm
@@ -45,26 +46,30 @@ def update_profile(request):
         if form.is_valid():
             user.full_name = request.POST['full_name'].strip()
             user.social_links = get_social_details(request)
+            if 'featured_image' in request.FILES:
+                featured_image = request.FILES['featured_image']
+                user.featured_image = featured_image
             if 'picture' in request.FILES:
                 picture = request.FILES['picture']
                 user.picture = picture
                 image = Image.open(BytesIO(request.FILES['picture'].read()))
-                buffer = BytesIO()
+                image_buffer = BytesIO()
                 if image.mode != "RGB":
                     image = image.convert("RGB")
 
                 image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
-                image.save(buffer, format='JPEG')
+                image.save(image_buffer, format='JPEG')
                 im = InMemoryUploadedFile(
-                    buffer,
+                    image_buffer,
                     None,
                     user.picture.url,
                     'image/jpeg',
-                    buffer.tell(),
+                    image_buffer.tell(),
                     None)
                 user.thumbnail = im
             user.save()
-            return HttpResponseRedirect('/dash/update_profile/')
+            messages.add_message(request, messages.INFO, "Profile updated successfully!")
+            return redirect(update_profile, permanent=True)
         else:
             error = "Please fill all the required fields!"
             print(form.errors)
