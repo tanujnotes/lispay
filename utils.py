@@ -1,4 +1,10 @@
+# Utils
+
+
 def clean_youtube_link(youtube_link):
+    if not youtube_link or youtube_link is None:
+        return "https://www.youtube.com/embed/oc_vB5Xcx1o"  # default video link
+
     if "watch" in youtube_link and "&" in youtube_link:
         key_values = youtube_link.split("?")[1]
         key_values = key_values.split("&")

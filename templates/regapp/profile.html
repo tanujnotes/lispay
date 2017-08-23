@@ -264,10 +264,25 @@
                         </form>
                     </div>
                 </div>
+                {% elif user.username == user_profile.username %}
+                <h4 class="text-center">Are you a creator yourself?</h4>
+                <a href="{% url 'creator_details' %}">
+                    <p class="text-center">Register here for free and start earning!</p></a>
                 {% else %}
-                <h4 class="text-center">This is not creator a profile.</h4>
-                <p class="description text-center" style="margin-top:0;">If you still want to pledge to profile, please
-                    let us know.</p>
+                <h4 class="text-center">This is not creator a profile!</h4>
+                <p class="description text-center" style="margin-top:0;">If you still want to pledge to this profile,
+                    please let us know.</p>
+                <div class="nav-align-center">
+                    <a href="https://facebook.com/lisplay"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-facebook"></i></a>
+                    <a href="htts://twitter.com/lisplayon"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-twitter"></i></a>
+                    <a href="mailto:care@lisplay.com?Subject=Hello%20there!"
+                       target="_top" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-envelope"></i></a>
+                </div>
                 {% endif %}
                 <br/>
             </div>
