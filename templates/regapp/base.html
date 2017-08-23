@@ -69,7 +69,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!--<li><input type="text" name="search" id="id_search" class="form-control"-->
                     <!--placeholder="Search..."></li>-->
-                    <li>
+                    <li style="margin-left:10px;margin-right:10px;">
                         <form class="form" method="post" action="{% url 'search' %}">
                             {% csrf_token %}
                             <input type="search" name="search" id="id_search" placeholder="Search...">
