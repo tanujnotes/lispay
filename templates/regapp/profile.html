@@ -106,6 +106,33 @@
 
                 {% if user.is_authenticated %}
                 {% ifequal user.username user_profile.username %}
+                <div class="section text-center">
+                    <h3 style="margin-bottom:2em;">Important Links</h3>
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-3 col-sm-4">
+                            <a href="{% url 'dashboard' %}">
+                                <button class="btn btn-primary btn-round">
+                                    <i class="material-icons">dashboard</i> Dashboard
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-md-2  col-sm-4">
+                            <a href="{% url 'update_profile' %}">
+                                <button class="btn btn-primary btn-round">
+                                    <i class="material-icons">person</i> Edit Profile
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-4">
+                            <a href="{% url 'creator_details' %}">
+                                <button class="btn btn-primary btn-round">
+                                    <i class="material-icons">pie_chart</i> Creator Details
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
                 <div class="section text-center" style="background-color:#eee;">
                     {% if featured_list.exists %}
                     <h3>CREATORS YOU ARE SUPPORTING</h3>
