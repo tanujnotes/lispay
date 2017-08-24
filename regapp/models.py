@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -163,3 +163,9 @@ class SubscriptionModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     ended_at = models.DateTimeField(blank=True, null=True)
+
+
+class DataDumpModel(models.Model):
+    event_type = models.CharField(max_length=20, blank=False)
+    data = JSONField()
+    created_at = models.DateTimeField(default=timezone.now)
