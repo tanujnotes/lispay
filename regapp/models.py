@@ -105,6 +105,8 @@ class MyUser(AbstractBaseUser):
     is_creator = models.BooleanField(default=False)
     last_login = models.DateTimeField(default=timezone.now)
     date_joined = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = MyUserManager()
 
@@ -160,9 +162,9 @@ class SubscriptionModel(models.Model):
         default="NA",
         blank=False,
     )
-    amount = models.PositiveSmallIntegerField(blank=False)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    amount = models.DecimalField(max_digits=9, decimal_places=2, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(blank=True, null=True)
 
 
@@ -184,4 +186,5 @@ class TransactionModel(models.Model):
 class DataDumpModel(models.Model):
     event_type = models.CharField(max_length=20, blank=False)
     data = JSONField()
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
