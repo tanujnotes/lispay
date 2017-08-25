@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from . import PaymentStatus
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
@@ -163,6 +164,21 @@ class SubscriptionModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     ended_at = models.DateTimeField(blank=True, null=True)
+
+
+class TransactionModel(models.Model):
+    transaction_id = models.CharField(max_length=255)
+    transaction_type = models.CharField(max_length=255)
+    transaction_status = models.CharField(max_length=20, choices=PaymentStatus.CHOICES, default=PaymentStatus.WAITING)
+    subscriber = models.ForeignKey(MyUser, related_name='subscriber_transaction', on_delete=models.PROTECT, blank=True)
+    creator = models.ForeignKey(MyUser, related_name='creator_transaction', on_delete=models.PROTECT, blank=True)
+    tax = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
+    captured_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
+    total_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
+    currency = models.CharField(max_length=10)
+    message = models.TextField(blank=True, default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class DataDumpModel(models.Model):
