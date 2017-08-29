@@ -5,6 +5,7 @@ class PaymentStatus:
     def __init__(self):
         pass
 
+    PAID = 'paid'
     WAITING = 'waiting'
     PREAUTH = 'preauth'
     CONFIRMED = 'confirmed'
@@ -14,6 +15,7 @@ class PaymentStatus:
     INPUT = 'input'
 
     CHOICES = [
+        (PAID, pgettext_lazy('payment status', 'Amount paid')),
         (WAITING, pgettext_lazy('payment status', 'Waiting for confirmation')),
         (PREAUTH, pgettext_lazy('payment status', 'Pre-authorized')),
         (CONFIRMED, pgettext_lazy('payment status', 'Confirmed')),
