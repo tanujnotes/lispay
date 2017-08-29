@@ -1,9 +1,10 @@
 import ast, json, requests, datetime
 from io import BytesIO
+from urllib import parse
 from django.shortcuts import render, redirect
-from regapp.models import MyUser, SubscriptionModel, CATEGORY_CHOICES
+from regapp.models import MyUser, SubscriptionModel, DataDumpModel, TransactionModel, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -21,8 +22,36 @@ ZOHO_CONTENT_TYPE = 'application/json;charset=UTF-8'
 @csrf_exempt
 @require_POST
 def webhook(request):
-    jsondata = request.body
+    binary_response = request.body
+    response = urllib.parse.unquote(binary_response.decode("utf-8"))
+    jsondata = json.loads(response[8:])
+    print("==============================================================================================")
     print(jsondata)
+    event_type = jsondata['event_type']
+    dump = DataDumpModel(event_type=event_type, data=jsondata)
+    dump.save()
+    if event_type == 'invoice_notification':
+        invoice_id = jsondata['data']['invoice']['invoice_id']
+        subscription_id = jsondata['data']['invoice']['subscriptions'][0]['subscription_id']
+        transaction_id = jsondata['data']['invoice']['payments'][0]['payment_id']
+        transaction_type = jsondata['data']['invoice']['transaction_type']
+        transaction_status = jsondata['data']['invoice']['status']
+        subscriber_username = jsondata['data']['invoice']['custom_field_hash']['cf_subscriber']
+        subscriber = MyUser.objects.get(username=subscriber_username)
+        creator_username = jsondata['data']['invoice']['custom_field_hash']['cf_creator']
+        creator = MyUser.objects.get(username=creator_username)
+        tax = jsondata['data']['invoice']['tax_total']
+        total_amount = jsondata['data']['invoice']['total']
+        currency = jsondata['data']['invoice']['currency_code']
+        message = jsondata['data']['invoice']['notes']
+
+        transaction = TransactionModel(invoice_id=invoice_id, subscription_id=subscription_id,
+                                       transaction_id=transaction_id, transaction_type=transaction_type,
+                                       transaction_status=transaction_status, subscriber=subscriber, creator=creator,
+                                       tax=tax, total_amount=total_amount, currency=currency, message=message)
+        transaction.save()
+
+    return HttpResponse(status=200)
 
 
 def index(request):
@@ -368,7 +397,7 @@ def login_redirect(request):
     if request.user.full_name:
         url = '/regapp/%s/' % request.user.username
     else:
-        url = '/regapp/update_profile/'
+        url = '/dash/update_profile/'
     return HttpResponseRedirect(url)
 
 

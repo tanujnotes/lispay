@@ -169,7 +169,9 @@ class SubscriptionModel(models.Model):
 
 
 class TransactionModel(models.Model):
-    transaction_id = models.CharField(max_length=255)
+    invoice_id = models.CharField(max_length=255)
+    subscription_id = models.CharField(max_length=255)
+    transaction_id = models.CharField(max_length=255)  # payment_id
     transaction_type = models.CharField(max_length=255)
     transaction_status = models.CharField(max_length=20, choices=PaymentStatus.CHOICES, default=PaymentStatus.WAITING)
     subscriber = models.ForeignKey(MyUser, related_name='subscriber_transaction', on_delete=models.PROTECT, blank=True)
