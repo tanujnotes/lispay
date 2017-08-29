@@ -150,6 +150,7 @@
                                             <small class="text-muted">{{ subscription.creator.short_bio }}</small>
                                         </h4>
                                     </a>
+                                    <p>&#8377;{{ subscription.amount }} Per Month</p>
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="footer text-center">
