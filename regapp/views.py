@@ -1,4 +1,4 @@
-import ast, json, requests, datetime
+import ast, utils, json, requests, datetime
 from io import BytesIO
 from urllib import parse
 from django.shortcuts import render, redirect
@@ -149,12 +149,16 @@ def checkout(request, creator):
         subscription_data = {'customer_id': request.user.customer_id,
                              'card_id': card_id,
                              'auto_collect': True,
-                             'plan': {'plan_code': "club2"},
+                             'plan': {'plan_code': utils.calculate_plan(amount)},
                              'custom_fields': [
                                  {'label': 'subscriber', 'value': request.user.username},
                                  {'label': 'creator', 'value': creator},
                              ]
                              }
+        addons = utils.calculate_addons(amount)
+        if addons:
+            subscription_data['addons'] = addons
+
         # If customer is not registered on zoho, register while creating the subscription
         if not request.user.customer_id:
             subscription_data['customer'] = {'display_name': request.user.username, 'email': request.user.email}
