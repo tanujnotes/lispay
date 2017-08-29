@@ -86,6 +86,8 @@ def checkout(request, creator):
         if response['code'] == 0:
             request.user.customer_id = response['customer']['customer_id']
             request.user.save()
+            dump = DataDumpModel(event_type="customer_registered", data=response)
+            dump.save()
 
     # Get all the saved credit cards for customer from zoho
     if request.user.customer_id:
@@ -132,6 +134,8 @@ def checkout(request, creator):
             response = json.loads(r.text)
             if response['code'] == 0:
                 card_id = response['card']['card_id']
+                dump = DataDumpModel(event_type="card_saved", data=response)
+                dump.save()
             else:
                 return render(request, 'regapp/checkout.html',
                               {"cards_json": cards_response_json, 'amount': request.session['amount'],
@@ -179,6 +183,8 @@ def checkout(request, creator):
                                   subs_channel="zoho",
                                   amount=response['subscription']['amount'])
             s.save()
+            dump = DataDumpModel(event_type="subscription_successful", data=response)
+            dump.save()
             return render(request, 'regapp/profile.html',
                           {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
         else:
@@ -224,6 +230,8 @@ def show_user_profile(request, profile_username):
                 subscription.status = "cancelled"
                 subscription.ended_at = datetime.datetime.now()
                 subscription.save()
+                dump = DataDumpModel(event_type="subscription_cancelled", data=response)
+                dump.save()
                 return render(request, 'regapp/profile.html',
                               {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
             else:
