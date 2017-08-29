@@ -23,7 +23,7 @@ ZOHO_CONTENT_TYPE = 'application/json;charset=UTF-8'
 @require_POST
 def webhook(request):
     binary_response = request.body
-    response = urllib.parse.unquote(binary_response.decode("utf-8"))
+    response = parse.unquote(binary_response.decode("utf-8"))
     jsondata = json.loads(response[8:])
     print("==============================================================================================")
     print(jsondata)
