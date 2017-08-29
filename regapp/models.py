@@ -186,7 +186,7 @@ class TransactionModel(models.Model):
 
 
 class DataDumpModel(models.Model):
-    event_type = models.CharField(max_length=20, blank=False)
+    event_type = models.CharField(max_length=100, blank=False)
     data = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
