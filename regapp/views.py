@@ -36,7 +36,7 @@ def webhook(request):
         transaction_id = jsondata['data']['invoice']['payments'][0]['payment_id']
         transaction_type = jsondata['data']['invoice']['transaction_type']
         transaction_status = jsondata['data']['invoice']['status']
-        subscriber_username = jsondata['data']['invoice']['custom_field_hash']['cf_subscriber']
+        subscriber_username = jsondata['data']['invoice']['custom_field_hash']['cf_subsciber']
         subscriber = MyUser.objects.get(username=subscriber_username)
         creator_username = jsondata['data']['invoice']['custom_field_hash']['cf_creator']
         creator = MyUser.objects.get(username=creator_username)
