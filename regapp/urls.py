@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^checkout/$', views.checkout, name='checkout'),
+    url(r'^thank_you/$', views.thank_you, name='thank_you'),
     url(r'^login_redirect/$', views.login_redirect, name='login_redirect'),
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^show_creators/(?P<category>[\w\-]+)/$', views.show_creators, name='show_creators'),

@@ -28,21 +28,29 @@
                         <div class="name">
                             <br/>
                             <h3>Your subscription was successful!</h3>
-                            <h4 class="description" style="margin-top:20px;">Let XYZ know on social media that now they
-                                have your support.</h4>
+                            <h4 class="description" style="margin-top:20px;">Let {{ creator.full_name }} know on social
+                                media that now they have your support.</h4>
                             <div class="nav-align-center" style="margin-top:20px;margin-bottom:20px;">
-                                <a href="https://facebook.com/lisplay"
+                                {% if creator.social_links|get_item:'facebook_details,facebook_link' %}
+                                <a href="{{ creator.social_links|get_item:'facebook_details,facebook_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                     <i class="fa fa-facebook"></i></a>
-                                <a href="htts://twitter.com/lisplayon"
+                                {% endif %}
+                                {% if creator.social_links|get_item:'twitter_details,twitter_link' %}
+                                <a href="{{ creator.social_links|get_item:'twitter_details,twitter_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                     <i class="fa fa-twitter"></i></a>
-                                <a href="https://facebook.com/lisplay"
+                                {% endif %}
+                                {% if creator.social_links|get_item:'instagram_details,instagram_link' %}
+                                <a href="{{ creator.social_links|get_item:'instagram_details,instagram_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                     <i class="fa fa-instagram"></i></a>
-                                <a href="htts://twitter.com/lisplayon"
-                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                {% endif %}
+                                {% if creator.social_links|get_item:'snapchat_details,snapchat_link' %}
+                                <a href="{{ creator.social_links|get_item:'snapchat_details,snapchat_link' }}"
+                                   target="_blank" class="btn btn-simple btn-just-icon">
                                     <i class="fa fa-snapchat"></i></a>
+                                {% endif %}
                             </div>
                             <a href="{% url 'show_user_profile' user.username %}">
                                 <button class="btn btn-white btn-raised btn-round">

@@ -67,7 +67,10 @@ def about(request):
 
 
 def thank_you(request):
-    return render(request, 'regapp/thank_you.html', {})
+    amount = request.session['amount']
+    creator_username = request.session['creator_username']
+    creator = MyUser.objects.get(username=creator_username)
+    return render(request, 'regapp/thank_you.html', {"creator": creator, "amount": amount})
 
 
 @login_required
@@ -197,8 +200,10 @@ def checkout(request, creator):
             s.save()
             dump = DataDumpModel(event_type="subscription_successful", data=response)
             dump.save()
-            return render(request, 'regapp/profile.html',
-                          {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
+            request.session['creator_username'] = creator
+            return redirect('thank_you')
+            # return render(request, 'regapp/profile.html',
+            #               {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
         else:
             return render(request, 'regapp/checkout.html',
                           {"cards_json": cards_response_json, 'amount': request.session['amount'], 'creator': creator,
