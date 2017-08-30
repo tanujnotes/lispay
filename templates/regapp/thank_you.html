@@ -1,0 +1,68 @@
+{% extends "regapp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Lisplay - Thank You!{% endblock %}
+
+{% block content %}
+
+<div class="profile-page components-page">
+    <div class="wrapper">
+        <div class="header header-filter" style="background-image: url('/static/img/examples/thank_you.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1 class="title text-center">Thank You!</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main main-raised">
+            <div class="container">
+                <div class="row">
+                    <div class="profile">
+                        <div class="avatar">
+                            <img src="{% static '/img/check.png' %}" alt="Circle Image"
+                                 class="img-circle img-responsive img-raised">
+                        </div>
+                        <div class="name">
+                            <br/>
+                            <h3>Your subscription was successful!</h3>
+                            <h4 class="description" style="margin-top:20px;">Let XYZ know on social media that now they
+                                have your support.</h4>
+                            <div class="nav-align-center" style="margin-top:20px;margin-bottom:20px;">
+                                <a href="https://facebook.com/lisplay"
+                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-facebook"></i></a>
+                                <a href="htts://twitter.com/lisplayon"
+                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-twitter"></i></a>
+                                <a href="https://facebook.com/lisplay"
+                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-instagram"></i></a>
+                                <a href="htts://twitter.com/lisplayon"
+                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-snapchat"></i></a>
+                            </div>
+                            <a href="{% url 'show_user_profile' user.username %}">
+                                <button class="btn btn-white btn-raised btn-round">
+                                    Back to profile
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <hr/>
+                <br/>
+                <p class="description text-center" style="margin-top:0;">Please note that this is a monthly
+                    subscription and you can cancel this subscription any time you want. For more information, please
+                    check our <a href="#">FAQ</a> page.</p>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

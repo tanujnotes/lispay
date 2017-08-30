@@ -66,6 +66,10 @@ def about(request):
     return render(request, 'regapp/about.html', {})
 
 
+def thank_you(request):
+    return render(request, 'regapp/thank_you.html', {})
+
+
 @login_required
 def checkout(request, creator):
     amount = request.session['amount']
