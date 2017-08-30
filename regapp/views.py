@@ -62,6 +62,10 @@ def index(request):
     return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
+def about(request):
+    return render(request, 'regapp/about.html', {})
+
+
 @login_required
 def checkout(request, creator):
     amount = request.session['amount']
