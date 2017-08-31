@@ -66,6 +66,10 @@ def about(request):
     return render(request, 'regapp/about.html', {})
 
 
+def faq(request):
+    return render(request, 'regapp/faq.html', {})
+
+
 def thank_you(request):
     amount = request.session['amount']
     creator_username = request.session['creator_username']

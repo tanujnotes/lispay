@@ -1,0 +1,64 @@
+{% extends "regapp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Lisplay - FAQ{% endblock %}
+
+{% block content %}
+
+<div class="components-page">
+    <div class="wrapper">
+        <div class="header header-filter" style="background-image: url('/static/img/examples/faq.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1 class="title text-center">FAQ</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main main-raised">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="card card-nav-tabs card-plain">
+                            <div class="header header-primary">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <li class="active"><a href="#creators" data-toggle="tab">Creators</a></li>
+                                            <li><a href="#supporters" data-toggle="tab">Supporters</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="creators">
+                                        <h5 class="text-primary">What is Lisplay?</h5>
+                                        <p>Lisplay is a monthly subscription based crowdfunding platform for independent
+                                            creators. As a creator you can register on Lisplay and ask your fans to
+                                            voluntarily pay you a monthly subscription This way you’ll have more time
+                                            and resources to focus on the work you love to do instead of chasing
+                                            advertisers and sponsors and worry about revenue all the time.
+                                        </p>
+                                    </div>
+                                    <div class="tab-pane" id="supporters">
+                                        <h5 class="text-primary">What is Lisplay?</h5>
+                                        <p> Lisplay is a monthly subscription based crowdfunding platform for
+                                            independent creators. Through Lisplay, you can provide financial help to
+                                            your favourite creators. Direct help from their fans means that creators
+                                            won’t have to do jobs on the side or chase sponsors/advertisers. With your
+                                            help they can keep doing what they love to do and you get to enjoy their
+                                            creations and satisfaction of knowing that you made a difference.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
