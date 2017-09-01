@@ -52,15 +52,15 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'django.contrib.postgres',
-    'django.contrib.admin',
-    'registration',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'regapp',
+    'registration',  # Should be above admin immediately above auth
+    'django.contrib.auth',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
