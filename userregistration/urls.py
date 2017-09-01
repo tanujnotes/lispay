@@ -19,8 +19,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from registration.backends.default.views import RegistrationView
 from regapp.forms import CustomUserForm
+from regapp import views
 
 urlpatterns = [
+                  url(r'^$', views.index, name='index'),
                   url(r'^admin/', admin.site.urls),
                   url(r'^regapp/', include('regapp.urls')),
                   url(r'^dash/', include('dash.urls')),
