@@ -27,10 +27,6 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
-
-
-
-
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -51,17 +47,10 @@
         -webkit-transition: width 0.4s ease-out-in;
         transition: width 0.4s ease-out-in;
     }
-
     input[type=search]:focus {
         width: 100%;
         color: grey;
     }
-
-
-
-
-
-
     </style>
 </head>
 
@@ -90,13 +79,10 @@
                               action="{% url 'search' %}">
                             {% csrf_token %}
                             <div class="form-group  is-empty">
-                                <input type="search" name="search" class="form-control" placeholder="Search"
+                                <input type="search" name="search" class="form-control" placeholder="Search creators"
                                        value="{{ search_query }}">
                                 <span class="material-input"></span>
                             </div>
-                            <button type="submit" class="btn btn-default btn-round btn-just-icon">
-                                <i class="material-icons">search</i>
-                            </button>
                         </form>
                     </li>
                     <li><a href="{% url 'show_creators' 'all' %}">Explore creators</a></li>
@@ -172,6 +158,7 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
 
 
 
