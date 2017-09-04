@@ -22,25 +22,25 @@
         <ul class="nav">
             <li>
                 <a href="{% url 'dashboard' %}">
-                    <i class="material-icons">dashboard</i>
+                    <i class="fa fa-dashboard"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
             <li class="active">
                 <a href="{% url 'update_profile' %}">
-                    <i class="material-icons">person</i>
+                    <i class="fa fa-user"></i>
                     <p>User Profile</p>
                 </a>
             </li>
             <li>
                 <a href="{% url 'creator_details' %}">
-                    <i class="material-icons">pie_chart</i>
+                    <i class="fa fa-pie-chart"></i>
                     <p>Creator Details</p>
                 </a>
             </li>
             <li class="active-pro">
                 <a href="{% url 'show_user_profile' user.username %}">
-                    <i class="material-icons">arrow_back</i>
+                    <i class="fa fa-arrow-left"></i>
                     <p>Back to profile</p>
                 </a>
             </li>
@@ -75,9 +75,9 @@
         <button type="button" class="close" aria-hidden="true" data-notify="dismiss"
                 data-dismiss="alert" aria-label="Close"
                 style="position: absolute; right: 10px; top: 50%; margin-top: -13px; z-index: 1033;">
-            <i class="material-icons">clear</i>
+            <i class="fa fa-close"></i>
         </button>
-        <i data-notify="icon" class="material-icons">check</i>
+        <i data-notify="icon" class="fa fa-check"></i>
         <span data-notify="title"></span>
         <span data-notify="message">{{ message }}</span>
     </div>
