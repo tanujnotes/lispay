@@ -224,7 +224,7 @@ def search(request):
 
     search_results = MyUser.objects.annotate(
         search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
-    return render(request, 'regapp/search.html', {'search_results': search_results})
+    return render(request, 'regapp/search.html', {'search_results': search_results, "search_query": search_query})
 
 
 def show_user_profile(request, profile_username):

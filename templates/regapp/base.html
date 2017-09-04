@@ -27,6 +27,10 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
+
+
+
+
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -54,6 +58,10 @@
     }
 
 
+
+
+
+
     </style>
 </head>
 
@@ -77,12 +85,18 @@
 
             <div class="collapse navbar-collapse" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
-                    <!--<li><input type="text" name="search" id="id_search" class="form-control"-->
-                    <!--placeholder="Search..."></li>-->
-                    <li style="margin-left:10px;margin-right:10px;">
-                        <form class="form" method="post" action="{% url 'search' %}">
+                    <li>
+                        <form class="form navbar-form navbar-right" role="search" method="post"
+                              action="{% url 'search' %}">
                             {% csrf_token %}
-                            <input type="search" name="search" id="id_search" placeholder="Search...">
+                            <div class="form-group  is-empty">
+                                <input type="search" name="search" class="form-control" placeholder="Search"
+                                       value="{{ search_query }}">
+                                <span class="material-input"></span>
+                            </div>
+                            <button type="submit" class="btn btn-default btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                            </button>
                         </form>
                     </li>
                     <li><a href="{% url 'show_creators' 'all' %}">Explore creators</a></li>
@@ -158,6 +172,10 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
+
+
 
 
 </script>
