@@ -1,0 +1,34 @@
+{% extends "regapp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Lisplay - Home{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+<div class="landing-page">
+
+    <div class="wrapper">
+        <div class="header header-filter"
+             style="background-image: url('/static/img/login_background.jpg'); background-size: cover; background-position: top center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="title">COMING SOON!</h1>
+                        <h3>This website is under construction. In the meantime, take a look at our app.</h3>
+                        <br/>
+                        <a href="https://play.google.com/store/apps/details?id=com.lisplay"
+                        class="btn btn-danger btn-round btn-raised btn-lg">
+                        <i class="fa fa-android"></i> Android</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% block footer %}
+{% endblock %}
+
+{% endblock %}
