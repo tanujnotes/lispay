@@ -148,16 +148,16 @@ class MyUser(AbstractBaseUser):
 
 
 class SubsPlanModel(models.Model):
-    plan_id = models.CharField(max_length=20, blank=False, null=False)
-    name = models.CharField(max_length=255, blank=True)
-    description = models.CharField(max_length=1000, blank=True)
+    plan_id = models.CharField(max_length=255, blank=False, null=False)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=1000, blank=True, null=True)
     subscriber = models.ForeignKey(MyUser, related_name='plan_subscriber', on_delete=models.PROTECT)
     creator = models.ForeignKey(MyUser, related_name='plan_creator', on_delete=models.PROTECT)
-    amount = models.DecimalField(max_digits=9, decimal_places=2, blank=False)
-    interval = models.DecimalField(max_digits=2, decimal_places=2, blank=False)  # 1
-    period = models.CharField(max_length=20, blank=False)  # monthly
+    amount = models.SmallIntegerField(blank=False)
+    interval = models.SmallIntegerField(default=1)  # 1
+    period = models.CharField(max_length=20, default='monthly')  # monthly
     currency = models.CharField(max_length=255, blank=True)
-    notes = JSONField()
+    notes = JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -180,7 +180,7 @@ class SubscriptionModel(models.Model):
         blank=False,
     )
     amount = models.DecimalField(max_digits=9, decimal_places=2, blank=False)
-    notes = JSONField()
+    notes = JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(blank=True, null=True)
