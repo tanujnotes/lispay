@@ -97,7 +97,7 @@ class MyUser(AbstractBaseUser):
     card_ids = ArrayField(models.CharField(max_length=50), blank=True, default=list)
     customer_id = models.CharField(max_length=20, blank=True)
     featured_video = models.URLField(default="https://www.youtube.com/embed/oc_vB5Xcx1o")
-    featured_text = models.CharField(max_length=1000, default=FEATURED_TEXT)
+    featured_text = models.CharField(max_length=1000, blank=True)
     social_links = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
