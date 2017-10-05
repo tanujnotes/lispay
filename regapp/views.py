@@ -100,82 +100,96 @@ def checkout(request, creator):
             dump = DataDumpModel(event_type="customer_registered", data=response)
             dump.save()
 
-    if request.method == 'POST':
-        # Create the plan
-        url = "https://api.razorpay.com/v1/plans"
-        data = {'period': 'monthly',
-                'interval': 1,
-                'item': {'name': 'plan_' + amount,
-                         'amount': amount,
-                         'currency': 'INR'
-                         },
-                'notes': {
-                    "creator": creator,
-                    "subscriber": request.user.username
-                }
-                }
-        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
-        response = json.loads(r.text)
-        if 'error' not in response:
-            plan_id = response['id']
-
-        # Create the subscription
-        url = "https://subscriptions.zoho.com/api/v1/subscriptions"
-        subs_data = {
-            "plan_id": plan_id,
-            "customer_id": request.user.customer_id,
-            "customer_notify": 0,
-            "total_count": 6,
-            "start_at": utils.get_subscription_start_at(),
+    # Create the plan
+    url = "https://api.razorpay.com/v1/plans"
+    data = {'period': 'monthly',
+            'interval': 1,
+            'item': {'name': 'plan_' + str(amount),
+                     'amount': amount,
+                     'currency': 'INR'
+                     },
             'notes': {
                 "creator": creator,
                 "subscriber": request.user.username
-            },
-        }
+            }
+            }
+    r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+    response = json.loads(r.text)
+    if 'error' not in response:
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print(response)
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        plan_id = response['id']
+        subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
+        creator_value = MyUser.objects.get(username=response['notes']['creator'])
+        plan = SubsPlanModel(plan_id=plan_id,
+                             name=response['item']['name'],
+                             description=response['item']['description'],
+                             subscriber=subscriber_value,
+                             creator=creator_value,
+                             amount=int(response['item']['amount']),
+                             interval=int(response['interval']),
+                             period=response['period'],
+                             currency=response['item']['currency'],
+                             notes=response['notes'])
+        plan.save()
+    # Create the subscription
+    url = "https://api.razorpay.com/v1/subscriptions"
+    subs_data = {
+        "plan_id": plan_id,
+        "customer_id": request.user.customer_id,
+        "customer_notify": 0,
+        "total_count": 6,
+        "start_at": utils.get_subscription_start_at(),
+        "notes": {
+            "creator": creator,
+            "subscriber": request.user.username
+        },
+    }
 
-        if not utils.is_first_day_of_month():
-            subs_data['addons'] = [
-                {
-                    "item": {
-                        "name": "First Payment",
-                        "amount": amount,
-                        "currency": "INR"
-                    }
+    if not utils.is_first_day_of_month():
+        subs_data['addons'] = [
+            {
+                "item": {
+                    "name": "First Payment",
+                    "amount": amount,
+                    "currency": "INR"
                 }
-            ]
+            }
+        ]
 
-        r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
-        response = json.loads(r.text)
+    r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+    response = json.loads(r.text)
 
-        if 'error' not in response:
-            if not request.user.customer_id and response['customer_id'] is not None:
-                request.user.customer_id = response['customer_id']
-                request.user.save()
+    if 'error' not in response:
+        if not request.user.customer_id and response['customer_id'] is not None:
+            request.user.customer_id = response['customer_id']
+            request.user.save()
 
-            # Get the custom fields from subscription response
-            subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
-            creator_value = MyUser.objects.get(username=response['notes']['creator'])
-            plan = SubsPlanModel.objects.get(plan_id=response['plan_id'])
-            # Save subscription details in database
-            s = SubscriptionModel(subscription_id=response['id'],
-                                  plan=plan,
-                                  subscriber=subscriber_value,
-                                  creator=creator_value,
-                                  status=response['status'],
-                                  subs_channel="razorpay",
-                                  amount=plan.amount)
-            s.save()
-            dump = DataDumpModel(event_type="subscription_created", data=response)
-            dump.save()
-            request.session['creator_username'] = creator
-            return redirect('thank_you')
-            # return render(request, 'regapp/profile.html',
-            #               {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
-        else:
-            return render(request, 'regapp/checkout.html',
-                          {'amount': request.session['amount'], 'creator': creator, "error": response['message']})
+        print("*********************************************************")
+        print(response)
+        # Get the custom fields from subscription response
+        subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
+        creator_value = MyUser.objects.get(username=response['notes']['creator'])
+        plan = SubsPlanModel.objects.get(plan_id=response['plan_id'])
+        subscription_id = response['id']
+        # Save subscription details in database
+        s = SubscriptionModel(subscription_id=subscription_id,
+                              plan=plan,
+                              subscriber=subscriber_value,
+                              creator=creator_value,
+                              status=response['status'],
+                              subs_channel="razorpay",
+                              amount=plan.amount)
+        s.save()
+        dump = DataDumpModel(event_type="subscription_created", data=response)
+        dump.save()
+        request.session['creator_username'] = creator
+        # return render(request, 'regapp/checkout.html',
+        #               {'amount': request.session['amount'], 'creator': creator, "error": response['message']})
 
-    return render(request, 'regapp/checkout.html', {'amount': request.session['amount'], 'creator': creator})
+    return render(request, 'regapp/checkout.html',
+                  {'amount': request.session['amount'], 'creator': creator, 'subscription_id': subscription_id})
 
 
 def search(request):

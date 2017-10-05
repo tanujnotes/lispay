@@ -21,6 +21,7 @@
       will-change: box-shadow, transform;
       transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
 </style>
 
 <div class="components-page">
@@ -99,13 +100,11 @@
                                             src="https://checkout.razorpay.com/v1/checkout.js"
                                             data-key="rzp_test_2pcIy5sW4v0mmP"
                                             data-amount="5000"
-                                            data-subscription_id="sub_8k3q3hCfPSn5oY"
+                                            data-subscription_id="{{ subscription_id }}"
                                             data-buttontext="Pay with Razorpay"
                                             data-name="Merchant Name"
                                             data-description="Purchase Description"
-                                            data-image="https://your-awesome-site.com/your_logo.jpg"
-                                            data-prefill.name="Harshil Mathur"
-                                            data-prefill.email="support@razorpay.com"
+                                            data-image="https://lh3.googleusercontent.com/03_kq2L8zzV4AjxEz52j49gVQm4dOnws5gPC1XpWA_ZnbGHfl0M2IhkB5MJdwmTBUjM=w300"
                                             data-theme.color="#9c27b0"
                                     ></script>
                                     <input type="hidden" value="Hidden Element" name="hidden">
