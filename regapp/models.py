@@ -23,17 +23,14 @@ CATEGORY_CHOICES = (
 
 SUBS_STATUS = (
     ("unknown", 'unknown'),
-    ("live", 'live'),
-    ("trial", 'trial'),
-    ("dunning", 'dunning'),
-    ("unpaid", 'unpaid'),
-    ("non_renewing", 'non_renewing'),
+    ("created", 'created'),
+    ("authenticated", 'authenticated'),
+    ("active", 'active'),
+    ("pending", 'pending'),
+    ("halted", 'halted'),
     ("cancelled", 'cancelled'),
-    ("creation_failed", 'creation_failed'),
-    ("cancelled_from_dunning", 'cancelled_from_dunning'),
-    ("expired", 'expired'),
-    ("trial_expired", 'trial_expired'),
-    ("future", 'future')
+    ("completed", 'completed'),
+    ("expired", 'expired')
 )
 
 SUBS_CHANNEL = (
