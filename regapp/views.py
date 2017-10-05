@@ -204,36 +204,32 @@ def search(request):
 
 def show_user_profile(request, profile_username):
     featured_list = SubscriptionModel.objects.filter(subscriber=MyUser.objects.get(username=profile_username)) \
-        .filter(status="live")
+        .filter(status="active")
     try:
         user_profile = MyUser.objects.get(username=profile_username)
     except:
         return HttpResponseRedirect('/regapp/')
 
     if request.method == 'POST':
-        # Cancel zoho subscription
-        # subscription_id = request.POST.get('subscription_id', "").strip()
-        # if subscription_id:
-        #     url = "https://subscriptions.zoho.com/api/v1/subscriptions/" \
-        #           + subscription_id \
-        #           + "/cancel?cancel_at_end=false"
-        #     headers = {'Authorization': ZOHO_AUTH_TOKEN,
-        #                'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
-        #                'Content-Type': ZOHO_CONTENT_TYPE}
-        #     r = requests.post(url, headers=headers)
-        #     response = json.loads(r.text)
-        #     if response['code'] == 0:
-        #         subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
-        #         subscription.status = "cancelled"
-        #         subscription.ended_at = datetime.datetime.now()
-        #         subscription.save()
-        #         dump = DataDumpModel(event_type="subscription_cancelled", data=response)
-        #         dump.save()
-        #         return render(request, 'regapp/profile.html',
-        #                       {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
-        #     else:
-        #         return render(request, 'regapp/profile.html',
-        #                       {'user_profile': user_profile, 'error': response['message']})
+        # Cancel subscription
+        subscription_id = request.POST.get('subscription_id', "").strip()
+        if subscription_id:
+            url = "https://api.razorpay.com/v1/subscriptions/" + subscription_id + "/cancel"
+            r = requests.post(url, headers=HEADERS, auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+            response = json.loads(r.text)
+            if 'error' not in response:
+                subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+                subscription.status = "cancelled"
+                subscription.ended_at = datetime.datetime.now()
+                subscription.save()
+                dump = DataDumpModel(event_type="subscription_cancelled", data=response)
+                dump.save()
+                return render(request, 'regapp/profile.html',
+                              {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
+            else:
+                return render(request, 'regapp/profile.html',
+                              {'user_profile': user_profile,
+                               'error': "Subscription cancellation failed. Please try again."})
 
         try:
             subscription_amount = request.POST.get('amount', "").strip()
