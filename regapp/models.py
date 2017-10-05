@@ -39,7 +39,8 @@ SUBS_STATUS = (
 SUBS_CHANNEL = (
     ("NA", "na"),
     ("ZOHO", "zoho"),
-    ("PAYTM", "paytm")
+    ("PAYTM", "paytm"),
+    ("RAZORPAY", "razorpay"),
 )
 
 FEATURED_TEXT = "Thank you for your help!"
@@ -146,8 +147,24 @@ class MyUser(AbstractBaseUser):
         return self.is_admin
 
 
+class SubsPlanModel(models.Model):
+    plan_id = models.CharField(max_length=20, blank=False, null=False)
+    name = models.CharField(max_length=255, blank=True)
+    description = models.CharField(max_length=1000, blank=True)
+    subscriber = models.ForeignKey(MyUser, related_name='plan_subscriber', on_delete=models.PROTECT)
+    creator = models.ForeignKey(MyUser, related_name='plan_creator', on_delete=models.PROTECT)
+    amount = models.DecimalField(max_digits=9, decimal_places=2, blank=False)
+    interval = models.DecimalField(max_digits=2, decimal_places=2, blank=False)  # 1
+    period = models.CharField(max_length=20, blank=False)  # monthly
+    currency = models.CharField(max_length=255, blank=True)
+    notes = JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class SubscriptionModel(models.Model):
     subscription_id = models.CharField(max_length=20, blank=False)
+    plan = models.ForeignKey(SubsPlanModel, related_name='plan', on_delete=models.PROTECT)
     subscriber = models.ForeignKey(MyUser, related_name='subscriber', on_delete=models.PROTECT)
     creator = models.ForeignKey(MyUser, related_name='creator', on_delete=models.PROTECT)
     status = models.CharField(
@@ -163,6 +180,7 @@ class SubscriptionModel(models.Model):
         blank=False,
     )
     amount = models.DecimalField(max_digits=9, decimal_places=2, blank=False)
+    notes = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(blank=True, null=True)

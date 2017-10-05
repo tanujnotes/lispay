@@ -1,4 +1,6 @@
 # Utils
+import datetime
+from dateutil.relativedelta import relativedelta
 
 
 def clean_youtube_link(youtube_link):
@@ -87,38 +89,38 @@ def check_http(url):
     return url
 
 
-def calculate_addons(amount):
-    addons = []
-    addon1_quantity = 0
-    addon10_quantity = 0
-    addon100_quantity = 0
-    addon1000_quantity = 0
-
-    if 10 <= amount <= 99:
-        addon1_quantity = amount % 10
-        addon10_quantity = amount // 10 - 1
-    elif 100 <= amount <= 999:
-        addon1_quantity = amount % 100 % 10
-        addon10_quantity = amount % 100 // 10
-        addon100_quantity = amount // 100 - 1
-    elif 1000 <= amount <= 9999:
-        addon1_quantity = amount % 1000 % 100 % 10
-        addon10_quantity = amount % 1000 % 100 // 10
-        addon100_quantity = amount % 1000 // 100
-        addon1000_quantity = amount // 1000 - 1
-    else:
-        return addons
-
-    if addon1_quantity > 0:
-        addons.append({"addon_code": "addon1", "quantity": addon1_quantity})
-    if addon10_quantity > 0:
-        addons.append({"addon_code": "addon10", "quantity": addon10_quantity})
-    if addon100_quantity > 0:
-        addons.append({"addon_code": "addon100", "quantity": addon100_quantity})
-    if addon1000_quantity > 0:
-        addons.append({"addon_code": "addon1000", "quantity": addon1000_quantity})
-
-    return addons
+# def calculate_addons(amount):
+#     addons = []
+#     addon1_quantity = 0
+#     addon10_quantity = 0
+#     addon100_quantity = 0
+#     addon1000_quantity = 0
+#
+#     if 10 <= amount <= 99:
+#         addon1_quantity = amount % 10
+#         addon10_quantity = amount // 10 - 1
+#     elif 100 <= amount <= 999:
+#         addon1_quantity = amount % 100 % 10
+#         addon10_quantity = amount % 100 // 10
+#         addon100_quantity = amount // 100 - 1
+#     elif 1000 <= amount <= 9999:
+#         addon1_quantity = amount % 1000 % 100 % 10
+#         addon10_quantity = amount % 1000 % 100 // 10
+#         addon100_quantity = amount % 1000 // 100
+#         addon1000_quantity = amount // 1000 - 1
+#     else:
+#         return addons
+#
+#     if addon1_quantity > 0:
+#         addons.append({"addon_code": "addon1", "quantity": addon1_quantity})
+#     if addon10_quantity > 0:
+#         addons.append({"addon_code": "addon10", "quantity": addon10_quantity})
+#     if addon100_quantity > 0:
+#         addons.append({"addon_code": "addon100", "quantity": addon100_quantity})
+#     if addon1000_quantity > 0:
+#         addons.append({"addon_code": "addon1000", "quantity": addon1000_quantity})
+#
+#     return addons
 
 
 def calculate_plan(amount):
@@ -130,3 +132,19 @@ def calculate_plan(amount):
         return "club4"
     else:
         return "club2"
+
+
+def is_first_day_of_month():
+    today = datetime.date.today()
+    first = today.replace(day=1)
+    return today == first
+
+
+def get_subscription_start_at():
+    today = datetime.date.today()
+    if is_first_day_of_month():
+        return int(today.strftime("%s"))
+
+    first_of_month = today.replace(day=1)
+    first_of_next_month = first_of_month + relativedelta(months=1)
+    return int(first_of_next_month.strftime("%s"))

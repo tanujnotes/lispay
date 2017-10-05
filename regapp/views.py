@@ -2,7 +2,7 @@ import ast, utils, json, requests, datetime
 from io import BytesIO
 from urllib import parse
 from django.shortcuts import render, redirect
-from regapp.models import MyUser, SubscriptionModel, DataDumpModel, TransactionModel, CATEGORY_CHOICES
+from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, TransactionModel, CATEGORY_CHOICES
 from regapp.forms import UpdateProfileForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -14,9 +14,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-ZOHO_AUTH_TOKEN = 'Zoho-authtoken 7ec76e4d322836b915698ec30fa4a2d5'
-ZOHO_ORGANIZATION_ID = '650065656'
-ZOHO_CONTENT_TYPE = 'application/json;charset=UTF-8'
+RAZORPAY_KEY = "rzp_test_2pcIy5sW4v0mmP"
+RAZORPAY_SECRET = "s9CeVjfADlnoRe1fMa22fPCe"
+HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
 
 @csrf_exempt
@@ -80,7 +80,6 @@ def thank_you(request):
 @login_required
 def checkout(request, creator):
     amount = request.session['amount']
-    cards_response_json = {}
     user = MyUser.objects.get(username=creator)
     if not user.is_creator:
         return render(request, 'regapp/profile.html',
@@ -89,120 +88,84 @@ def checkout(request, creator):
         return render(request, 'regapp/profile.html',
                       {'user_profile': user, 'message': "Please enter an amount and continue"})
 
-    # Register customer to zoho
+    # Register customer
     if not request.user.customer_id:
-        url = 'https://subscriptions.zoho.com/api/v1/customers'
-        headers = {'Authorization': ZOHO_AUTH_TOKEN,
-                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
-        data = {"display_name": request.user.username, "email": request.user.email}
-
-        r = requests.post(url, headers=headers, data=json.dumps(data))
+        url = 'https://api.razorpay.com/v1/customers'
+        data = {"name": request.user.username, "email": request.user.email}
+        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
         response = json.loads(r.text)
-        if response['code'] == 0:
-            request.user.customer_id = response['customer']['customer_id']
+        if 'error' not in response:
+            request.user.customer_id = response['id']
             request.user.save()
             dump = DataDumpModel(event_type="customer_registered", data=response)
             dump.save()
 
-    # Get all the saved credit cards for customer from zoho
-    if request.user.customer_id:
-        url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
-        headers = {'Authorization': ZOHO_AUTH_TOKEN,
-                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
-                   'Content-Type': ZOHO_CONTENT_TYPE}
-        cards_response = requests.get(url, headers=headers)
-        cards_response_json = json.loads(cards_response.text)
-
     if request.method == 'POST':
-        card_id = request.POST.get('card_id', "")
-        if not card_id:
-            card_number = request.POST.get('card_number', "").strip().replace(" ", "")
-            card_cvv = request.POST.get('card_cvv', "").strip()
-            card_expiry = request.POST.get('card_expiry', "").strip()
-            print(card_number)
-            if not card_number or not card_cvv or not card_expiry:
-                return render(request, 'regapp/checkout.html', {"error": "Please fill out all the card detail fields."})
-
-            try:
-                expiry_month = card_expiry.split('/')[0]
-                expiry_year = card_expiry.split('/')[1]
-                if int(expiry_month) < 1 or int(expiry_month) > 12:
-                    return render(request, 'regapp/checkout.html',
-                                  {"cards_json": cards_response_json, 'amount': request.session['amount'],
-                                   "creator": creator,
-                                   "error": "Invalid value of month in card expiry date. Please check."})
-            except:
-                return render(request, 'regapp/checkout.html',
-                              {"cards_json": cards_response_json, 'amount': request.session['amount'],
-                               "creator": creator, "error": "Please fill the card expiry field in correct format."})
-
-            # Save the card details of customer on zoho
-            url = 'https://subscriptions.zoho.com/api/v1/customers/' + request.user.customer_id + '/cards'
-            headers = {'Authorization': ZOHO_AUTH_TOKEN,
-                       'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID}
-            data = {"card_number": card_number, "cvv_number": card_cvv, "expiry_month": expiry_month,
-                    "expiry_year": "20" + expiry_year, "payment_gateway": "test_gateway", "street": "DLF Phase 3",
-                    "city": "Gurugram",
-                    "state": "Haryana", "zip": "122002", "country": "India"}
-
-            r = requests.post(url, headers=headers, data=json.dumps(data))
-            response = json.loads(r.text)
-            if response['code'] == 0:
-                card_id = response['card']['card_id']
-                dump = DataDumpModel(event_type="card_saved", data=response)
-                dump.save()
-            else:
-                return render(request, 'regapp/checkout.html',
-                              {"cards_json": cards_response_json, 'amount': request.session['amount'],
-                               "creator": creator, "error": response['message']})
+        # Create the plan
+        url = "https://api.razorpay.com/v1/plans"
+        data = {'period': 'monthly',
+                'interval': 1,
+                'item': {'name': 'plan_' + amount,
+                         'amount': amount,
+                         'currency': 'INR'
+                         },
+                'notes': {
+                    "creator": creator,
+                    "subscriber": request.user.username
+                }
+                }
+        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+        response = json.loads(r.text)
+        if 'error' not in response:
+            plan_id = response['id']
 
         # Create the subscription
         url = "https://subscriptions.zoho.com/api/v1/subscriptions"
-        headers = {'Authorization': ZOHO_AUTH_TOKEN,
-                   'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
-                   'Content-Type': ZOHO_CONTENT_TYPE}
-        subscription_data = {'customer_id': request.user.customer_id,
-                             'card_id': card_id,
-                             'auto_collect': True,
-                             'plan': {'plan_code': utils.calculate_plan(amount)},
-                             'custom_fields': [
-                                 {'label': 'subscriber', 'value': request.user.username},
-                                 {'label': 'creator', 'value': creator},
-                             ]
-                             }
-        addons = utils.calculate_addons(amount)
-        if addons:
-            subscription_data['addons'] = addons
+        subs_data = {
+            "plan_id": plan_id,
+            "customer_id": request.user.customer_id,
+            "customer_notify": 0,
+            "total_count": 6,
+            "start_at": utils.get_subscription_start_at(),
+            'notes': {
+                "creator": creator,
+                "subscriber": request.user.username
+            },
+        }
 
-        # If customer is not registered on zoho, register while creating the subscription
-        if not request.user.customer_id:
-            subscription_data['customer'] = {'display_name': request.user.username, 'email': request.user.email}
-        # Send subscription request
-        r = requests.post(url, headers=headers, data=json.dumps(subscription_data))
+        if not utils.is_first_day_of_month():
+            subs_data['addons'] = [
+                {
+                    "item": {
+                        "name": "First Payment",
+                        "amount": amount,
+                        "currency": "INR"
+                    }
+                }
+            ]
+
+        r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
         response = json.loads(r.text)
 
-        if response['code'] == 0:
-            if not request.user.customer_id:
-                request.user.customer_id = response['subscription']['customer']['customer_id']
+        if 'error' not in response:
+            if not request.user.customer_id and response['customer_id'] is not None:
+                request.user.customer_id = response['customer_id']
                 request.user.save()
 
             # Get the custom fields from subscription response
-            subscriber_value = ""
-            creator_value = ""
-            for custom_field in response['subscription']['custom_fields']:
-                if custom_field['index'] == 1:
-                    subscriber_value = MyUser.objects.get(username=custom_field['value'])
-                else:
-                    creator_value = MyUser.objects.get(username=custom_field['value'])
+            subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
+            creator_value = MyUser.objects.get(username=response['notes']['creator'])
+            plan = SubsPlanModel.objects.get(plan_id=response['plan_id'])
             # Save subscription details in database
-            s = SubscriptionModel(subscription_id=response['subscription']['subscription_id'],
+            s = SubscriptionModel(subscription_id=response['id'],
+                                  plan=plan,
                                   subscriber=subscriber_value,
                                   creator=creator_value,
-                                  status=response['subscription']['status'],
-                                  subs_channel="zoho",
-                                  amount=response['subscription']['amount'])
+                                  status=response['status'],
+                                  subs_channel="razorpay",
+                                  amount=plan.amount)
             s.save()
-            dump = DataDumpModel(event_type="subscription_successful", data=response)
+            dump = DataDumpModel(event_type="subscription_created", data=response)
             dump.save()
             request.session['creator_username'] = creator
             return redirect('thank_you')
@@ -210,11 +173,9 @@ def checkout(request, creator):
             #               {'user_profile': user, 'message': "Your subscription was successful. Thank you!"})
         else:
             return render(request, 'regapp/checkout.html',
-                          {"cards_json": cards_response_json, 'amount': request.session['amount'], 'creator': creator,
-                           "error": response['message']})
+                          {'amount': request.session['amount'], 'creator': creator, "error": response['message']})
 
-    return render(request, 'regapp/checkout.html',
-                  {"cards_json": cards_response_json, 'amount': request.session['amount'], 'creator': creator})
+    return render(request, 'regapp/checkout.html', {'amount': request.session['amount'], 'creator': creator})
 
 
 def search(request):
@@ -236,28 +197,29 @@ def show_user_profile(request, profile_username):
         return HttpResponseRedirect('/regapp/')
 
     if request.method == 'POST':
-        subscription_id = request.POST.get('subscription_id', "").strip()
-        if subscription_id:
-            url = "https://subscriptions.zoho.com/api/v1/subscriptions/" \
-                  + subscription_id \
-                  + "/cancel?cancel_at_end=false"
-            headers = {'Authorization': ZOHO_AUTH_TOKEN,
-                       'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
-                       'Content-Type': ZOHO_CONTENT_TYPE}
-            r = requests.post(url, headers=headers)
-            response = json.loads(r.text)
-            if response['code'] == 0:
-                subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
-                subscription.status = "cancelled"
-                subscription.ended_at = datetime.datetime.now()
-                subscription.save()
-                dump = DataDumpModel(event_type="subscription_cancelled", data=response)
-                dump.save()
-                return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
-            else:
-                return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile, 'error': response['message']})
+        # Cancel zoho subscription
+        # subscription_id = request.POST.get('subscription_id', "").strip()
+        # if subscription_id:
+        #     url = "https://subscriptions.zoho.com/api/v1/subscriptions/" \
+        #           + subscription_id \
+        #           + "/cancel?cancel_at_end=false"
+        #     headers = {'Authorization': ZOHO_AUTH_TOKEN,
+        #                'X-com-zoho-subscriptions-organizationid': ZOHO_ORGANIZATION_ID,
+        #                'Content-Type': ZOHO_CONTENT_TYPE}
+        #     r = requests.post(url, headers=headers)
+        #     response = json.loads(r.text)
+        #     if response['code'] == 0:
+        #         subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+        #         subscription.status = "cancelled"
+        #         subscription.ended_at = datetime.datetime.now()
+        #         subscription.save()
+        #         dump = DataDumpModel(event_type="subscription_cancelled", data=response)
+        #         dump.save()
+        #         return render(request, 'regapp/profile.html',
+        #                       {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
+        #     else:
+        #         return render(request, 'regapp/profile.html',
+        #                       {'user_profile': user_profile, 'error': response['message']})
 
         try:
             subscription_amount = request.POST.get('amount', "").strip()
