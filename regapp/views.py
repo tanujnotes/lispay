@@ -79,6 +79,8 @@ def thank_you(request):
 
 @login_required
 def checkout(request, creator):
+    plan_id = ""
+    subscription_id = ""
     amount = request.session['amount']
     user = MyUser.objects.get(username=creator)
     if not user.is_creator:
@@ -105,7 +107,7 @@ def checkout(request, creator):
     data = {'period': 'monthly',
             'interval': 1,
             'item': {'name': 'plan_' + str(amount),
-                     'amount': amount,
+                     'amount': amount * 100,  # amount is in paise
                      'currency': 'INR'
                      },
             'notes': {
@@ -116,9 +118,6 @@ def checkout(request, creator):
     r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
     response = json.loads(r.text)
     if 'error' not in response:
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        print(response)
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         plan_id = response['id']
         subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
         creator_value = MyUser.objects.get(username=response['notes']['creator'])
@@ -152,7 +151,7 @@ def checkout(request, creator):
             {
                 "item": {
                     "name": "First Payment",
-                    "amount": amount,
+                    "amount": amount * 100,  # amount is in paise
                     "currency": "INR"
                 }
             }
@@ -160,14 +159,11 @@ def checkout(request, creator):
 
     r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
     response = json.loads(r.text)
-
     if 'error' not in response:
         if not request.user.customer_id and response['customer_id'] is not None:
             request.user.customer_id = response['customer_id']
             request.user.save()
 
-        print("*********************************************************")
-        print(response)
         # Get the custom fields from subscription response
         subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
         creator_value = MyUser.objects.get(username=response['notes']['creator'])
