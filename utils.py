@@ -142,9 +142,6 @@ def is_first_day_of_month():
 
 def get_subscription_start_at():
     today = datetime.date.today()
-    if is_first_day_of_month():
-        return int(today.strftime("%s"))
-
     first_of_month = today.replace(day=1)
     first_of_next_month = first_of_month + relativedelta(months=1)
     return int(first_of_next_month.strftime("%s"))

@@ -146,10 +146,7 @@ def checkout(request, creator):
             "creator": creator,
             "subscriber": request.user.username
         },
-    }
-
-    if not utils.is_first_day_of_month():
-        subs_data['addons'] = [
+        "addons": [
             {
                 "item": {
                     "name": "First Payment",
@@ -157,7 +154,9 @@ def checkout(request, creator):
                     "currency": "INR"
                 }
             }
+
         ]
+    }
 
     r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
     response = json.loads(r.text)
