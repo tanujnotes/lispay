@@ -177,7 +177,7 @@ def checkout(request, creator):
                               creator=creator_value,
                               status=response['status'],
                               subs_channel="razorpay",
-                              amount=plan.amount // 100,
+                              amount=plan.amount,
                               notes=response['notes'])
         s.save()
         dump = DataDumpModel(event_type="subscription_created", data=response)
