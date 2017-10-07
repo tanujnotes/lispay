@@ -1,15 +1,17 @@
 import datetime
-from utils import *
+import utils
 from io import BytesIO
+
+from PIL import Image, ImageOps
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+
+from dash.forms import UpdateCreatorForm
 from regapp.forms import UpdateProfileForm
 from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser
-from dash.forms import UpdateCreatorForm
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from PIL import Image, ImageOps
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 @login_required
@@ -47,7 +49,7 @@ def update_profile(request):
     if request.method == 'POST':
         if form.is_valid():
             user.full_name = request.POST['full_name'].strip()
-            user.social_links = get_social_details(request)
+            user.social_links = utils.get_social_details(request)
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']
                 user.featured_image = featured_image
@@ -133,7 +135,7 @@ def creator_details(request):
             user.profile_description = request.POST.get('profile_description', "").strip()
             user.featured_text = request.POST.get('featured_text', "").strip()
             featured_video = request.POST.get('featured_video', "").strip()
-            user.featured_video = clean_youtube_link(featured_video)
+            user.featured_video = utils.clean_youtube_link(featured_video)
 
             if not user.full_name or not user.short_bio or not user.profile_description or not user.featured_text:
                 error = "Please fill up all the required fields!"
