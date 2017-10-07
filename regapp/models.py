@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from . import PaymentStatus
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -150,10 +151,10 @@ class SubsPlanModel(models.Model):
     description = models.CharField(max_length=1000, blank=True, null=True)
     subscriber = models.ForeignKey(MyUser, related_name='plan_subscriber', on_delete=models.PROTECT)
     creator = models.ForeignKey(MyUser, related_name='plan_creator', on_delete=models.PROTECT)
-    amount = models.SmallIntegerField(blank=False)
-    interval = models.SmallIntegerField(default=1)  # 1
-    period = models.CharField(max_length=20, default='monthly')  # monthly
-    currency = models.CharField(max_length=255, blank=True)
+    amount = models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(9999)], blank=False)
+    interval = models.PositiveSmallIntegerField(default=1)  # 1
+    period = models.CharField(max_length=10, default='monthly')  # monthly
+    currency = models.CharField(max_length=10, blank=True)
     notes = JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -176,7 +177,7 @@ class SubscriptionModel(models.Model):
         default="NA",
         blank=False,
     )
-    amount = models.DecimalField(max_digits=9, decimal_places=2, blank=False)
+    amount = models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(9999)], blank=False)
     notes = JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -107,7 +107,7 @@ def checkout(request, creator):
     data = {'period': 'monthly',
             'interval': 1,
             'item': {'name': 'plan_' + str(amount),
-                     'amount': amount * 100,  # amount is in paise
+                     'amount': amount * 100,  # razorpay accepts amount in paise
                      'currency': 'INR'
                      },
             'notes': {
@@ -117,6 +117,7 @@ def checkout(request, creator):
             }
     r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
     response = json.loads(r.text)
+    # Save the plan
     if 'error' not in response:
         plan_id = response['id']
         subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
@@ -126,12 +127,13 @@ def checkout(request, creator):
                              description=response['item']['description'],
                              subscriber=subscriber_value,
                              creator=creator_value,
-                             amount=int(response['item']['amount']),
+                             amount=int(response['item']['amount'] // 100),
                              interval=int(response['interval']),
                              period=response['period'],
                              currency=response['item']['currency'],
                              notes=response['notes'])
         plan.save()
+
     # Create the subscription
     url = "https://api.razorpay.com/v1/subscriptions"
     subs_data = {
@@ -151,7 +153,7 @@ def checkout(request, creator):
             {
                 "item": {
                     "name": "First Payment",
-                    "amount": amount * 100,  # amount is in paise
+                    "amount": amount * 100,  # razorpay accepts amount in paise
                     "currency": "INR"
                 }
             }
@@ -176,7 +178,8 @@ def checkout(request, creator):
                               creator=creator_value,
                               status=response['status'],
                               subs_channel="razorpay",
-                              amount=plan.amount)
+                              amount=plan.amount // 100,
+                              notes=response['notes'])
         s.save()
         dump = DataDumpModel(event_type="subscription_created", data=response)
         dump.save()
