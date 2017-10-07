@@ -313,18 +313,18 @@ def update_profile(request):
                 picture = request.FILES['picture']
                 user.picture = picture
                 image = Image.open(BytesIO(request.FILES['picture'].read()))
-                buffer = BytesIO()
+                image_buffer = BytesIO()
                 if image.mode != "RGB":
                     image = image.convert("RGB")
 
                 image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
-                image.save(buffer, format='JPEG')
+                image.save(image_buffer, format='JPEG')
                 im = InMemoryUploadedFile(
-                    buffer,
+                    image_buffer,
                     None,
                     user.picture.url,
                     'image/jpeg',
-                    buffer.tell(),
+                    image_buffer.tell(),
                     None)
 
                 user.thumbnail = im
