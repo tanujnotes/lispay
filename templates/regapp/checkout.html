@@ -21,7 +21,6 @@
       will-change: box-shadow, transform;
       transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
 </style>
 
 <div class="components-page">
@@ -95,6 +94,7 @@
                             </div>
                             <div class="footer text-center">
                                 <form action="/regapp/thank_you/" method="POST">
+                                    {% csrf_token %}
                                     <!-- Note that the amount is in paise = 50 INR -->
                                     <script
                                             src="https://checkout.razorpay.com/v1/checkout.js"
