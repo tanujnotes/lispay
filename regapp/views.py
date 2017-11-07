@@ -3,6 +3,7 @@ import datetime
 import json
 import requests
 import utils
+import logging
 from io import BytesIO
 from urllib import parse
 
@@ -23,6 +24,8 @@ from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpMode
 RAZORPAY_KEY = "rzp_test_2pcIy5sW4v0mmP"
 RAZORPAY_SECRET = "s9CeVjfADlnoRe1fMa22fPCe"
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
+
+logger = logging.getLogger(__name__)
 
 
 @csrf_exempt
@@ -65,6 +68,7 @@ def index(request):
     user2 = MyUser.objects.get(username="user2")
     user3 = MyUser.objects.get(username="user3")
     featured_list = {'user1': user1, 'user2': user2, 'user3': user3}
+    logger.info("Opening home page")
     return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
@@ -108,6 +112,7 @@ def show_user_profile(request, profile_username):
         user_profile = MyUser.objects.get(username=profile_username)
     except:
         return HttpResponseRedirect('/regapp/')
+    # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
     request.session['creator_username'] = profile_username
 
