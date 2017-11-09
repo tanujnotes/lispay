@@ -33,33 +33,11 @@ logger = logging.getLogger(__name__)
 def webhook(request):
     binary_response = request.body
     response = parse.unquote(binary_response.decode("utf-8"))
-    jsondata = json.loads(response[8:])
-    print("==============================================================================================")
-    print(jsondata)
-    event_type = jsondata['event_type']
+    jsondata = json.loads(response)
+    logger.info(jsondata)
+    event_type = jsondata['event']
     dump = DataDumpModel(event_type=event_type, data=jsondata)
     dump.save()
-    if event_type == 'invoice_notification':
-        invoice_id = jsondata['data']['invoice']['invoice_id']
-        subscription_id = jsondata['data']['invoice']['subscriptions'][0]['subscription_id']
-        transaction_id = jsondata['data']['invoice']['payments'][0]['payment_id']
-        transaction_type = jsondata['data']['invoice']['transaction_type']
-        transaction_status = jsondata['data']['invoice']['status']
-        subscriber_username = jsondata['data']['invoice']['custom_field_hash']['cf_subsciber']
-        subscriber = MyUser.objects.get(username=subscriber_username)
-        creator_username = jsondata['data']['invoice']['custom_field_hash']['cf_creator']
-        creator = MyUser.objects.get(username=creator_username)
-        tax = jsondata['data']['invoice']['tax_total']
-        total_amount = jsondata['data']['invoice']['total']
-        currency = jsondata['data']['invoice']['currency_code']
-        message = jsondata['data']['invoice']['notes']
-
-        transaction = TransactionModel(invoice_id=invoice_id, subscription_id=subscription_id,
-                                       transaction_id=transaction_id, transaction_type=transaction_type,
-                                       transaction_status=transaction_status, subscriber=subscriber, creator=creator,
-                                       tax=tax, total_amount=total_amount, currency=currency, message=message)
-        transaction.save()
-
     return HttpResponse(status=200)
 
 
