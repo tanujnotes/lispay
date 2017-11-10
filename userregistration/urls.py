@@ -24,8 +24,8 @@ from regapp import views
 urlpatterns = [
                   url(r'^$', views.index, name='index'),
                   url(r'^admin/', admin.site.urls),
-                  url(r'^regapp/', include('regapp.urls')),
-                  url(r'^dash/', include('dash.urls')),
+                  url(r'^', include('dash.urls')),
+                  url(r'^', include('regapp.urls')),
                   url(r'^accounts/register/$', RegistrationView.as_view(
                       form_class=CustomUserForm), name='registration_register'),
                   url(r'^accounts/', include('registration.backends.default.urls')),

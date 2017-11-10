@@ -89,7 +89,7 @@ def show_user_profile(request, profile_username):
     try:
         user_profile = MyUser.objects.get(username=profile_username)
     except:
-        return HttpResponseRedirect('/regapp/')
+        return HttpResponseRedirect('/')
     # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
     request.session['creator_username'] = profile_username
@@ -126,7 +126,7 @@ def show_user_profile(request, profile_username):
                               {'user_profile': user_profile, 'error': "Subscription amount must be less than 1000"})
             else:
                 request.session['amount'] = amount
-                # return HttpResponseRedirect('/regapp/' + profile_username + '/checkout/')
+                # return HttpResponseRedirect('/' + profile_username + '/checkout/')
         except:
             return render(request, 'regapp/profile.html',
                           {'user_profile': user_profile, 'error': "Please enter a valid amount"})
@@ -241,7 +241,7 @@ def show_user_profile(request, profile_username):
             dump = DataDumpModel(event_type="subscription_created", data=response)
             dump.save()
             request.session['subscription_id'] = subscription_id
-            return HttpResponseRedirect('/regapp/' + profile_username + '/checkout/')
+            return HttpResponseRedirect('/' + profile_username + '/checkout/')
 
         else:
             return render(request, 'regapp/profile.html',
@@ -326,7 +326,7 @@ def update_profile(request):
                 user.thumbnail = im
 
             user.save()
-            return HttpResponseRedirect('/regapp/%s/' % user.username)
+            return HttpResponseRedirect('/%s/' % user.username)
         else:
             error = "Please fill all the required fields!"
             print(form.errors)
@@ -342,9 +342,9 @@ def update_profile(request):
 @login_required
 def login_redirect(request):
     if request.user.full_name:
-        url = '/regapp/%s/' % request.user.username
+        url = '/%s/' % request.user.username
     else:
-        url = '/dash/update_profile/'
+        url = '/update_profile/'
     return HttpResponseRedirect(url)
 
 

@@ -147,7 +147,7 @@ def creator_details(request):
                 return render(request, 'dash/creator_details.html', context)
 
             user.save()
-            return HttpResponseRedirect('/dash/creator_details/')
+            return HttpResponseRedirect('/creator_details/')
         else:
             error = "Please fill all the required fields!"
             print(form.errors)
