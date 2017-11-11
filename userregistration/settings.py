@@ -10,8 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
-import raven
+from .local_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
-REGISTRATION_OPEN = True
+REGISTRATION_OPEN = REGISTRATION_OPEN_VALUE
 ACCOUNT_ACTIVATION_DAYS = 1
 INCLUDE_AUTH_URLS = True
 INCLUDE_REGISTER_URL = True
@@ -30,32 +29,22 @@ LOGIN_URL = '/accounts/login/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'thetanuj1@gmail.com'
-EMAIL_HOST_PASSWORD = '<mainhoondon>90'  # This is not your gmail password.
+EMAIL_HOST_USER = EMAIL_HOST_USER_VALUE
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD_VALUE  # This is not your gmail password.
 EMAIL_USE_TLS = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '14zdnto(!mol6dpj-c8_#^hd2*nl6@&k1^3+d4(car6_*)n)x8'
+SECRET_KEY = SECRET_KEY_VALUE
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG_VALUE
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '192.168.2.3',
-    'lisplay.com',
-    'www.lisplay.com',
-]
+ALLOWED_HOSTS = ALLOWED_HOSTS_VALUE
 
-RAVEN_CONFIG = {
-    'dsn': 'https://c4c1e94af54a421f87bcc32d42891bfc:1d8d72cf00434e8cb2d6c37a1fabcc58@sentry.io/212254',
-    # If you are using git, you can also automatically configure the
-    # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-}
+RAVEN_CONFIG = RAVEN_CONFIG_VALUE
 
 # Application definition
 
@@ -107,14 +96,7 @@ WSGI_APPLICATION = 'userregistration.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'regappdb',
-        'USER': 'tan',
-        'PASSWORD': 'toor99',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default': DATABASE_VALUE
 }
 
 # Password validation

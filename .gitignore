@@ -3,6 +3,7 @@
 .DS_Store
 regapp/__pycache__
 userregistration/__pycache__
+userregistration/local_settings.py
 media/*
 logs/*
 .idea/*
