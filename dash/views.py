@@ -147,10 +147,17 @@ def creator_details(request):
                 return render(request, 'dash/creator_details.html', context)
 
             user.save()
-            return HttpResponseRedirect('/creator_details/')
+            message = "Creator details updated successfully!"
+            context = {
+                "form": form,
+                "categories": CATEGORY_CHOICES,
+                "message": message,
+            }
+            return render(request, 'dash/creator_details.html', context)
         else:
-            error = "Please fill all the required fields!"
-            print(form.errors)
+            error = "Invalid values in form!"
+            for field, errors in form.errors.items():
+                print('Field: {} Errors: {}'.format(field, ','.join(errors)))
 
     context = {
         "form": form,
