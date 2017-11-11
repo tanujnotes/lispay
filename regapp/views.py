@@ -4,13 +4,10 @@ import json
 import requests
 import utils
 import logging
-from io import BytesIO
 from urllib import parse
 
-from PIL import Image, ImageOps
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -18,8 +15,7 @@ from django.template.defaulttags import register
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from regapp.forms import UpdateProfileForm
-from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, TransactionModel, CATEGORY_CHOICES
+from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel
 
 RAZORPAY_KEY = "rzp_test_2pcIy5sW4v0mmP"
 RAZORPAY_SECRET = "s9CeVjfADlnoRe1fMa22fPCe"
@@ -278,65 +274,6 @@ def show_creators(request, category, page="1"):
 
     context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages}
     return render(request, 'regapp/show_creators.html', context)
-
-
-@login_required
-def update_profile(request):
-    error = ""
-    user = request.user
-    form = UpdateProfileForm(request.POST or None,
-                             initial={'full_name': user.full_name,
-                                      'short_bio': user.short_bio,
-                                      'profile_description': user.profile_description,
-                                      'category': user.category,
-                                      'featured_video': user.featured_video,
-                                      'featured_text': user.featured_text,
-                                      'social_links': user.social_links,
-                                      'is_creator': user.is_creator})
-
-    if request.method == 'POST':
-        if form.is_valid():
-            user.full_name = request.POST['full_name']
-            user.short_bio = request.POST['short_bio']
-            featured_video = request.POST.get('featured_video', "")
-            user.featured_video = clean_youtube_link(featured_video)
-            user.featured_text = request.POST.get('featured_text', "")
-            user.profile_description = request.POST.get('profile_description', "")
-            user.category = request.POST.get('category', "")
-            user.is_creator = ("is_creator" in request.POST)
-            user.social_links = utils.get_social_details(request)
-            if 'picture' in request.FILES:
-                picture = request.FILES['picture']
-                user.picture = picture
-                image = Image.open(BytesIO(request.FILES['picture'].read()))
-                image_buffer = BytesIO()
-                if image.mode != "RGB":
-                    image = image.convert("RGB")
-
-                image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
-                image.save(image_buffer, format='JPEG')
-                im = InMemoryUploadedFile(
-                    image_buffer,
-                    None,
-                    user.picture.url,
-                    'image/jpeg',
-                    image_buffer.tell(),
-                    None)
-
-                user.thumbnail = im
-
-            user.save()
-            return HttpResponseRedirect('/%s/' % user.username)
-        else:
-            error = "Please fill all the required fields!"
-            print(form.errors)
-
-    context = {
-        "form": form,
-        "categories": CATEGORY_CHOICES,
-        "errors": error
-    }
-    return render(request, 'regapp/update_profile.html', context)
 
 
 @login_required
