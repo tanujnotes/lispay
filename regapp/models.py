@@ -81,6 +81,7 @@ class MyUser(AbstractBaseUser):
         unique=True,
     )
     full_name = models.CharField(max_length=30, blank=True)
+    mobile = models.CharField(max_length=20, blank=True)
     short_bio = models.CharField(max_length=50, blank=True)
     profile_description = models.CharField(max_length=1000, blank=True)
     featured_image = models.ImageField(upload_to='featured_images', default="featured_images/default_cover.jpg")

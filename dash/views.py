@@ -44,11 +44,13 @@ def update_profile(request):
     user = request.user
     form = UpdateProfileForm(request.POST or None,
                              initial={'full_name': user.full_name,
+                                      'mobile': user.mobile,
                                       'social_links': user.social_links})
 
     if request.method == 'POST':
         if form.is_valid():
             user.full_name = request.POST['full_name'].strip()
+            user.mobile = request.POST.get('mobile', "").strip()
             user.social_links = utils.get_social_details(request)
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']

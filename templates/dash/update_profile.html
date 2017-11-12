@@ -63,6 +63,14 @@
             document.getElementById('featured_image_file_name').innerHTML = fileName;
         });
     });
+
+
+
+
+
+
+
+
 </script>
 
 <div class="container-fluid">
@@ -100,15 +108,15 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Full name (required)</label>
-                                    <input type="text" name="full_name" id="id_full_name" class="form-control"
+                                    <input type="text" class="form-control" name="full_name" id="id_full_name"
                                            maxlength="30" value="{{ form.full_name.value }}" required/>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Date of birth (dd/mm/yyyy)</label>
-                                    <input type="text" class="form-control" name="date_of_birth" id="id_date_of_birth"
-                                           value="{{ form.date_of_birth.value }}"/>
+                                    <label class="control-label">Mobile</label>
+                                    <input type="tel" class="form-control" name="mobile" id="id_mobile"
+                                           minlength="10" maxlength="20" value="{{ form.mobile.value }}"/>
                                 </div>
                             </div>
                         </div>
