@@ -8,7 +8,7 @@
 <div class="profile-page">
     <div class="wrapper">
         <div class="header header-filter"
-             style="background-image: url('/media/{{ user_profile.featured_image }}');"></div>
+             style="background-image: url('{{ user_profile.featured_image.url }}');"></div>
         {% if error %}
         <div data-notify="container"
              class="col-xs-11 col-sm-4 alert alert-danger alert-with-icon animated fadeInDown"
@@ -50,8 +50,8 @@
                 <div class="row">
                     <div class="profile">
                         <div class="avatar">
-                            <a href="/media/{{ user_profile.picture }}" target="_blank">
-                                <img src="/media/{{ user_profile.thumbnail }}" alt="Circle Image"
+                            <a href="{{ user_profile.picture.url }}" target="_blank">
+                                <img src="{{ user_profile.thumbnail.url }}" alt="Circle Image"
                                      class="img-circle img-responsive img-raised">
                             </a>
                         </div>
@@ -144,7 +144,7 @@
                             <div class="col-md-4">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' subscription.creator.username %}">
-                                        <img src="/media/{{ subscription.creator.thumbnail }}" alt="Thumbnail Image"
+                                        <img src="{{ subscription.creator.thumbnail.url }}" alt="Thumbnail Image"
                                              class="img-raised img-circle">
                                         <h4 class="title">{{ subscription.creator.full_name }}<br/>
                                             <small class="text-muted">{{ subscription.creator.short_bio }}</small>
