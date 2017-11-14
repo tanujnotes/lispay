@@ -25,7 +25,7 @@
 
 <div class="components-page">
     <div class="wrapper">
-        <div class="header header-filter" style="background-image: url('/static/img/examples/city.jpg');">
+        <div class="header header-filter" style="background-image: url('{{ STATIC_URL }}img/examples/city.jpg');">
             {% if error %}
             <div data-notify="container"
                  class="col-xs-11 col-sm-4 alert alert-danger alert-with-icon animated fadeInDown"

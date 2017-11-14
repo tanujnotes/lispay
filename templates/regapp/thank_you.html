@@ -7,7 +7,7 @@
 
 <div class="profile-page components-page">
     <div class="wrapper">
-        <div class="header header-filter" style="background-image: url('/static/img/examples/thank_you.jpg');">
+        <div class="header header-filter" style="background-image: url('{{ STATIC_URL }}img/examples/thank_you.jpg');">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="profile">
                         <div class="avatar">
-                            <img src="{% static '/img/check.png' %}" alt="Circle Image"
+                            <img src="{% static 'img/check.png' %}" alt="Circle Image"
                                  class="img-circle img-responsive img-raised">
                         </div>
                         <div class="name">

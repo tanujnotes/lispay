@@ -4,7 +4,7 @@
 {% block title %}Lisplay - Profile{% endblock %}
 
 {% block sidebar %}
-<div class="sidebar" data-color="purple" data-image="{% static '/img/sidebar-1.jpg' %}">
+<div class="sidebar" data-color="purple" data-image="{% static 'img/sidebar-1.jpg' %}">
 
     <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -51,7 +51,7 @@
 
 {% block content %}
 <!--Script to show filename of selected file-->
-<script src="{% static '/dash/js/jquery-3.1.0.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'dash/js/jquery-3.1.0.min.js' %}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#id_profile_picture').change(function(e){

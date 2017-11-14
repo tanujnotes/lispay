@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.admin',
     'raven.contrib.django.raven_compat',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.static',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -208,8 +210,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR, ]
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [STATIC_DIR, ]
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
@@ -217,3 +219,18 @@ MEDIA_URL = '/media/'
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'regapp.MyUser'
+
+# AWS
+AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID_VALUE
+AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY_VALUE
+AWS_S3_REGION_NAME = AWS_S3_REGION_NAME_VALUE
+AWS_STORAGE_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME_VALUE
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [STATIC_DIR, ]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
