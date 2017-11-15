@@ -79,9 +79,9 @@ def search(request):
 
 
 def show_user_profile(request, profile_username):
-    featured_list = SubscriptionModel.objects.filter(subscriber=MyUser.objects.get(username=profile_username)) \
-        .filter(status="active")
     try:
+        featured_list = SubscriptionModel.objects.filter(
+            subscriber=MyUser.objects.get(username=profile_username)).filter(status="active")
         user_profile = MyUser.objects.get(username=profile_username)
     except:
         return HttpResponseRedirect('/')
@@ -194,7 +194,7 @@ def show_user_profile(request, profile_username):
             "plan_id": plan_id,
             "customer_id": request.user.customer_id,
             "customer_notify": 0,
-            "total_count": 6,
+            "total_count": 120,
             "start_at": utils.get_subscription_start_at(),
             "notes": {
                 "creator": profile_username,
