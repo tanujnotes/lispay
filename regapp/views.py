@@ -5,6 +5,7 @@ import requests
 import utils
 import logging
 from urllib import parse
+from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector
@@ -17,8 +18,6 @@ from django.views.decorators.http import require_POST
 
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel
 
-RAZORPAY_KEY = "rzp_test_2pcIy5sW4v0mmP"
-RAZORPAY_SECRET = "s9CeVjfADlnoRe1fMa22fPCe"
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
 logger = logging.getLogger(__name__)
@@ -95,7 +94,7 @@ def show_user_profile(request, profile_username):
         subscription_id = request.POST.get('subscription_id', "").strip()
         if subscription_id:
             url = "https://api.razorpay.com/v1/subscriptions/" + subscription_id + "/cancel"
-            r = requests.post(url, headers=HEADERS, auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+            r = requests.post(url, headers=HEADERS, auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
             response = json.loads(r.text)
             if 'error' not in response:
                 subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
@@ -116,10 +115,12 @@ def show_user_profile(request, profile_username):
             amount = int(subscription_amount)
             if amount < 10:
                 return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile, 'error': "Subscription amount must not be less than 10"})
+                              {'user_profile': user_profile,
+                               'error': "Subscription amount must not be less than Rs. 10"})
             elif amount > 9999:
                 return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile, 'error': "Subscription amount must be less than 1000"})
+                              {'user_profile': user_profile,
+                               'error': "Subscription amount must be more than Rs. 9999"})
             else:
                 request.session['amount'] = amount
                 # return HttpResponseRedirect('/' + profile_username + '/checkout/')
@@ -130,7 +131,8 @@ def show_user_profile(request, profile_username):
         # user = MyUser.objects.get(username=creator)
         if not user_profile.is_creator:
             return render(request, 'regapp/profile.html',
-                          {'user_profile': user_profile, 'message': "You can pledge to creator accounts only."})
+                          {'user_profile': user_profile,
+                           'message': "This is not a creator account. You can pledge only to creator accounts."})
         if not amount or amount is None:
             return render(request, 'regapp/profile.html',
                           {'user_profile': user_profile, 'message': "Please enter an amount and continue"})
@@ -139,7 +141,7 @@ def show_user_profile(request, profile_username):
         if not request.user.customer_id:
             url = 'https://api.razorpay.com/v1/customers'
             data = {"name": request.user.username, "email": request.user.email}
-            r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+            r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
             response = json.loads(r.text)
             if 'error' not in response:
                 request.user.customer_id = response['id']
@@ -164,7 +166,7 @@ def show_user_profile(request, profile_username):
                     "subscriber": request.user.username
                 }
                 }
-        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
         response = json.loads(r.text)
         # Save the plan
         if 'error' not in response:
@@ -210,7 +212,7 @@ def show_user_profile(request, profile_username):
             ]
         }
         # Make the request to create subscription
-        r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY, RAZORPAY_SECRET))
+        r = requests.post(url, headers=HEADERS, data=json.dumps(subs_data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
         response = json.loads(r.text)
         # Save the subscription details
         if 'error' not in response:
