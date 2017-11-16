@@ -4,6 +4,8 @@ import json
 import requests
 import utils
 import logging
+import hmac
+import hashlib
 from urllib import parse
 from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
 
@@ -54,10 +56,29 @@ def faq(request):
 
 
 def thank_you(request):
-    amount = request.session['amount']
-    creator_username = request.session['creator_username']
-    creator = MyUser.objects.get(username=creator_username)
-    return render(request, 'regapp/thank_you.html', {"creator": creator, "amount": amount})
+    binary_response = request.body
+    logger.info(binary_response)
+    response = parse.unquote(binary_response.decode("utf-8"))
+    key_value = response.split('&')
+    key_value_dict = {}
+    for pair in key_value:
+        pair_split = pair.split('=')
+        key_value_dict[pair_split[0]] = pair_split[1]
+
+    subscription = SubscriptionModel.objects.filter(subscriber=request.user).latest('created_at')
+
+    key_binary = bytes(RAZORPAY_SECRET_, 'latin-1')
+    string_binary = bytes(key_value_dict['razorpay_payment_id'] + '|' + subscription.subscription_id, 'latin-1')
+    digest = hmac.new(key_binary, string_binary, digestmod=hashlib.sha256).hexdigest()
+
+    if digest == key_value_dict['razorpay_signature']:
+        amount = request.session['amount']
+        creator_username = request.session['creator_username']
+        creator = MyUser.objects.get(username=creator_username)
+        return render(request, 'regapp/thank_you.html',
+                      {"creator": creator, "amount": amount, "message": "Your subscription was successful!"})
+    else:
+        return render(request, 'regapp/thank_you.html', {"message": "Subscription failed!"})
 
 
 @login_required
