@@ -21,6 +21,8 @@
       will-change: box-shadow, transform;
       transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+
 </style>
 
 <div class="components-page">
@@ -98,14 +100,16 @@
                                     <!-- Note that the amount is in paise = 50 INR -->
                                     <script
                                             src="https://checkout.razorpay.com/v1/checkout.js"
-                                            data-key="rzp_test_2pcIy5sW4v0mmP"
-                                            data-amount="5000"
+                                            data-key="{{ key }}"
+                                            data-amount="{{ amount }}"
                                             data-subscription_id="{{ subscription_id }}"
                                             data-buttontext="Pay with Razorpay"
-                                            data-name="Merchant Name"
+                                            data-name="Lisplay"
                                             data-description="Purchase Description"
                                             data-image="https://lh3.googleusercontent.com/03_kq2L8zzV4AjxEz52j49gVQm4dOnws5gPC1XpWA_ZnbGHfl0M2IhkB5MJdwmTBUjM=w300"
                                             data-theme.color="#9c27b0"
+                                            data-notes.creator="{{ creator }}"
+                                            data-notes.subscriber="{{ user.username }}"
                                     ></script>
                                     <input type="hidden" value="Hidden Element" name="hidden">
                                 </form>

@@ -85,7 +85,8 @@ def thank_you(request):
 def checkout(request, creator):
     return render(request, 'regapp/checkout.html',
                   {'creator': creator,
-                   'amount': request.session['amount'],
+                   'key': RAZORPAY_KEY_,
+                   'amount': request.session['amount'] * 100,  # Razorpay accept amount in paise
                    'subscription_id': request.session['subscription_id']})
 
 
