@@ -72,8 +72,8 @@ def thank_you(request):
     digest = hmac.new(key_binary, string_binary, digestmod=hashlib.sha256).hexdigest()
 
     if digest == key_value_dict['razorpay_signature']:
-        amount = request.session['amount']
-        creator_username = request.session['creator_username']
+        amount = subscription.amount
+        creator_username = subscription.creator.username
         creator = MyUser.objects.get(username=creator_username)
         return render(request, 'regapp/thank_you.html',
                       {"creator": creator, "amount": amount, "message": "Your subscription was successful!"})
