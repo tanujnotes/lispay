@@ -185,14 +185,14 @@ class SubscriptionModel(models.Model):
     ended_at = models.DateTimeField(blank=True, null=True)
 
 
-class TransactionModel(models.Model):
+class PaymentModel(models.Model):
     invoice_id = models.CharField(max_length=255)
     subscription_id = models.CharField(max_length=255)
-    transaction_id = models.CharField(max_length=255)  # payment_id
-    transaction_type = models.CharField(max_length=255)
-    transaction_status = models.CharField(max_length=20, choices=PaymentStatus.CHOICES, default=PaymentStatus.WAITING)
-    subscriber = models.ForeignKey(MyUser, related_name='subscriber_transaction', on_delete=models.PROTECT, blank=True)
-    creator = models.ForeignKey(MyUser, related_name='creator_transaction', on_delete=models.PROTECT, blank=True)
+    payment_id = models.CharField(max_length=255)  # payment_id
+    payment_type = models.CharField(max_length=255)
+    payment_status = models.CharField(max_length=20, choices=PaymentStatus.CHOICES, default=PaymentStatus.WAITING)
+    subscriber = models.ForeignKey(MyUser, related_name='subscriber_payment', on_delete=models.PROTECT, blank=True)
+    creator = models.ForeignKey(MyUser, related_name='creator_payment', on_delete=models.PROTECT, blank=True)
     tax = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     captured_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     total_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
