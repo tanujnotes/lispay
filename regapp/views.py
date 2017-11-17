@@ -28,13 +28,17 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 @require_POST
 def webhook(request):
-    binary_response = request.body
-    response = parse.unquote(binary_response.decode("utf-8"))
-    jsondata = json.loads(response)
-    logger.info(jsondata)
-    event_type = jsondata['event']
-    dump = DataDumpModel(event_type=event_type, data=jsondata)
-    dump.save()
+    try:
+        binary_response = request.body
+        response = parse.unquote(binary_response.decode("utf-8"))
+        jsondata = json.loads(response)
+        logger.info(jsondata)
+        event_type = jsondata.get('event', 'event_not_found')
+        dump = DataDumpModel(event_type=event_type, data=jsondata)
+        dump.save()
+    except:
+        pass
+
     return HttpResponse(status=200)
 
 
