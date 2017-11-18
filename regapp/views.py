@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.defaulttags import register
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -34,10 +34,76 @@ def webhook(request):
         jsondata = json.loads(response)
         logger.info(jsondata)
         event_type = jsondata.get('event', 'event_not_found')
-        dump = DataDumpModel(event_type=event_type, data=jsondata)
-        dump.save()
+        if event_type == "event_not_found" or not DataDumpModel.objects.filter(data=jsondata).exists():
+            dump = DataDumpModel(event_type=event_type, data=jsondata)
+            dump.save()
+        else:
+            return HttpResponse(status=200)
     except:
-        pass
+        return redirect(index())
+
+    if event_type == 'event_not_found' or 'payload' not in jsondata or 'contains' not in jsondata:
+        return HttpResponse(200)
+
+    if 'subscription' in jsondata['contains']:
+        subscription_id = jsondata['payload']['subscription']['entity']['id']
+        subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+
+        if event_type == "subscription.activated":
+            if subscription.status == "created" or subscription.status == "authenticated" \
+                    or subscription.status == "pending" or subscription.status == "halted":
+                subscription.status = "active"
+            if subscription.paid_count < jsondata['payload']['subscription']['entity']['paid_count']:
+                subscription.paid_count = jsondata['payload']['subscription']['entity']['paid_count']
+            subscription.save()
+
+        elif event_type == "subscription.charged":
+            if subscription.paid_count < jsondata['payload']['subscription']['entity']['paid_count']:
+                subscription.paid_count = jsondata['payload']['subscription']['entity']['paid_count']
+            subscription.save()
+
+        elif event_type == "subscription.pending":
+            subscription.status = "pending"
+            subscription.save()
+
+        elif event_type == "subscription.halted":
+            subscription.status = "halted"
+            subscription.save()
+
+        elif event_type == "subscription.cancelled":
+            subscription.status = "cancelled"
+            subscription.save()
+
+        elif event_type == "subscription.completed":
+            subscription.status = "completed"
+            subscription.save()
+
+    if 'payment' in jsondata['contains']:
+        payment_id = jsondata['payload']['payment']['entity']['id']
+        entity = jsondata['payload']['payment']['entity']
+        if not PaymentModel.objects.filter(payment_id=payment_id).exists():
+            payment = PaymentModel(invoice_id=entity['invoice_id'],
+                                   subscription_id=entity['subscription_id'],
+                                   payment_id=entity['id'],
+                                   payment_type=entity['method'],
+                                   payment_status=entity['status'],
+                                   subscriber=SubscriptionModel.objects.get(
+                                       subscription_id=entity['subscription_id']).subscriber,
+                                   creator=SubscriptionModel.objects.get(
+                                       subscription_id=entity['subscription_id']).creator,
+                                   tax=entity['tax'] / 100,
+                                   fee=entity['fee'] / 100,
+                                   captured_amount=entity['amount'] // 100,
+                                   total_amount=entity['amount'] // 100,
+                                   currency=entity['currency'],
+                                   message="")
+            payment.save()
+
+        else:
+            payment = PaymentModel.objects.get(payment_id=payment_id)
+            if payment.payment_status != "captured":
+                payment.payment_status = entity['status']
+                payment.save()
 
     return HttpResponse(status=200)
 
@@ -260,6 +326,7 @@ def show_user_profile(request, profile_username):
                                   status=response['status'],
                                   subs_channel="razorpay",
                                   amount=plan.amount,
+                                  paid_count=response['paid_count'],
                                   notes=response['notes'])
             s.save()
             dump = DataDumpModel(event_type="subscription_created", data=response)

@@ -195,6 +195,7 @@ class PaymentModel(models.Model):
     subscriber = models.ForeignKey(MyUser, related_name='subscriber_payment', on_delete=models.PROTECT, blank=True)
     creator = models.ForeignKey(MyUser, related_name='creator_payment', on_delete=models.PROTECT, blank=True)
     tax = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
+    fee = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     captured_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     total_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     currency = models.CharField(max_length=10)
