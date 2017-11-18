@@ -179,6 +179,7 @@ class SubscriptionModel(models.Model):
         blank=False,
     )
     amount = models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(9999)], blank=False)
+    paid_count = models.PositiveSmallIntegerField(blank=True)
     notes = JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -196,7 +197,6 @@ class PaymentModel(models.Model):
     tax = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     captured_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
     total_amount = models.DecimalField(max_digits=9, decimal_places=2, default='0.0')
-    paid_count = models.PositiveSmallIntegerField(blank=True)
     currency = models.CharField(max_length=10)
     message = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
