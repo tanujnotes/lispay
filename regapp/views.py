@@ -18,7 +18,7 @@ from django.template.defaulttags import register
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel
+from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
