@@ -116,7 +116,7 @@ def webhook(request):
         elif entity['notes']:
             notes = entity['notes']
             if SubscriptionModel.objects.filter(notes=notes).exists():
-                subscription = SubscriptionModel.objects.filter(notes=notes)[0]
+                subscription = SubscriptionModel.objects.filter(notes=notes).order_by('-created_at')[0]
                 payment = PaymentModel(invoice_id=entity['invoice_id'],
                                        subscription_id=subscription.subscription_id,
                                        payment_id=entity['id'],
