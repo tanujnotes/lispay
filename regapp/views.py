@@ -122,10 +122,8 @@ def webhook(request):
                                        payment_id=entity['id'],
                                        payment_type=entity['method'],
                                        payment_status=entity['status'],
-                                       subscriber=SubscriptionModel.objects.get(
-                                           subscription_id=entity['subscription_id']).subscriber,
-                                       creator=SubscriptionModel.objects.get(
-                                           subscription_id=entity['subscription_id']).creator,
+                                       subscriber=SubscriptionModel.objects.get(subscription_id=notes['subscriber']),
+                                       creator=SubscriptionModel.objects.get(subscription_id=notes['creator']),
                                        tax=entity['tax'] / 100,
                                        fee=entity['fee'] / 100,
                                        captured_amount=entity['amount'] // 100,
