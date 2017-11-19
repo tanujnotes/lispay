@@ -72,16 +72,14 @@ def webhook(request):
                                            payment_id=payment_entity['id'],
                                            payment_type=payment_entity['method'],
                                            payment_status=payment_entity['status'],
-                                           subscriber=SubscriptionModel.objects.get(
-                                               subscription_id=payment_entity['subscription_id']).subscriber,
-                                           creator=SubscriptionModel.objects.get(
-                                               subscription_id=payment_entity['subscription_id']).creator,
+                                           subscriber=subscription.subscriber,
+                                           creator=subscription.creator,
                                            tax=payment_entity['tax'] / 100,
                                            fee=payment_entity['fee'] / 100,
                                            captured_amount=payment_entity['amount'] // 100,
                                            total_amount=payment_entity['amount'] // 100,
                                            currency=payment_entity['currency'],
-                                           message="")
+                                           message=subscription.notes)
                     payment.save()
                 else:
                     payment = PaymentModel.objects.get(payment_id=payment_id)
@@ -129,7 +127,7 @@ def webhook(request):
                                        captured_amount=entity['amount'] // 100,
                                        total_amount=entity['amount'] // 100,
                                        currency=entity['currency'],
-                                       message="")
+                                       message=notes)
                 payment.save()
 
     return HttpResponse(status=200)
