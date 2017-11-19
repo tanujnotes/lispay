@@ -64,27 +64,27 @@ def webhook(request):
             subscription.save()
 
             if 'payment' in jsondata['payload']:
-                payment_entity = jsondata['payload']['payment']['entity']
-                payment_id = payment_entity['id']
+                pay_entity = jsondata['payload']['payment']['entity']
+                payment_id = pay_entity['id']
                 if not PaymentModel.objects.filter(payment_id=payment_id).exists():
-                    payment = PaymentModel(invoice_id=payment_entity['invoice_id'],
+                    payment = PaymentModel(invoice_id=pay_entity['invoice_id'],
                                            subscription_id=subscription_id,
-                                           payment_id=payment_entity['id'],
-                                           payment_type=payment_entity['method'],
-                                           payment_status=payment_entity['status'],
+                                           payment_id=pay_entity['id'],
+                                           payment_type=pay_entity['method'],
+                                           payment_status=pay_entity['status'],
                                            subscriber=subscription.subscriber,
                                            creator=subscription.creator,
-                                           tax=payment_entity['tax'] / 100,
-                                           fee=payment_entity['fee'] / 100,
-                                           captured_amount=payment_entity['amount'] // 100,
-                                           total_amount=payment_entity['amount'] // 100,
-                                           currency=payment_entity['currency'],
+                                           tax=pay_entity['tax'] / 100 if pay_entity['tax'] is not None else None,
+                                           fee=pay_entity['fee'] / 100 if pay_entity['fee'] is not None else None,
+                                           captured_amount=pay_entity['amount'] // 100,
+                                           total_amount=pay_entity['amount'] // 100,
+                                           currency=pay_entity['currency'],
                                            message=subscription.notes)
                     payment.save()
                 else:
                     payment = PaymentModel.objects.get(payment_id=payment_id)
                     if payment.payment_status != "captured":
-                        payment.payment_status = payment_entity['status']
+                        payment.payment_status = pay_entity['status']
                         payment.save()
 
         elif event_type == "subscription.pending":
@@ -110,7 +110,11 @@ def webhook(request):
             payment = PaymentModel.objects.get(payment_id=payment_id)
             if payment.payment_status != "captured":
                 payment.payment_status = entity['status']
-                payment.save()
+            if not payment.tax or not payment.fee:
+                payment.tax = entity['tax'] / 100 if entity['tax'] is not None else None,
+                payment.fee = entity['fee'] / 100 if entity['fee'] is not None else None,
+            payment.save()
+
         elif entity['notes']:
             notes = entity['notes']
             if SubscriptionModel.objects.filter(notes=notes).exists():
@@ -122,8 +126,8 @@ def webhook(request):
                                        payment_status=entity['status'],
                                        subscriber=MyUser.objects.get(username=notes['subscriber']),
                                        creator=MyUser.objects.get(username=notes['creator']),
-                                       tax=entity['tax'] / 100,
-                                       fee=entity['fee'] / 100,
+                                       tax=entity['tax'] / 100 if entity['tax'] is not None else None,
+                                       fee=entity['fee'] / 100 if entity['fee'] is not None else None,
                                        captured_amount=entity['amount'] // 100,
                                        total_amount=entity['amount'] // 100,
                                        currency=entity['currency'],
