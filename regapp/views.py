@@ -40,7 +40,7 @@ def webhook(request):
         else:
             return HttpResponse(status=200)
     except:
-        return redirect(index())
+        return redirect(index)
 
     if event_type == 'event_not_found' or 'payload' not in jsondata or 'contains' not in jsondata:
         return HttpResponse(200)
@@ -60,7 +60,34 @@ def webhook(request):
         elif event_type == "subscription.charged":
             if subscription.paid_count < jsondata['payload']['subscription']['entity']['paid_count']:
                 subscription.paid_count = jsondata['payload']['subscription']['entity']['paid_count']
+                subscription.status = "active"
             subscription.save()
+
+            if 'payment' in jsondata['payload']:
+                payment_entity = jsondata['payload']['payment']['entity']
+                payment_id = payment_entity['id']
+                if not PaymentModel.objects.filter(payment_id=payment_id).exists():
+                    payment = PaymentModel(invoice_id=payment_entity['invoice_id'],
+                                           subscription_id=subscription_id,
+                                           payment_id=payment_entity['id'],
+                                           payment_type=payment_entity['method'],
+                                           payment_status=payment_entity['status'],
+                                           subscriber=SubscriptionModel.objects.get(
+                                               subscription_id=payment_entity['subscription_id']).subscriber,
+                                           creator=SubscriptionModel.objects.get(
+                                               subscription_id=payment_entity['subscription_id']).creator,
+                                           tax=payment_entity['tax'] / 100,
+                                           fee=payment_entity['fee'] / 100,
+                                           captured_amount=payment_entity['amount'] // 100,
+                                           total_amount=payment_entity['amount'] // 100,
+                                           currency=payment_entity['currency'],
+                                           message="")
+                    payment.save()
+                else:
+                    payment = PaymentModel.objects.get(payment_id=payment_id)
+                    if payment.payment_status != "captured":
+                        payment.payment_status = payment_entity['status']
+                        payment.save()
 
         elif event_type == "subscription.pending":
             subscription.status = "pending"
@@ -81,28 +108,30 @@ def webhook(request):
     if 'payment' in jsondata['contains']:
         payment_id = jsondata['payload']['payment']['entity']['id']
         entity = jsondata['payload']['payment']['entity']
-        if not PaymentModel.objects.filter(payment_id=payment_id).exists():
-            payment = PaymentModel(invoice_id=entity['invoice_id'],
-                                   subscription_id=entity['subscription_id'],
-                                   payment_id=entity['id'],
-                                   payment_type=entity['method'],
-                                   payment_status=entity['status'],
-                                   subscriber=SubscriptionModel.objects.get(
-                                       subscription_id=entity['subscription_id']).subscriber,
-                                   creator=SubscriptionModel.objects.get(
-                                       subscription_id=entity['subscription_id']).creator,
-                                   tax=entity['tax'] / 100,
-                                   fee=entity['fee'] / 100,
-                                   captured_amount=entity['amount'] // 100,
-                                   total_amount=entity['amount'] // 100,
-                                   currency=entity['currency'],
-                                   message="")
-            payment.save()
-
-        else:
+        if PaymentModel.objects.filter(payment_id=payment_id).exists():
             payment = PaymentModel.objects.get(payment_id=payment_id)
             if payment.payment_status != "captured":
                 payment.payment_status = entity['status']
+                payment.save()
+        elif entity['notes']:
+            notes = entity['notes']
+            if SubscriptionModel.objects.filter(notes=notes).exists():
+                subscription = SubscriptionModel.objects.filter(notes=notes)[0]
+                payment = PaymentModel(invoice_id=entity['invoice_id'],
+                                       subscription_id=subscription.subscription_id,
+                                       payment_id=entity['id'],
+                                       payment_type=entity['method'],
+                                       payment_status=entity['status'],
+                                       subscriber=SubscriptionModel.objects.get(
+                                           subscription_id=entity['subscription_id']).subscriber,
+                                       creator=SubscriptionModel.objects.get(
+                                           subscription_id=entity['subscription_id']).creator,
+                                       tax=entity['tax'] / 100,
+                                       fee=entity['fee'] / 100,
+                                       captured_amount=entity['amount'] // 100,
+                                       total_amount=entity['amount'] // 100,
+                                       currency=entity['currency'],
+                                       message="")
                 payment.save()
 
     return HttpResponse(status=200)
