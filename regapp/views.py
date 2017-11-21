@@ -134,6 +134,10 @@ def webhook(request):
                                        message=notes)
                 payment.save()
 
+                if not subscription.subscriber.mobile:
+                    subscription.subscriber.mobile = entity['contact']
+                    subscription.subscriber.save()
+
     return HttpResponse(status=200)
 
 
