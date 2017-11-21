@@ -19,23 +19,22 @@ from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser, PaymentMo
 def dashboard(request):
     current_month = datetime.datetime.now().month
     user = MyUser.objects.get(username=request.user.username)
-    current_subscribers_count = SubscriptionModel.objects.filter(
-        creator=user).filter(
-        status="live").count()
+
+    current_subscribers_count = SubscriptionModel.objects.filter(creator=user).filter(
+        status__in=['created', 'authenticated', 'active', 'pending']).count()
     this_month_revenue = PaymentModel.objects.filter(created_at__month=current_month).filter(
         payment_status='captured').aggregate(Sum('total_amount')).get('total_amount__sum', 0.0)
     joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
         created_at__month=current_month).count()
     left_this_month = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
-        status='cancelled').count()
+        status='cancelled').count()  # TODO: What about 'halted' and 'completed'?
     subscribers = SubscriptionModel.objects.filter(creator=user).filter(
         status__in=['created', 'authenticated', 'active', 'pending'])
-    subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
-        status='cancelled')
+    subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(status='cancelled')
 
     context = {
         'current_subscribers_count': current_subscribers_count,
-        'this_month_revenue': this_month_revenue,
+        'this_month_revenue': this_month_revenue if this_month_revenue is not None else 0,
         'joined_this_month': joined_this_month,
         'left_this_month': left_this_month,
         'subscribers': subscribers,
