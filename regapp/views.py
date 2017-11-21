@@ -111,8 +111,8 @@ def webhook(request):
             if payment.payment_status != "captured":
                 payment.payment_status = entity['status']
             if not payment.tax or not payment.fee:
-                payment.tax = entity['tax'] / 100 if entity['tax'] is not None else None,
-                payment.fee = entity['fee'] / 100 if entity['fee'] is not None else None,
+                payment.tax = entity['tax'] / 100 if entity['tax'] is not None else None
+                payment.fee = entity['fee'] / 100 if entity['fee'] is not None else None
             payment.save()
 
         elif entity['notes']:
