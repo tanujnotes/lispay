@@ -425,22 +425,6 @@ def login_redirect(request):
     return HttpResponseRedirect(url)
 
 
-def clean_youtube_link(youtube_link):
-    if "watch" in youtube_link and "&" in youtube_link:
-        key_values = youtube_link.split("?")[1]
-        key_values = key_values.split("&")
-        for pair in key_values:
-            if "v=" in pair:
-                return "https://www.youtube.com/embed/" + pair.split("=")[1]
-    elif "watch" in youtube_link:
-        return youtube_link.replace('watch?v=', 'embed/')
-    elif "youtu.be" in youtube_link:
-        video_id = youtube_link.split("/")[1]
-        return "https://www.youtube.com/embed/" + video_id
-    else:
-        return youtube_link
-
-
 @register.filter
 def get_item(dictionary, args):
     if args is None or dictionary is None or dictionary is "":
