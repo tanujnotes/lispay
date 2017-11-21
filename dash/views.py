@@ -22,8 +22,8 @@ def dashboard(request):
     current_subscribers_count = SubscriptionModel.objects.filter(
         creator=user).filter(
         status="live").count()
-    this_month_revenue = PaymentModel.objects.filter(created_at__month=current_month).aggregate(
-        Sum('total_amount')).get('total_amount__sum', 0.0)
+    this_month_revenue = PaymentModel.objects.filter(created_at__month=current_month).filter(
+        payment_status='captured').aggregate(Sum('total_amount')).get('total_amount__sum', 0.0)
     joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
         created_at__month=current_month).count()
     left_this_month = SubscriptionModel.objects.filter(creator=user).filter(
