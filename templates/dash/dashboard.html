@@ -143,7 +143,7 @@
                 <div class="card-content table-responsive">
                     <table class="table table-hover">
                         <thead class="text-warning">
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Username</th>
                         <th>Amount</th>
                         <th>Started at</th>
@@ -151,7 +151,7 @@
                         <tbody>
                         {% for subscriber in subscribers %}
                         <tr>
-                            <td>{{ subscriber.id }}</td>
+                            <td>{{ forloop.counter }}</td>
                             <td><a target="_blank" href="{% url 'show_user_profile' subscriber.subscriber %}">
                                 {{ subscriber.subscriber }}</a></td>
                             <td>&#8377; {{ subscriber.amount }}</td>
@@ -172,36 +172,21 @@
                 <div class="card-content table-responsive">
                     <table class="table table-hover">
                         <thead class="text-danger">
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Username</th>
                         <th>Started at</th>
                         <th>Cancelled at</th>
                         </thead>
                         <tbody>
+                        {% for subscriber in subscribers_cancelled %}
                         <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>&#8377;36</td>
-                            <td>Niger</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a target="_blank" href="{% url 'show_user_profile' subscriber.subscriber %}">
+                                {{ subscriber.subscriber }}</a></td>
+                            <td>{{ subscriber.created_at|date:"M d, o" }}</td>
+                            <td>{{ subscriber.ended_at|date:"M d, o" }}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Minerva Hooper</td>
-                            <td>&#8377;789</td>
-                            <td>Curaçao</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sage Rodriguez</td>
-                            <td>&#8377;142</td>
-                            <td>Netherlands</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Philip Chaney</td>
-                            <td>&#8377;11</td>
-                            <td>Korea, South</td>
-                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

@@ -26,17 +26,20 @@ def dashboard(request):
         payment_status='captured').aggregate(Sum('total_amount')).get('total_amount__sum', 0.0)
     joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
         created_at__month=current_month).count()
-    left_this_month = SubscriptionModel.objects.filter(creator=user).filter(
-        updated_at__month=current_month).filter(status="cancelled").count()
+    left_this_month = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
+        status='cancelled').count()
     subscribers = SubscriptionModel.objects.filter(creator=user).filter(
         status__in=['created', 'authenticated', 'active', 'pending'])
+    subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
+        status='cancelled')
 
     context = {
         'current_subscribers_count': current_subscribers_count,
         'this_month_revenue': this_month_revenue,
         'joined_this_month': joined_this_month,
         'left_this_month': left_this_month,
-        'subscribers': subscribers
+        'subscribers': subscribers,
+        'subscribers_cancelled': subscribers_cancelled
     }
     return render(request, 'dash/dashboard.html', context)
 

@@ -91,12 +91,14 @@ def webhook(request):
             subscription.status = "pending"
             subscription.save()
 
+        # TODO: Handle following three events regarding what to show in Dashboard
         elif event_type == "subscription.halted":
             subscription.status = "halted"
             subscription.save()
 
         elif event_type == "subscription.cancelled":
             subscription.status = "cancelled"
+            subscription.ended_at = datetime.datetime.now()
             subscription.save()
 
         elif event_type == "subscription.completed":
