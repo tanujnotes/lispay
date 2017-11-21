@@ -161,14 +161,17 @@ def faq(request):
 
 
 def thank_you(request):
-    binary_response = request.body
-    logger.info(binary_response)
-    response = parse.unquote(binary_response.decode("utf-8"))
-    key_value = response.split('&')
-    key_value_dict = {}
-    for pair in key_value:
-        pair_split = pair.split('=')
-        key_value_dict[pair_split[0]] = pair_split[1]
+    try:
+        binary_response = request.body
+        logger.info(binary_response)
+        response = parse.unquote(binary_response.decode("utf-8"))
+        key_value = response.split('&')
+        key_value_dict = {}
+        for pair in key_value:
+            pair_split = pair.split('=')
+            key_value_dict[pair_split[0]] = pair_split[1]
+    except:
+        return redirect(index)
 
     subscription = SubscriptionModel.objects.filter(subscriber=request.user).latest('created_at')
 
@@ -208,7 +211,7 @@ def search(request):
 def show_user_profile(request, profile_username):
     try:
         user_profile = MyUser.objects.get(username=profile_username)
-    except e:
+    except:
         return redirect(index)
     # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
