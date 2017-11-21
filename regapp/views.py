@@ -418,10 +418,19 @@ def show_creators(request, category, page="1"):
 
 @login_required
 def login_redirect(request):
+    next_url = request.GET.get('next', '')
+
     if request.user.full_name:
-        url = '/%s/' % request.user.username
+        if next_url:
+            url = next_url
+        else:
+            url = '/%s/' % request.user.username
     else:
-        url = '/update_profile/'
+        if next_url:
+            url = '/update-profile/?next=%s' % next_url
+        else:
+            url = '/update-profile/'
+
     return HttpResponseRedirect(url)
 
 
