@@ -207,12 +207,16 @@ def search(request):
 
 def show_user_profile(request, profile_username):
     try:
-        featured_list = SubscriptionModel.objects.filter(
-            subscriber=MyUser.objects.get(username=profile_username)).filter(status="active")
         user_profile = MyUser.objects.get(username=profile_username)
-    except:
-        return HttpResponseRedirect('/')
+    except e:
+        return redirect(index)
     # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
+
+    featured_list = {}
+    if request.user.is_authenticated() and request.user.username == profile_username:
+        featured_list = SubscriptionModel.objects.filter(
+            subscriber=MyUser.objects.get(username=request.user.username)).filter(
+            status__in=['created', 'authenticated', 'active', 'pending'])
 
     request.session['creator_username'] = profile_username
 
