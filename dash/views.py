@@ -3,6 +3,7 @@ import utils
 from io import BytesIO
 
 from PIL import Image, ImageOps
+from django.db.models import Sum
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -11,7 +12,7 @@ from django.shortcuts import render, redirect
 
 from dash.forms import UpdateCreatorForm
 from regapp.forms import UpdateProfileForm
-from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser
+from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser, PaymentModel
 
 
 @login_required
@@ -21,16 +22,18 @@ def dashboard(request):
     current_subscribers_count = SubscriptionModel.objects.filter(
         creator=user).filter(
         status="live").count()
-    last_month_revenue = 0  # TODO: Implement a transaction table
+    this_month_revenue = PaymentModel.objects.filter(created_at__month=current_month).aggregate(
+        Sum('total_amount')).get('total_amount__sum', 0.0)
     joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
         created_at__month=current_month).count()
     left_this_month = SubscriptionModel.objects.filter(creator=user).filter(
         updated_at__month=current_month).filter(status="cancelled").count()
-    subscribers = SubscriptionModel.objects.filter(creator=user).filter(status="live")
+    subscribers = SubscriptionModel.objects.filter(creator=user).filter(
+        status__in=['created', 'authenticated', 'active', 'pending'])
 
     context = {
         'current_subscribers_count': current_subscribers_count,
-        'last_month_revenue': last_month_revenue,
+        'this_month_revenue': this_month_revenue,
         'joined_this_month': joined_this_month,
         'left_this_month': left_this_month,
         'subscribers': subscribers
