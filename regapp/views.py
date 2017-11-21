@@ -271,6 +271,9 @@ def show_user_profile(request, profile_username):
             return render(request, 'regapp/profile.html',
                           {'user_profile': user_profile, 'message': "Please enter an amount and continue"})
 
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect('/accounts/login/?next=/%s/' % profile_username)
+
         # Register customer
         if not request.user.customer_id:
             url = 'https://api.razorpay.com/v1/customers'
