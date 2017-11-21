@@ -23,7 +23,7 @@ ACCOUNT_ACTIVATION_DAYS = 1
 INCLUDE_AUTH_URLS = True
 INCLUDE_REGISTER_URL = True
 REGISTRATION_AUTO_LOGIN = False
-LOGIN_REDIRECT_URL = '/login_redirect/'
+LOGIN_REDIRECT_URL = '/login-redirect/'
 LOGIN_URL = '/accounts/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
