@@ -288,7 +288,7 @@ def show_user_profile(request, profile_username):
         url = "https://api.razorpay.com/v1/plans"
         data = {'period': 'monthly',
                 'interval': 1,
-                'item': {'name': 'plan_' + str(amount),
+                'item': {'name': 'plan_%s_%s_%s' % (str(amount), profile_username, request.user.username),
                          'amount': amount * 100,  # razorpay accepts amount in paise
                          'currency': 'INR'
                          },
