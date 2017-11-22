@@ -203,7 +203,7 @@ def search(request):
     if search_query is None:
         return render(request, 'regapp/index.html', {})
 
-    search_results = MyUser.objects.annotate(
+    search_results = MyUser.objects.filter(is_creator=True).annotate(
         search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
     return render(request, 'regapp/search.html', {'search_results': search_results, "search_query": search_query})
 
