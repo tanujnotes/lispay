@@ -18,6 +18,7 @@ from django.template.defaulttags import register
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from regapp.forms import UpdateProfileForm
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
@@ -417,6 +418,29 @@ def show_creators(request, category, page="1"):
 
 
 @login_required
+def welcome(request):
+    error = ""
+    if request.user.full_name:
+        return HttpResponseRedirect('/%s/' % request.user.username)
+
+    form = UpdateProfileForm(request.POST or None, initial={'full_name': request.user.full_name})
+    if request.method == 'POST':
+        if form.is_valid():
+            user.full_name = request.POST['full_name'].strip()
+            user.save()
+            return HttpResponseRedirect('/%s/' % request.user.username)
+        else:
+            error = "Please enter your full name!"
+            print(form.errors)
+
+    context = {
+        "form": form,
+        "errors": error,
+    }
+    return render(request, 'regapp/welcome.html', context)
+
+
+@login_required
 def login_redirect(request):
     next_url = request.GET.get('next', '')
 
@@ -427,9 +451,9 @@ def login_redirect(request):
             url = '/%s/' % request.user.username
     else:
         if next_url:
-            url = '/update-profile/?next=%s' % next_url
+            url = '/welcome/?next=%s' % next_url
         else:
-            url = '/update-profile/'
+            url = '/welcome/'
 
     return HttpResponseRedirect(url)
 
