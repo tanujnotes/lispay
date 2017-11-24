@@ -70,7 +70,7 @@ def update_profile(request):
                 im = InMemoryUploadedFile(
                     image_buffer,
                     None,
-                    user.featured_image.url,
+                    user.username + '_featured.jpeg',
                     'image/jpeg',
                     image_buffer.tell(),
                     None)
@@ -90,7 +90,7 @@ def update_profile(request):
                 im = InMemoryUploadedFile(
                     image_buffer,
                     None,
-                    user.picture.url,
+                    user.username + '_profile.jpeg',
                     'image/jpeg',
                     image_buffer.tell(),
                     None)
@@ -101,7 +101,7 @@ def update_profile(request):
                 im = InMemoryUploadedFile(
                     thumbnail_image_buffer,
                     None,
-                    user.picture.url,
+                    user.username + '_thumbnail.jpeg',
                     'image/jpeg',
                     thumbnail_image_buffer.tell(),
                     None)
