@@ -118,12 +118,13 @@
                             <div class="col-md-4">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' featured_user.username %}">
-                                        <img src="{{ featured_user.thumbnail.url }}" alt="Thumbnail Image"
+                                        <img src="{{ featured_user.picture.url }}" alt="Thumbnail Image"
                                              class="img-raised img-circle">
-                                        <h4 class="title">{{ featured_user.full_name }}<br/>
-                                            <small class="text-muted">{{ featured_user.short_bio }}</small>
-                                        </h4>
                                     </a>
+                                    <h4 class="title">{{ featured_user.full_name }}<br/>
+                                        <small class="text-muted">{{ featured_user.short_bio }}</small>
+                                    </h4>
+                                    <p class="description">{{ featured_user.profile_description|slice:":200" }}...</p>
                                     {% if featured_user.social_links|get_item:'facebook_details,facebook_link' %}
                                     <a href="{{ featured_user.social_links|get_item:'facebook_details,facebook_link' }}"
                                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
