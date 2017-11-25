@@ -62,6 +62,16 @@
                                     <div class="col-md-4 col-sm-8 col-xs-7 col-xs-offset-1">
                                         <h4>{{ creator.full_name }}<br/>
                                             <small class="text-muted">{{ creator.short_bio }}</small>
+                                            <br/>
+                                            {% with count=subscriber_count|get_value:creator.username %}
+                                            {% if count %}
+                                            {% ifequal count 1 %}
+                                            <small class="grey">{{ count }} Supporter</small>
+                                            {% else %}
+                                            <small class="grey">{{ count }} Supporters</small>
+                                            {% endifequal %}
+                                            {% endif %}
+                                            {% endwith %}
                                         </h4>
                                     </div>
                                 </a>

@@ -206,7 +206,14 @@ def search(request):
 
     search_results = MyUser.objects.filter(is_creator=True).annotate(
         search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
-    return render(request, 'regapp/search.html', {'search_results': search_results, "search_query": search_query})
+
+    subscriber_count = {}
+    for creator in search_results:
+        subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
+            status__in=['created', 'authenticated', 'active', 'pending']).count()
+
+    return render(request, 'regapp/search.html', {'search_results': search_results, "search_query": search_query,
+                                                  'subscriber_count': subscriber_count})
 
 
 def show_user_profile(request, profile_username):
@@ -413,7 +420,13 @@ def show_creators(request, category, page="1"):
         page = paginator.num_pages
         creators = paginator.page(page)
 
-    context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages}
+    subscriber_count = {}
+    for creator in creators:
+        subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
+            status__in=['created', 'authenticated', 'active', 'pending']).count()
+
+    context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages,
+               'subscriber_count': subscriber_count}
     return render(request, 'regapp/show_creators.html', context)
 
 
@@ -426,8 +439,8 @@ def welcome(request):
     form = UpdateProfileForm(request.POST or None, initial={'full_name': request.user.full_name})
     if request.method == 'POST':
         if form.is_valid():
-            user.full_name = request.POST['full_name'].strip()
-            user.save()
+            request.user.full_name = request.POST['full_name'].strip()
+            request.user.save()
             return HttpResponseRedirect('/%s/' % request.user.username)
         else:
             error = "Please enter your full name!"
@@ -458,8 +471,12 @@ def login_redirect(request):
     return HttpResponseRedirect(url)
 
 
+# Use for social_links in user model
 @register.filter
 def get_item(dictionary, args):
+    print("==================================")
+    print(dictionary)
+    print (args)
     if args is None or dictionary is None or dictionary is "":
         return ""
     arg_list = [arg.strip() for arg in args.split(',')]
@@ -470,6 +487,11 @@ def get_item(dictionary, args):
     if dictionary.get(arg_list[0]) is None or dictionary.get(arg_list[0]).get(arg_list[1]) is None:
         return ""
     return dictionary.get(arg_list[0]).get(arg_list[1])
+
+
+@register.filter
+def get_value(dictionary, key):
+    return dictionary.get(key)
 
 
 @register.filter(name='times')
