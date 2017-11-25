@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /dashboard/
+Disallow: /update-profile/
+Disallow: /creator-details/
+Disallow: /welcome/
+Disallow: /webhook/
+Disallow: /checkout/
+Disallow: /thank-you/
+Disallow: /login-redirect/
+Disallow: /*/checkout/
