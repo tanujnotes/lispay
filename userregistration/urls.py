@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import TemplateView
 from registration.backends.default.views import RegistrationView
 from regapp.forms import CustomUserForm
 from regapp import views
@@ -24,6 +25,8 @@ from regapp import views
 urlpatterns = [
                   url(r'^$', views.index, name='index'),
                   url(r'^admin/', admin.site.urls),
+                  url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+                      name="robots_file"),
                   url(r'^', include('dash.urls')),
                   url(r'^', include('regapp.urls')),
                   url(r'^accounts/register/$', RegistrationView.as_view(
