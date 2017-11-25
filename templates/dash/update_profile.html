@@ -63,14 +63,6 @@
             document.getElementById('featured_image_file_name').innerHTML = fileName;
         });
     });
-
-
-
-
-
-
-
-
 </script>
 
 <div class="container-fluid">
@@ -162,6 +154,8 @@
                     </div>
                 </div>
             </div>
+
+            <!--User Card-->
             <div class="col-md-4">
                 <a href="{% url 'show_user_profile' user.username %}">
                     <div class="card card-profile">
@@ -169,13 +163,14 @@
                             <img class="img" src="{{ user.thumbnail.url }}"/>
                         </div>
                         <div class="content">
-                            <p class="text-muted">{{ "@"|add:user.username }}</p>
                             <h4 class="card-title">{{ user.full_name }}</h4>
+                            <p class="text-muted">{{ "@"|add:user.username }}</p>
                             <h6 class="category text-gray">{{ user.short_bio }}</h6>
                         </div>
                     </div>
                 </a>
             </div>
+            <!--End: User Card-->
         </div>
         <!--End row personal details-->
 

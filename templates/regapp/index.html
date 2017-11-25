@@ -122,7 +122,7 @@
                                              class="img-raised img-circle">
                                     </a>
                                     <h4 class="title">{{ featured_user.full_name }}<br/>
-                                        <small class="text-muted">{{ featured_user.short_bio }}</small>
+                                        <small class="text-muted">{{ featured_user.short_bio|upper }}</small>
                                     </h4>
                                     <p class="description">{{ featured_user.profile_description|slice:":200" }}...</p>
                                     {% if featured_user.social_links|get_item:'facebook_details,facebook_link' %}
