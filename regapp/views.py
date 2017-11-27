@@ -193,7 +193,7 @@ def thank_you(request):
 @login_required
 def checkout(request, creator):
     return render(request, 'regapp/checkout.html',
-                  {'creator': creator,
+                  {'creator': MyUser.objects.get(username=creator),
                    'key': RAZORPAY_KEY_,
                    'amount': request.session['amount'],
                    'subscription_id': request.session['subscription_id']})

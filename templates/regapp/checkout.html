@@ -23,6 +23,7 @@
     }
 
 
+
 </style>
 
 <div class="components-page">
@@ -48,7 +49,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h1 class="title text-center">Pledge confirmation</h1>
+                        <h1 class="title text-center">Checkout</h1>
                     </div>
                 </div>
             </div>
@@ -61,25 +62,11 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-5 col-md-offset-1" style="padding-bottom: 40px;">
-                        <h3>Confirm you pledge to {{ creator }}</h3>
+                        <h3>Confirm you pledge to {{ creator.full_name }}</h3>
                         <h5>Rs. {{ amount }} per month</h5>
                         <hr/>
-                        <p>user_profile.featured_textBecome a member of club 2 by pledging any two digit amount
-                            i.e. from Rs. 10 to Rs.
-                            99. No matter what
-                            amount you choose, it will be greatly helpful to usBecome a member of club 2 by pledging any
-                            two digit amount
-                            i.e. from Rs. 10 to Rs.
-                            99. No matter what
-                            amount you choose, it will be greatly helpful to usBecome a member of club 2 by pledging any
-                            two digit amount
-                            i.e. from Rs. 10 to Rs.
-                            99. No matter what
-                            amount you choose, it will be greatly helpful to usBecome a member of club 2 by pledging any
-                            two digit amount
-                            i.e. from Rs. 10 to Rs.
-                            99. No matter what
-                            amount you choose, it will be greatly helpful to us</p>
+                        <p>Your next charge will be at 1st of next month.</p>
+                        <p>Lisply does not issue refunds on behalf of creators. See our Return Policy.</p>
                     </div>
                     <div class="col-md-4 col-md-offset-1" style="margin-top: 40px;">
                         <div class="card card-signup">
@@ -92,7 +79,7 @@
                                 <p>You'll be charged Rs. {{ amount }} now and then the same
                                     amount on the 1st of every month going forward.</p>
                                 <p>You can cancel your pledge at any time. By making this
-                                    pledge, you agree to <a href="#">Lisplay's Terms of Services.</a></p>
+                                    pledge, you agree to Lisplay's <a href="#">Terms of Services.</a></p>
                             </div>
                             <div class="footer text-center">
                                 <form action="/thank-you/" method="POST">
@@ -103,23 +90,24 @@
                                             data-key="{{ key }}"
                                             data-amount="{{ amount }}00"
                                             data-subscription_id="{{ subscription_id }}"
-                                            data-buttontext="Pay with Razorpay"
+                                            data-buttontext="Pay with credit card"
                                             data-name="Lisplay"
-                                            data-description="Purchase Description"
+                                            data-description="Monthly subscription"
                                             data-image="https://lh3.googleusercontent.com/03_kq2L8zzV4AjxEz52j49gVQm4dOnws5gPC1XpWA_ZnbGHfl0M2IhkB5MJdwmTBUjM=w300"
                                             data-theme.color="#9c27b0"
-                                            data-notes.creator="{{ creator }}"
+                                            data-notes.creator="{{ creator.full_name }}"
                                             data-notes.subscriber="{{ user.username }}"
                                     ></script>
                                     <input type="hidden" value="Hidden Element" name="hidden">
                                 </form>
                             </div>
-                            <div class="footer text-center" style="margin-bottom: 10px;">
-                                <button class="btn btn-info btn-lg btn-round" type="submit" value="Submit"
-                                        style="padding-left: 55px; padding-right: 55px;">
-                                    Pay with paytm
-                                </button>
-                            </div>
+                            <p class="description text-center">More payment options are coming soon!</p>
+                            <!--<div class="footer text-center" style="margin-bottom: 10px;">-->
+                            <!--<button class="btn btn-info btn-lg btn-round" type="submit" value="Submit"-->
+                            <!--style="padding-left: 55px; padding-right: 55px;">-->
+                            <!--Pay with paytm-->
+                            <!--</button>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
