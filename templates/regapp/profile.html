@@ -56,15 +56,17 @@
                             </a>
                         </div>
                         <div class="name">
-                            <h3 class="title" style="margin-bottom:0; margin-top:20px;">{{ user_profile.full_name }}</h3>
+                            <h3 class="title" style="margin-bottom:0em; margin-top:1em;">
+                                {{ user_profile.full_name }}</h3>
                             <p class="text-muted">{{ "@"|add:user_profile.username }}</p>
                             <h6 style="margin-top:20px;">{{ user_profile.short_bio }}</h6>
                         </div>
                     </div>
                 </div>
-                <div class="description text-center">
-                    <p>{{ user_profile.profile_description }}</p>
-                </div>
+                <!--<div class="description text-center">-->
+                <!--<p>{{ user_profile.profile_description }}</p>-->
+                <!--</div>-->
+                <br/>
                 <div class="nav-align-center">
                     {% if user_profile.social_links|get_item:'facebook_details,facebook_link' %}
                     <a href="{{ user_profile.social_links|get_item:'facebook_details,facebook_link' }}"
@@ -101,6 +103,8 @@
                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
                         <i class="fa fa-github"></i></a>
                     {% endif %}
+                    <br/>
+                    <br/>
                     <hr/>
                 </div>
 
@@ -177,20 +181,27 @@
 
 
                 {% if user_profile.is_creator %}
+
+                <div class="section text-center">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h3 class="title">ABOUT CREATOR</h3>
+                            <h5 class="description">Learn about about what we do, what we need and how you can help
+                                us.</h5>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
-                    <div class="col-md-6">
-                        <h3>Featured Video</h3>
-                        <br/>
+                    <div style="margin-left: 1em; margin-right: 1em; margin-top: 1em; margin-bottom: 1em;">
                         <div class="video-container">
-                            <iframe width="500" height="280"
+                            <iframe width="500" height="280" align="left" style="margin-right: 2em; margin-bottom: 2em;"
                                     src="{{ user_profile.featured_video }}" frameborder="0"
                                     allowfullscreen></iframe>
                         </div>
                     </div>
-                    <div class="col-md-4 col-md-offset-1">
-                        <h3>Featured Text</h3>
-                        <br/>
-                        <p>{{ user_profile.featured_text }}</p>
+                    <div style="margin-left: 1em; margin-right: 1em; margin-top: 1em; margin-bottom: 1em;">
+                        <p>{{ user_profile.profile_description }}</p>
                     </div>
                 </div>
                 <br/>
