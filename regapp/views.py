@@ -474,9 +474,6 @@ def login_redirect(request):
 # Use for social_links in user model
 @register.filter
 def get_item(dictionary, args):
-    print("==================================")
-    print(dictionary)
-    print (args)
     if args is None or dictionary is None or dictionary is "":
         return ""
     arg_list = [arg.strip() for arg in args.split(',')]
