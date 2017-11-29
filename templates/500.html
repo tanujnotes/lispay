@@ -1,0 +1,61 @@
+{% extends "regapp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Lisplay - Error!{% endblock %}
+
+{% block content %}
+
+<div class="profile-page components-page">
+    <div class="wrapper">
+        <div class="header header-filter" style="background-image: url('{{ STATIC_URL }}img/examples/thank_you.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1 class="title text-center">Error!</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main main-raised">
+            <div class="container">
+                <div class="row">
+                    <div class="profile">
+                        <div class="avatar">
+                            <img src="{% static 'img/error.png' %}" alt="Circle Image"
+                                 class="img-circle img-responsive img-raised">
+                        </div>
+                        <div class="name">
+                            <br/>
+                            <h3>Oops! This should not have happened.</h3>
+                            <h5 class="description" style="margin-top:1em; margin-bottom:1em;">Please try again and if
+                                you see this page again, please contact us. Sorry for the trouble.</h5>
+                            <div class="nav-align-center">
+                                <a href="https://facebook.com/lisplay"
+                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-facebook"></i></a>
+                                <a href="htts://twitter.com/lisplayon"
+                                   target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-twitter"></i></a>
+                                <a href="mailto:support@lisplay.com?Subject=Hello%20there!"
+                                   target="_top" class="btn btn-simple btn-just-icon btn-default">
+                                    <i class="fa fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <hr/>
+                <br/>
+                <p class="description text-center" style="margin-top:0;">
+                    Go back to <a href="{% url 'index' %}">home page</a>.
+                </p>
+                </p>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
