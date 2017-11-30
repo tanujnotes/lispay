@@ -4,6 +4,7 @@ from io import BytesIO
 
 from PIL import Image, ImageOps
 from django.db.models import Sum
+from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -12,7 +13,7 @@ from django.shortcuts import render, redirect
 
 from dash.forms import UpdateCreatorForm
 from regapp.forms import UpdateProfileForm
-from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser, PaymentModel
+from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser, PaymentModel, DataDumpModel
 
 
 @login_required
@@ -108,6 +109,12 @@ def update_profile(request):
                 user.thumbnail = im
             user.save()
             messages.add_message(request, messages.INFO, "Profile updated successfully!")
+            try:
+                data = serializers.serialize('json', [user, ])
+                dump = DataDumpModel(event_type="profile_updated", data=data)
+                dump.save()
+            except:
+                pass
             return redirect(update_profile)
         else:
             error = "Please fill all the required fields!"
@@ -160,6 +167,12 @@ def creator_details(request):
                 "categories": CATEGORY_CHOICES,
                 "message": message,
             }
+            try:
+                data = serializers.serialize('json', [user, ])
+                dump = DataDumpModel(event_type="creator_details_updated", data=data)
+                dump.save()
+            except:
+                pass
             return render(request, 'dash/creator_details.html', context)
         else:
             error = "Invalid values in form!"

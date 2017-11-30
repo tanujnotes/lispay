@@ -166,6 +166,8 @@ def thank_you(request):
         binary_response = request.body
         logger.info(binary_response)
         response = parse.unquote(binary_response.decode("utf-8"))
+        dump = DataDumpModel(event_type="thank_you_event", data=response)
+        dump.save()
         key_value = response.split('&')
         key_value_dict = {}
         for pair in key_value:
@@ -329,6 +331,8 @@ def show_user_profile(request, profile_username):
                                  currency=response['item']['currency'],
                                  notes=response['notes'])
             plan.save()
+            dump = DataDumpModel(event_type="subscription_plan_created", data=response)
+            dump.save()
         else:
             return render(request, 'regapp/profile.html',
                           {'user_profile': user_profile, 'error': "Failed to create subscription. Please try again!"})
