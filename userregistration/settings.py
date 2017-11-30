@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'regapp',
-    'registration',  # Should be above admin immediately above auth
+    'regapp',  # Should be above registration
+    'registration',  # Should be above admin and immediately above auth
     'django.contrib.auth',
     'django.contrib.admin',
     'raven.contrib.django.raven_compat',
