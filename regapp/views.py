@@ -225,9 +225,9 @@ def show_user_profile(request, profile_username):
         return redirect(index)
     # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
-    featured_list = {}
+    subscribed_to = {}
     if request.user.is_authenticated() and request.user.username == profile_username:
-        featured_list = SubscriptionModel.objects.filter(
+        subscribed_to = SubscriptionModel.objects.filter(
             subscriber=MyUser.objects.get(username=request.user.username)).filter(
             status__in=['authenticated', 'active', 'pending'])
 
@@ -247,11 +247,16 @@ def show_user_profile(request, profile_username):
                 subscription.save()
                 dump = DataDumpModel(event_type="subscription_cancelled", data=response)
                 dump.save()
+
+                subscribed_to = SubscriptionModel.objects.filter(
+                    subscriber=MyUser.objects.get(username=request.user.username)).filter(
+                    status__in=['authenticated', 'active', 'pending'])
                 return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile, 'message': "Your subscription was cancelled."})
+                              {'user_profile': user_profile, 'subscribed_to': subscribed_to,
+                               'message': "Your subscription was cancelled."})
             else:
                 return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile,
+                              {'user_profile': user_profile, 'subscribed_to': subscribed_to,
                                'error': "Subscription cancellation failed. Please try again."})
 
         try:
@@ -297,7 +302,7 @@ def show_user_profile(request, profile_username):
                 dump.save()
             else:
                 return render(request, 'regapp/profile.html',
-                              {'user_profile': user_profile,
+                              {'user_profile': user_profile, 'subscribed_to': subscribed_to,
                                'error': "Failed to create subscription. Please try again!"})
 
         # Create the plan
@@ -335,7 +340,8 @@ def show_user_profile(request, profile_username):
             dump.save()
         else:
             return render(request, 'regapp/profile.html',
-                          {'user_profile': user_profile, 'error': "Failed to create subscription. Please try again!"})
+                          {'user_profile': user_profile, 'subscribed_to': subscribed_to,
+                           'error': "Failed to create subscription. Please try again!"})
 
         # Create the subscription
         url = "https://api.razorpay.com/v1/subscriptions"
@@ -393,9 +399,10 @@ def show_user_profile(request, profile_username):
 
         else:
             return render(request, 'regapp/profile.html',
-                          {'user_profile': user_profile, 'error': "Failed to create subscription. Please try again!"})
+                          {'user_profile': user_profile, 'subscribed_to': subscribed_to,
+                           'error': "Failed to create subscription. Please try again!"})
 
-    return render(request, 'regapp/profile.html', {'user_profile': user_profile, 'featured_list': featured_list})
+    return render(request, 'regapp/profile.html', {'user_profile': user_profile, 'subscribed_to': subscribed_to})
 
 
 def show_creators(request, category, page="1"):

@@ -140,12 +140,12 @@
                 </div>
                 <hr/>
                 <div class="section text-center" style="background-color:#eee;">
-                    {% if featured_list.exists %}
+                    {% if subscribed_to.exists %}
                     <h3>CREATORS YOU ARE SUPPORTING</h3>
                     <div class="team">
                         <div class="row">
-                            {% if featured_list|length == 1 %}
-                            {% for subscription in featured_list %}
+                            {% if subscribed_to|length == 1 %}
+                            {% for subscription in subscribed_to %}
                             <div class="col-md-4 col-md-offeset-4" style="margin-top:1em; margin-bottom:1em;">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' subscription.creator.username %}">
@@ -168,7 +168,7 @@
                             </div>
                             {% endfor %}
                             {% else %}
-                            {% for subscription in featured_list %}
+                            {% for subscription in subscribed_to %}
                             <div class="col-md-4" style="margin-top:1em; margin-bottom:1em;">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' subscription.creator.username %}">
