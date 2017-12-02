@@ -144,17 +144,40 @@
                     <h3>CREATORS YOU ARE SUPPORTING</h3>
                     <div class="team">
                         <div class="row">
+                            {% ifequal featured_list|length 1 %}
                             {% for subscription in featured_list %}
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="margin-top:1em; margin-bottom:1em;">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' subscription.creator.username %}">
                                         <img src="{{ subscription.creator.thumbnail.url }}" alt="Thumbnail Image"
                                              class="img-raised img-circle">
                                         <h4 class="title">{{ subscription.creator.full_name }}<br/>
-                                            <small class="text-muted">{{ subscription.creator.short_bio }}</small>
+                                            <small class="text-muted">&#8377;{{ subscription.amount }} per month</small>
                                         </h4>
                                     </a>
-                                    <p>&#8377;{{ subscription.amount }} Per Month</p>
+                                    <form class="form" method="post" action=".">
+                                        {% csrf_token %}
+                                        <div class="footer text-center">
+                                            <button class="btn btn-white btn-round btn-xs" name="subscription_id"
+                                                    type="submit" value="{{ subscription.subscription_id }}">
+                                                Cancel Subscription
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            {% for subscription in featured_list %}
+                            <div class="col-md-4 col-md-offset-4" style="margin-top:1em; margin-bottom:1em;">
+                                <div class="team-player">
+                                    <a href="{% url 'show_user_profile' subscription.creator.username %}">
+                                        <img src="{{ subscription.creator.thumbnail.url }}" alt="Thumbnail Image"
+                                             class="img-raised img-circle">
+                                        <h4 class="title">{{ subscription.creator.full_name }}<br/>
+                                            <small class="text-muted">&#8377;{{ subscription.amount }} per month</small>
+                                        </h4>
+                                    </a>
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="footer text-center">
