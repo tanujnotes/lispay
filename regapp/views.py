@@ -405,7 +405,7 @@ def show_user_profile(request, profile_username):
     return render(request, 'regapp/profile.html', {'user_profile': user_profile, 'subscribed_to': subscribed_to})
 
 
-def show_creators(request, category, page="1"):
+def explore_creators(request, category, page="1"):
     try:
         page = int(page)
     except:
@@ -438,7 +438,7 @@ def show_creators(request, category, page="1"):
 
     context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages,
                'subscriber_count': subscriber_count}
-    return render(request, 'regapp/show_creators.html', context)
+    return render(request, 'regapp/explore_creators.html', context)
 
 
 @login_required

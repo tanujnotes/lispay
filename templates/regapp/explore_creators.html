@@ -27,19 +27,19 @@
                         <div class="col-md-2">
                             <div class="fixed-section" data-spy="affix" data-offset-top="340">
                                 <ul>
-                                    <li><a href="/show-creators/all">All</a></li>
-                                    <li><a href="/show-creators/videos-and-films">Videos and Films</a></li>
-                                    <li><a href="/show-creators/music">Music</a></li>
-                                    <li><a href="/show-creators/writing">Writing</a></li>
-                                    <li><a href="/show-creators/arts-and-crafts">Arts and Crafts</a></li>
-                                    <li><a href="/show-creators/games">Games</a></li>
-                                    <li><a href="/show-creators/photography">Photography</a></li>
-                                    <li><a href="/show-creators/science-and-technology">Science and
+                                    <li><a href="/explore-creators/all">All</a></li>
+                                    <li><a href="/explore-creators/videos-and-films">Videos and Films</a></li>
+                                    <li><a href="/explore-creators/music">Music</a></li>
+                                    <li><a href="/explore-creators/writing">Writing</a></li>
+                                    <li><a href="/explore-creators/arts-and-crafts">Arts and Crafts</a></li>
+                                    <li><a href="/explore-creators/games">Games</a></li>
+                                    <li><a href="/explore-creators/photography">Photography</a></li>
+                                    <li><a href="/explore-creators/science-and-technology">Science and
                                         Technology</a></li>
-                                    <li><a href="/show-creators/education">Education</a></li>
-                                    <li><a href="/show-creators/dance-and-theater">Dance and Theater</a></li>
-                                    <li><a href="/show-creators/coding">Coding</a></li>
-                                    <li><a href="/show-creators/others">Others</a></li>
+                                    <li><a href="/explore-creators/education">Education</a></li>
+                                    <li><a href="/explore-creators/dance-and-theater">Dance and Theater</a></li>
+                                    <li><a href="/explore-creators/coding">Coding</a></li>
+                                    <li><a href="/explore-creators/others">Others</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -89,9 +89,9 @@
                             <ul class="pagination pagination-primary">
                                 {% for i in 1|range:total_pages %}
                                 {% if i == page %}
-                                <li class="active"><a href="{% url 'show_creators' 'all' i %}">{{ i }}</a></li>
+                                <li class="active"><a href="{% url 'explore_creators' 'all' i %}">{{ i }}</a></li>
                                 {% else %}
-                                <li><a href="{% url 'show_creators' 'all' i %}">{{ i }}</a></li>
+                                <li><a href="{% url 'explore_creators' 'all' i %}">{{ i }}</a></li>
                                 {% endif %}
                                 {% endfor %}
                             </ul>
