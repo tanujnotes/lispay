@@ -146,7 +146,7 @@
                         <div class="row">
                             {% if subscribed_to|length == 1 %}
                             {% for subscription in subscribed_to %}
-                            <div class="col-md-4 col-md-offeset-4" style="margin-top:1em; margin-bottom:1em;">
+                            <div class="col-md-4 col-md-offset-4" style="margin-top:1em; margin-bottom:1em;">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' subscription.creator.username %}">
                                         <img src="{{ subscription.creator.thumbnail.url }}" alt="Thumbnail Image"
