@@ -212,7 +212,7 @@ def search(request):
     subscriber_count = {}
     for creator in search_results:
         subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
-            status__in=['created', 'authenticated', 'active', 'pending']).count()
+            status__in=['authenticated', 'active', 'pending']).count()
 
     return render(request, 'regapp/search.html', {'search_results': search_results, "search_query": search_query,
                                                   'subscriber_count': subscriber_count})
@@ -229,7 +229,7 @@ def show_user_profile(request, profile_username):
     if request.user.is_authenticated() and request.user.username == profile_username:
         featured_list = SubscriptionModel.objects.filter(
             subscriber=MyUser.objects.get(username=request.user.username)).filter(
-            status__in=['created', 'authenticated', 'active', 'pending'])
+            status__in=['authenticated', 'active', 'pending'])
 
     request.session['creator_username'] = profile_username
 
@@ -427,7 +427,7 @@ def show_creators(request, category, page="1"):
     subscriber_count = {}
     for creator in creators:
         subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
-            status__in=['created', 'authenticated', 'active', 'pending']).count()
+            status__in=['authenticated', 'active', 'pending']).count()
 
     context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages,
                'subscriber_count': subscriber_count}
