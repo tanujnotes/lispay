@@ -40,26 +40,28 @@ Lisplay - Sign up
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         <input type="text" name="username" id="id_username" class="form-control"
-                                               placeholder="Username..." required autofocus>
+                                               maxlength="30" pattern="[A-Za-z0-9]+" placeholder="Username..."
+                                               title="Only alphabet characters and numbers"
+                                               required autofocus>
                                     </div>
 
                                     <div class="input-group">
                                         <span class="input-group-addon"> <i class="fa fa-envelope-open"></i></span>
-                                        <input type="text" name="email" id="id_email" class="form-control"
-                                               placeholder="Email..." required>
+                                        <input type="email" name="email" id="id_email" class="form-control"
+                                               maxlength="75" placeholder="Email..." required>
                                     </div>
 
                                     <div class="input-group">
                                         <span class="input-group-addon"><i
                                                 class="fa fa-lock"></i></span>
-                                        <input type="password" name="password1" id="id_password1"
+                                        <input type="password" name="password1" id="id_password1" minlength="8"
                                                placeholder="Password..." class="form-control" required/>
                                     </div>
 
                                     <div class="input-group">
                                         <span class="input-group-addon"><i
                                                 class="fa fa-lock"></i></span>
-                                        <input type="password" name="password2" id="id_password2"
+                                        <input type="password" name="password2" id="id_password2" minlength="8"
                                                placeholder="Password confirmation..."
                                                class="form-control" required/>
                                     </div>
