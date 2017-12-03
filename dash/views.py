@@ -50,6 +50,7 @@ def update_profile(request):
     user = request.user
     form = UpdateProfileForm(request.POST or None,
                              initial={'full_name': user.full_name,
+                                      'email': user.email,
                                       'mobile': user.mobile,
                                       'social_links': user.social_links})
 

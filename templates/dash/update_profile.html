@@ -63,6 +63,12 @@
             document.getElementById('featured_image_file_name').innerHTML = fileName;
         });
     });
+
+
+
+
+
+
 </script>
 
 <div class="container-fluid">
@@ -95,20 +101,40 @@
                         <h4 class="title">Profile Details</h4>
                         <p class="category">Add/edit Lisplay profile details here</p>
                     </div>
+
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                <h5>Full Name:</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Full name (required)</label>
                                     <input type="text" class="form-control" name="full_name" id="id_full_name"
                                            maxlength="30" value="{{ form.full_name.value }}" required/>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-6">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                <h5>Mobile:</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Mobile</label>
                                     <input type="tel" class="form-control" name="mobile" id="id_mobile"
-                                           minlength="10" maxlength="20" value="{{ form.mobile.value }}"/>
+                                           minlength="9" maxlength="20" value="{{ form.mobile.value }}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                <h5>Email:</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                <div class="form-group label-floating">
+                                    <input type="text" class="form-control" name="email" id="id_email"
+                                           maxlength="30" value="{{ form.email.value }}" readonly disabled/>
                                 </div>
                             </div>
                         </div>
@@ -125,8 +151,7 @@
                                 </button>
                             </div>
                             <div class="col-md-5 col-sm-5 col-xs-6 form-group">
-                                <p id="picture_file_name" class="text-muted" style="margin-top:1.5em;">
-                                    No file selected</p>
+                                <p id="picture_file_name" class="text-muted" style="margin-top:1.5em;"></p>
                             </div>
                         </div>
 
@@ -142,8 +167,7 @@
                                 </button>
                             </div>
                             <div class="col-md-5 col-sm-5 col-xs-6 form-group">
-                                <p id="featured_image_file_name" class="text-muted" style="margin-top:1.5em;">
-                                    No file selected</p>
+                                <p id="featured_image_file_name" class="text-muted" style="margin-top:1.5em;"></p>
                             </div>
                         </div>
 
@@ -151,6 +175,7 @@
                             Update Profile
                         </button>
                         <div class="clearfix"></div>
+
                     </div>
                 </div>
             </div>
