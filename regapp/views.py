@@ -161,6 +161,10 @@ def faq(request):
     return render(request, 'regapp/faq.html', {})
 
 
+def privacy(request):
+    return render(request, 'regapp/privacy_policy.html', {})
+
+
 def thank_you(request):
     try:
         binary_response = request.body

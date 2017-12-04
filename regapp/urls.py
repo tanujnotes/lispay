@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^faq/$', views.faq, name='faq'),
     url(r'^about/$', views.about, name='about'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^privacy/$', views.privacy, name='privacy'),
     url(r'^welcome/$', views.welcome, name='welcome'),
     url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^checkout/$', views.checkout, name='checkout'),
