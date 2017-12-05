@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^checkout/$', views.checkout, name='checkout'),
     url(r'^thank-you/$', views.thank_you, name='thank_you'),
+    url(r'^terms-of-use/$', views.terms_of_use, name='terms_of_use'),
     url(r'^login-redirect/$', views.login_redirect, name='login_redirect'),
     url(r'^explore-creators/(?P<category>[\w\-]+)/$', views.explore_creators, name='explore_creators'),
     url(r'^explore-creators/(?P<category>[\w\-]+)/(?P<page>[0-9]+)/$', views.explore_creators, name='explore_creators'),

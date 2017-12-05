@@ -29,6 +29,8 @@
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
 
+
+
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -53,6 +55,8 @@
         width: 100%;
         color: grey;
     }
+
+
 
 
     </style>
@@ -124,9 +128,10 @@
     <div class="container">
         <nav class="pull-left">
             <ul>
-                <li><a href="{% url 'about' %}">About Us</a></li>
-                <li><a href="{% url 'faq' %}">FAQ</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'terms_of_use' %}">Terms of Use</a></li>
+                <li><a href="{% url 'faq' %}">FAQ</a></li>
             </ul>
         </nav>
         <div class="copyright pull-right"> &copy; 2017 Lisplay</div>
@@ -162,6 +167,8 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
 
 </script>
 
