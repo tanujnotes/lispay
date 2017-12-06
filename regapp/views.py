@@ -233,6 +233,12 @@ def search(request):
     if search_query is None:
         return render(request, 'regapp/index.html', {})
 
+    try:
+        dump = DataDumpModel(event_type="search_lisplay", data={'search_term': search_query})
+        dump.save()
+    except:
+        pass
+
     search_results_available = True
     search_results = MyUser.objects.filter(is_creator=True).annotate(
         search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
