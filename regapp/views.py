@@ -1,14 +1,12 @@
 import ast
 import datetime
-import json
-import requests
-import utils
-import logging
-import hmac
 import hashlib
+import hmac
+import json
+import logging
 from urllib import parse
-from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
 
+import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -18,12 +16,33 @@ from django.template.defaulttags import register
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+import utils
 from regapp.forms import UpdateProfileForm
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
+from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
 logger = logging.getLogger(__name__)
+
+CATEGORY_BACKGROUND = {
+    "ALL": 'https://images.unsplash.com/photo-1504131582848-89af412e36e0?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "MUSIC": 'https://images.unsplash.com/photo-1445985543470-41fba5c3144a?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "MEDIA": 'https://images.unsplash.com/photo-1497015289639-54688650d173?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "GAMES": 'https://images.unsplash.com/photo-1489850846882-35ef10a4b480?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "COMEDY": 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "WRITING": 'https://images.unsplash.com/photo-1462642109801-4ac2971a3a51?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "PODCASTS": 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "EDUCATION": 'https://images.unsplash.com/photo-1462536943532-57a629f6cc60?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "PHOTOGRAPHY": 'https://images.unsplash.com/photo-1495558761807-e324eceafffa?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "PROGRAMMING": 'https://images.unsplash.com/photo-1503444200347-fa86187a2797?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "CRAFTS AND DIY": 'https://images.unsplash.com/photo-1500445040738-cb9363fe7fb5?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "VIDEOS AND FILMS": 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "DANCE AND THEATER": 'https://images.unsplash.com/photo-1479813183133-f2e9b38ed6c4?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "DRAWING AND PAINTING": 'https://images.unsplash.com/photo-1456086272160-b28b0645b729?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "SCIENCE AND TECHNOLOGY": 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1650&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "OTHERS": 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1652&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+}
 
 
 @csrf_exempt
@@ -445,7 +464,7 @@ def explore_creators(request, category, page="1"):
             status__in=['authenticated', 'active', 'pending']).count()
 
     context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages,
-               'subscriber_count': subscriber_count}
+               'subscriber_count': subscriber_count, 'background': CATEGORY_BACKGROUND[category]}
     return render(request, 'regapp/explore_creators.html', context)
 
 

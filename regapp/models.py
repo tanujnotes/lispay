@@ -1,25 +1,29 @@
-from django.db import models
-from django.utils import timezone
-from . import PaymentStatus
-from django.contrib.postgres.fields import ArrayField, JSONField
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.contrib.postgres.fields import ArrayField, JSONField
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
+from django.utils import timezone
+
+from . import PaymentStatus
 
 CATEGORY_CHOICES = (
     ("OTHERS", 'Others'),
-    ("VIDEOS AND FILMS", 'Videos and Films'),
     ("MUSIC", 'Music'),
-    ("WRITING", 'Writing'),
-    ("ARTS AND CRAFTS", 'Arts and Crafts'),
-    ("GAMES", 'Games'),
     ("MEDIA", 'Media'),
-    ("PHOTOGRAPHY", 'Photography'),
-    ("SCIENCE AND TECHNOLOGY", 'Science and Technology'),
+    ("GAMES", 'Games'),
+    ("COMEDY", 'Comedy'),
+    ("WRITING", 'Writing'),
+    ("PODCASTS", 'Podcasts'),
     ("EDUCATION", 'Education'),
+    ("PHOTOGRAPHY", 'Photography'),
+    ("PROGRAMMING", 'Programming'),
+    ("CRAFTS AND DIY", 'Crafts and DIY'),
+    ("VIDEOS AND FILMS", 'Videos and Films'),
     ("DANCE AND THEATER", 'Dance and Theater'),
-    ("CODING", 'Coding'),
+    ("DRAWING AND PAINTING", 'Drawing and Painting'),
+    ("SCIENCE AND TECHNOLOGY", 'Science and Technology'),
 )
 
 SUBS_STATUS = (

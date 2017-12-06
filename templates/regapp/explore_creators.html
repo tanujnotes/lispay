@@ -10,11 +10,11 @@
 
     <div class="wrapper">
         <div class="header header-filter"
-             style="background-image: url('https://images.unsplash.com/photo-1470219556762-1771e7f9427d?auto=format&fit=crop&w=2378&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D');">
+             style="background-image: url({{ background }});">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h1 class="title text-center">Creators</h1>
+                        <h1 class="title text-center">Explore Creators</h1>
                     </div>
                 </div>
             </div>
@@ -24,31 +24,35 @@
             <div class="section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="fixed-section" data-spy="affix" data-offset-top="340">
+                        <div class="col-md-3 col-sm-4">
+                            <div class="fixed-section" data-spy="affix" data-offset-top="320">
                                 <ul>
                                     <li><a href="/explore-creators/all">All</a></li>
-                                    <li><a href="/explore-creators/videos-and-films">Videos and Films</a></li>
                                     <li><a href="/explore-creators/music">Music</a></li>
-                                    <li><a href="/explore-creators/writing">Writing</a></li>
-                                    <li><a href="/explore-creators/arts-and-crafts">Arts and Crafts</a></li>
+                                    <li><a href="/explore-creators/media">Media</a></li>
                                     <li><a href="/explore-creators/games">Games</a></li>
-                                    <li><a href="/explore-creators/photography">Photography</a></li>
-                                    <li><a href="/explore-creators/science-and-technology">Science and
-                                        Technology</a></li>
+                                    <li><a href="/explore-creators/comedy">Comedy</a></li>
+                                    <li><a href="/explore-creators/writing">Writing</a></li>
+                                    <li><a href="/explore-creators/podcasts">Podcasts</a></li>
                                     <li><a href="/explore-creators/education">Education</a></li>
+                                    <li><a href="/explore-creators/photography">Photography</a></li>
+                                    <li><a href="/explore-creators/programming">Programming</a></li>
+                                    <li><a href="/explore-creators/crafts-and-diy">Crafts and DIY</a></li>
+                                    <li><a href="/explore-creators/videos-and-films">Videos and Films</a></li>
                                     <li><a href="/explore-creators/dance-and-theater">Dance and Theater</a></li>
-                                    <li><a href="/explore-creators/coding">Coding</a></li>
-                                    <li><a href="/explore-creators/others">Others</a></li>
+                                    <li><a href="/explore-creators/drawing-and-painting">Drawing and Painting</a></li>
+                                    <li><a href="/explore-creators/science-and-technology">Science and Technology</a>
+                                    </li>
+                                    <li><a href="/explore-creators/others">Everything else</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-8 col-md-offset-1">
+                        <div class="col-md-8 col-sm-8">
 
                             {% ifequal creators.start_index 0 %}
                             <h4 class="text-danger col-xs-offset-1">No creators found in this category!</h4>
                             {% else %}
-                            <h3 class="col-xs-offset-1">Creators</h3>
+                            <h3 class="col-xs-offset-1">{{ category }}</h3>
                             {% endifequal %}
                             <br/>
                             <br/>
