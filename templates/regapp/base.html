@@ -28,6 +28,9 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
+
+
+
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -52,6 +55,9 @@
         width: 100%;
         color: grey;
     }
+
+
+
     </style>
 </head>
 
@@ -127,16 +133,24 @@
 {% block footer %}
 <footer class="footer">
     <div class="container">
-        <nav class="pull-left">
-            <ul>
+        <nav class="col-md-6 col-sm-6 col-xs-6 pull-left">
+            <ul class="nav navbar-nav">
                 <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
                 <li><a href="{% url 'terms_of_use' %}">Terms of Use</a></li>
                 <li><a href="{% url 'faq' %}">FAQ</a></li>
             </ul>
         </nav>
-        <div class="copyright pull-right"> &copy; 2017 Lisplay</div>
+        <nav class="col-md-6 col-sm-6 col-xs-6 pull-right">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://fb.com/lisplay">Facebook</a></li>
+                <li><a href="https://twitter.com/lisplay">Twitter</a></li>
+                <li><a href="mailto:support@lisplay.com">Email</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=com.lisplay">Play Store</a></li>
+            </ul>
+        </nav>
     </div>
+    <div class="copyright text-center"> &copy; 2017 Lisplay</div>
 </footer>
 {% endblock %}
 
@@ -168,6 +182,9 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
+
 </script>
 
 </body>
