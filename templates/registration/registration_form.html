@@ -36,7 +36,13 @@ Lisplay - Sign up
                                 </div>
                                 <!--<p class="text-divider">Or Be Classical</p>-->
                                 <div class="content">
-                                    {{ form.errors }}
+                                    <!--{{ form.errors }}-->
+                                    <ul class="errorlist">
+                                        {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         <input type="text" name="username" id="id_username" class="form-control"
@@ -44,12 +50,14 @@ Lisplay - Sign up
                                                title="Only alphabet characters and numbers"
                                                required autofocus>
                                     </div>
+                                    {{ form.username.errors }}
 
                                     <div class="input-group">
                                         <span class="input-group-addon"> <i class="fa fa-envelope-open"></i></span>
                                         <input type="email" name="email" id="id_email" class="form-control"
                                                maxlength="75" placeholder="Email..." required>
                                     </div>
+                                    {{ form.email.errors }}
 
                                     <div class="input-group">
                                         <span class="input-group-addon"><i
@@ -57,6 +65,7 @@ Lisplay - Sign up
                                         <input type="password" name="password1" id="id_password1" minlength="8"
                                                placeholder="Password..." class="form-control" required/>
                                     </div>
+                                    {{ form.password1.errors }}
 
                                     <div class="input-group">
                                         <span class="input-group-addon"><i
@@ -65,6 +74,7 @@ Lisplay - Sign up
                                                placeholder="Password confirmation..."
                                                class="form-control" required/>
                                     </div>
+                                    {{ form.password2.errors }}
 
                                     <div class="checkbox">
                                         <label>

@@ -25,14 +25,17 @@ Lisplay - Login
                                     <h4>Login</h4>
                                 </div>
                                 <div class="content">
-                                    {% for error in form.non_field_errors %}
-                                    <p class="description text-center">{{ error }}</p>
-                                    {% endfor %}
+                                    <ul class="errorlist">
+                                        {% for error in form.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
                                     <div class="input-group">
                                         <span class="input-group-addon"> <i class="fa fa-user"></i></span>
                                         <input type="text" name="username" id="id_username" class="form-control"
                                                maxlength="30" placeholder="Username..." required autofocus>
                                     </div>
+                                    {{ form.username.errors }}
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-lock"></i>
@@ -40,6 +43,7 @@ Lisplay - Login
                                         <input type="password" name="password" id="id_password"
                                                placeholder="Password..." class="form-control" required/>
                                     </div>
+                                    {{ form.password.errors }}
                                     <!--<input name="next" type="hidden"-->
                                     <!--value="show_user_profile">-->
                                 </div>
