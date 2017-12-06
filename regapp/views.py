@@ -233,15 +233,21 @@ def search(request):
     if search_query is None:
         return render(request, 'regapp/index.html', {})
 
+    search_results_available = True
     search_results = MyUser.objects.filter(is_creator=True).annotate(
         search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
+    if not search_results:
+        search_results_available = False
+        search_results = MyUser.objects.filter(is_creator=True).order_by('-created_at')
 
     subscriber_count = {}
     for creator in search_results:
         subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
             status__in=['authenticated', 'active', 'pending']).count()
 
-    return render(request, 'regapp/search.html', {'search_results': search_results, "search_query": search_query,
+    return render(request, 'regapp/search.html', {'search_results': search_results,
+                                                  'search_query': search_query,
+                                                  'search_results_available': search_results_available,
                                                   'subscriber_count': subscriber_count})
 
 
