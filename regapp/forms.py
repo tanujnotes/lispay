@@ -1,6 +1,7 @@
 from django import forms
-from regapp.models import MyUser
 from registration.forms import RegistrationForm
+
+from regapp.models import MyUser
 
 
 class CustomUserForm(RegistrationForm):
@@ -11,6 +12,7 @@ class CustomUserForm(RegistrationForm):
 
 class UpdateProfileForm(forms.ModelForm):
     full_name = forms.CharField(max_length=30, required=True)
+    short_bio = forms.CharField(max_length=50, required=False)
     email = forms.EmailField(max_length=75, required=False)
     mobile = forms.CharField(max_length=20, required=False)
     social_links = forms.CharField(required=False)
@@ -18,4 +20,4 @@ class UpdateProfileForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('full_name', 'email', 'mobile', 'social_links', 'is_creator')
+        fields = ('full_name', 'short_bio', 'email', 'mobile', 'social_links', 'is_creator')

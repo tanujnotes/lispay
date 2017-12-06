@@ -1,16 +1,15 @@
 import datetime
-import utils
 from io import BytesIO
 
 from PIL import Image, ImageOps
-from django.db.models import Sum
-from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.http import HttpResponseRedirect
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 
+import utils
 from dash.forms import UpdateCreatorForm
 from regapp.forms import UpdateProfileForm
 from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser, PaymentModel, DataDumpModel
@@ -52,11 +51,13 @@ def update_profile(request):
                              initial={'full_name': user.full_name,
                                       'email': user.email,
                                       'mobile': user.mobile,
+                                      'short_bio': user.short_bio,
                                       'social_links': user.social_links})
 
     if request.method == 'POST':
         if form.is_valid():
-            user.full_name = request.POST['full_name'].strip()
+            user.full_name = request.POST.get('full_name', "").strip()
+            user.short_bio = request.POST.get('short_bio', "").strip()
             user.mobile = request.POST.get('mobile', "").strip()
             user.social_links = utils.get_social_details(request)
             if 'featured_image' in request.FILES:

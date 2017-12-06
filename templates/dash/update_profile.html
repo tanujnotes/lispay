@@ -63,12 +63,6 @@
             document.getElementById('featured_image_file_name').innerHTML = fileName;
         });
     });
-
-
-
-
-
-
 </script>
 
 <div class="container-fluid">
@@ -110,7 +104,21 @@
                             <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
                                     <input type="text" class="form-control" name="full_name" id="id_full_name"
-                                           maxlength="30" value="{{ form.full_name.value }}" required/>
+                                           maxlength="30" value="{{ form.full_name.value }}"
+                                           placeholder="Your popular name" required/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                <h5>Short Bio:</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                <div class="form-group label-floating">
+                                    <input type="text" class="form-control" name="short_bio" id="id_short_bio"
+                                           maxlength="50" value="{{ form.short_bio.value }}"
+                                           placeholder="One short line about you"/>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +130,8 @@
                             <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
                                     <input type="tel" class="form-control" name="mobile" id="id_mobile"
-                                           minlength="9" maxlength="20" value="{{ form.mobile.value }}"/>
+                                           minlength="9" maxlength="20" value="{{ form.mobile.value }}"
+                                           placeholder="Your mobile number"/>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +143,8 @@
                             <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
                                     <input type="text" class="form-control" name="email" id="id_email"
-                                           maxlength="30" value="{{ form.email.value }}" readonly disabled/>
+                                           maxlength="30" value="{{ form.email.value }}"
+                                           placeholder="Your email address" readonly disabled/>
                                 </div>
                             </div>
                         </div>
@@ -170,8 +180,8 @@
                                 <p id="featured_image_file_name" class="text-muted" style="margin-top:1.5em;"></p>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary btn-round btn-lg pull-right">
+                        <hr/>
+                        <button type="submit" class="btn btn-primary btn-round pull-right">
                             Update Profile
                         </button>
                         <div class="clearfix"></div>
@@ -209,10 +219,10 @@
                     </div>
                     <div class="card-content">
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Facebook</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="facebook_link" id="id_facebook_link"
                                            value="{{ user.social_links|get_item:'facebook_details,facebook_link' }}"
@@ -222,10 +232,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Twitter</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="twitter_link" id="id_twitter_link"
                                            value="{{ user.social_links|get_item:'twitter_details,twitter_link' }}"
@@ -235,10 +245,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Instagram</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="instagram_link" id="id_instagram_link"
                                            value="{{ user.social_links|get_item:'instagram_details,instagram_link' }}"
@@ -248,10 +258,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Snapchat</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="snapchat_link" id="id_snapchat_link"
                                            value="{{ user.social_links|get_item:'snapchat_details,snapchat_link' }}"
@@ -261,10 +271,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>YouTube</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="youtube_link" id="id_youtube_link"
                                            value="{{ user.social_links|get_item:'youtube_details,youtube_link' }}"
@@ -274,10 +284,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Twitch</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="twitch_link" id="id_twitch_link"
                                            value="{{ user.social_links|get_item:'twitch_details,twitch_link' }}"
@@ -287,10 +297,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Dribble</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="dribble_link" id="id_dribble_link"
                                            value="{{ user.social_links|get_item:'dribble_details,dribble_link' }}"
@@ -300,10 +310,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Linkedin</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="linkedin_link" id="id_linkedin_link"
                                            value="{{ user.social_links|get_item:'linkedin_details,linkedin_link' }}"
@@ -313,10 +323,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Github</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="github_link" id="id_github_link"
                                            value="{{ user.social_links|get_item:'github_details,github_link' }}"
@@ -326,10 +336,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Blog</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="blog_link" id="id_blog_link"
                                            value="{{ user.social_links|get_item:'blog_details,blog_link' }}"
@@ -339,10 +349,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Website</h5>
                             </div>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-9 col-sm-9 col-xs-8">
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="website_link" id="id_website_link"
                                            value="{{ user.social_links|get_item:'website_details,website_link' }}"
@@ -351,7 +361,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-round btn-lg pull-right">Update Details
+                        <button type="submit" class="btn btn-primary btn-round pull-right">
+                            Update Details
                         </button>
                         <div class="clearfix"></div>
                     </div>
