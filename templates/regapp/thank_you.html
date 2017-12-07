@@ -27,11 +27,11 @@
                     <div class="profile">
                         <div class="avatar">
                             {% if creator %}
-                            <img src="{% static 'img/check.png' %}" alt="Circle Image"
-                                 class="img-circle img-responsive img-raised">
+                            <img style="min-height:160px; min-width:160px;" src="{% static 'img/check.png' %}"
+                                 alt="Success" class="img-circle img-responsive img-raised">
                             {% else %}
-                            <img src="{% static 'img/warning.png' %}" alt="Circle Image"
-                                 class="img-circle img-responsive img-raised">
+                            <img style="min-height:160px; min-width:160px;" src="{% static 'img/warning.png' %}"
+                                 alt="Error" class="img-circle img-responsive img-raised">
                             {% endif %}
                         </div>
                         <div class="name">

@@ -118,7 +118,8 @@
                             <div class="col-md-4">
                                 <div class="team-player">
                                     <a href="{% url 'show_user_profile' featured_user.username %}">
-                                        <img src="{{ featured_user.picture.url }}" alt="Thumbnail Image"
+                                        <img style="min-height:160px; min-width:160px; overflow:hidden;"
+                                             src="{{ featured_user.picture.url }}" alt="{{ featured_user.username }}"
                                              class="img-raised img-circle">
                                     </a>
                                     <h4 class="title">{{ featured_user.full_name }}<br/>

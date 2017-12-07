@@ -51,8 +51,8 @@
                     <div class="profile">
                         <div class="avatar">
                             <a href="{{ user_profile.picture.url }}" target="_blank">
-                                <img src="{{ user_profile.thumbnail.url }}" alt="Circle Image"
-                                     class="img-circle img-responsive img-raised">
+                                <img style="min-height:160px; min-width:160px;" src="{{ user_profile.thumbnail.url }}"
+                                     alt="{{ user_profile.username }}" class="img-circle img-responsive img-raised">
                             </a>
                         </div>
                         <div class="name">
