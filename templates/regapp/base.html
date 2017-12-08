@@ -28,22 +28,18 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
-
-
-
-
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
 
     <style>
     input[type=search] {
-        width: 160px;
+        width: 200px;
         box-sizing: border-box;
-        border: 2px solid #ccc;
+        border: 2px solid rgba(0,0,0,0.0);
         border-radius: 4px;
         font-size: 16px;
-        background-color: white;
+        background-color: rgba(0,0,0,0.2);
         background-image: url('{{ STATIC_URL }}img/searchicon.png');
         background-size: 20px 20px;
         background-position: 10px 12px;
@@ -54,12 +50,8 @@
     }
     input[type=search]:focus {
         width: 100%;
-        color: grey;
+        color: white;
     }
-
-
-
-
     </style>
 </head>
 
@@ -78,42 +70,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                {% if user.is_authenticated %}
-                <a class="navbar-brand" href="{% url 'show_user_profile' user.username %}">Lisplay</a>
-                {% else %}
                 <a class="navbar-brand" href="{% url 'index' %}">Lisplay</a>
-                {% endif %}
             </div>
 
             <div class="collapse navbar-collapse" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
-                    <li style="margin-top:0.3em;">
-                        <form class="form navbar-form navbar-right" role="search" method="post"
-                              action="{% url 'search' %}">
+                    <li style="margin-left:10px;margin-right:10px;">
+                        <form class="form" method="post" action="{% url 'search' %}">
                             {% csrf_token %}
-                            <div class="form-group is-empty">
-                                <input type="search" name="search" class="form-control" placeholder="Search creators"
-                                       value="{{ search_query }}">
-                                <span class="material-input"></span>
-                            </div>
+                            <input type="search" name="search" id="id_search" placeholder="Search...">
                         </form>
                     </li>
                     <li><a href="{% url 'explore_creators' 'all' %}">Explore creators</a></li>
 
                     {% if user.is_authenticated %}
+                    <li><a href="{% url 'show_user_profile' user.username %}">{{ user.username }}</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}<b
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b
                                 class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'show_user_profile' user.username %}">
-                                My Profile
-                            </a></li>
-                            <li class="divider"></li>
                             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                             <li><a href="{% url 'update_profile' %}">Edit Profile</a></li>
                             <li><a href="{% url 'creator_details' %}">Creator Details</a></li>
                             <li class="divider"></li>
                             <li><a href="{% url 'auth_password_change' %}">Change Password</a></li>
+                            <li class="divider"></li>
                             <li><a href="{% url 'auth_logout' %}">Logout</a></li>
                         </ul>
                     </li>
@@ -185,10 +166,6 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
-
-
-
-
 </script>
 
 </body>
