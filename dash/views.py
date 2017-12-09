@@ -139,7 +139,7 @@ def creator_details(request):
                                       'short_bio': user.short_bio,
                                       'profile_description': user.profile_description,
                                       'category': user.category,
-                                      'featured_video': user.featured_video,
+                                      'featured_video': user.featured_video if user.featured_video != "https://www.youtube.com/embed/oc_vB5Xcx1o" else "",
                                       'featured_text': user.featured_text})
 
     if request.method == 'POST':

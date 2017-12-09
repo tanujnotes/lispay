@@ -65,6 +65,7 @@
         }
     }
 
+
 </script>
 
 <div class="container-fluid">
@@ -163,7 +164,7 @@
                                     <label class="control-label">Short bio</label>
                                     <input type="text" class="form-control" name="short_bio" id="id_short_bio"
                                            placeholder="Short bio (e.g. I create music videos and travel vlogs)"
-                                           minlength="10" maxlength="50" value="{{ user.short_bio }}" required/>
+                                           minlength="10" maxlength="50" value="{{ form.short_bio.value }}" required/>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +179,7 @@
                                     <label class="control-label">Profile description</label>
                                     <textarea class="form-control" rows="3" name="profile_description"
                                               id="id_profile_description" minlength="100" maxlength="1000"
-                                              required>{{ user.profile_description }}</textarea>
+                                              required>{{ form.profile_description.value }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +195,7 @@
                                     <label class="control-label">Thank you note</label>
                                     <textarea class="form-control" rows="3" name="featured_text" id="id_featured_text"
                                               minlength="50" maxlength="200"
-                                              required>{{ user.featured_text }}</textarea>
+                                              required>{{ form.featured_text.value }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -202,9 +203,9 @@
                         <div class="row form-group">
                             <h4>Featured Video <span class="text-gray"> (optional)</span></h4>
                             <div class="stats" data-placement="top" title="No YouTube Video?" data-toggle="popover"
-                                 data-content="If you don't have a YouTube channel/video, just shoot a short video
+                                 data-content="If you don't have a YouTube channel/video, just record a short video
                                  using your smartphone and send it to us. We will upload it on our channel and feature
-                                 it on your Lisplay page. We'll assist you with the whole process; just send us an
+                                 it on your Lisplay page. We'll assist you with the whole process, just send us an
                                  email at support@lisplay.com">
                                 <p>Please enter a YouTube link of your work or an introduction video. The video will be
                                     featured on your profile. <a href="#">Need help?</a>
@@ -216,7 +217,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Featured video link</label>
                                     <input type="url" class="form-control" name="featured_video" id="id_featured_video"
-                                           value="{{ user.featured_video }}"/>
+                                           value="{{ form.featured_video.value }}"/>
                                 </div>
                             </div>
                         </div>
