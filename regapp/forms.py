@@ -3,11 +3,21 @@ from registration.forms import RegistrationForm
 
 from regapp.models import MyUser
 
+RESTRICTED_USERNAMES = (
+    'admin', 'lisplay', 'accounts', 'dashboard', 'update-profile', 'creator-details', 'faq', 'about', 'search',
+    'privacy', 'welcome', 'webhook', 'checkout', 'thank-you', 'terms-of-use', 'login-redirect', 'explore-creators')
+
 
 class CustomUserForm(RegistrationForm):
     class Meta:
         model = MyUser
         fields = ('username', 'email')
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username").strip().lower()
+        if username in RESTRICTED_USERNAMES:
+            raise forms.ValidationError("Username not available")
+        return username
 
 
 class UpdateProfileForm(forms.ModelForm):

@@ -48,14 +48,15 @@ Lisplay - Sign up
                                         <input type="text" name="username" id="id_username" class="form-control"
                                                maxlength="30" pattern="[a-z0-9]+" placeholder="Username..."
                                                title="Use only lowercase letters and numbers for Username"
-                                               required autofocus>
+                                               value="{{ form.username.value|default_if_none:'' }}" required autofocus>
                                     </div>
                                     {{ form.username.errors }}
 
                                     <div class="input-group">
                                         <span class="input-group-addon"> <i class="fa fa-envelope-open"></i></span>
                                         <input type="email" name="email" id="id_email" class="form-control"
-                                               maxlength="75" placeholder="Email..." required>
+                                               maxlength="75" placeholder="Email..."
+                                               value="{{ form.email.value|default_if_none:'' }}" required>
                                     </div>
                                     {{ form.email.errors }}
 
