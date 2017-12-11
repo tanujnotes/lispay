@@ -140,7 +140,10 @@ def creator_details(request):
                                       'profile_description': user.profile_description,
                                       'category': user.category,
                                       'featured_video': user.featured_video if user.featured_video != "https://www.youtube.com/embed/oc_vB5Xcx1o" else "",
-                                      'featured_text': user.featured_text})
+                                      'featured_text': user.featured_text,
+                                      'club_2_reward': user.club_2_reward,
+                                      'club_3_reward': user.club_3_reward,
+                                      'club_4_reward': user.club_4_reward})
 
     if request.method == 'POST':
         if form.is_valid():
@@ -152,6 +155,9 @@ def creator_details(request):
             user.short_bio = request.POST.get('short_bio', "").strip()
             user.profile_description = request.POST.get('profile_description', "").strip()
             user.featured_text = request.POST.get('featured_text', "").strip()
+            user.club_2_reward = request.POST.get('club_2_reward', "").strip()
+            user.club_3_reward = request.POST.get('club_3_reward', "").strip()
+            user.club_4_reward = request.POST.get('club_4_reward', "").strip()
             featured_video = request.POST.get('featured_video', "").strip()
             user.featured_video = utils.clean_youtube_link(featured_video)
 

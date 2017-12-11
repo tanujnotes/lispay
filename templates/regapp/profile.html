@@ -249,7 +249,13 @@
                                 </div>
                             </div>
                         </form>
+                        {% if user_profile.club_2_reward %}
+                        <p class="text-muted" style="margin: 1em;">
+                            <strong>REWARD: </strong> {{ user_profile.club_2_reward }}
+                        </p>
+                        {% endif %}
                     </div>
+
                     <div class="col-md-4" style="margin-bottom: 80px;">
                         <form class="form" method="post" action=".">
                             {% csrf_token %}
@@ -278,7 +284,13 @@
                                 </div>
                             </div>
                         </form>
+                        {% if user_profile.club_3_reward %}
+                        <p class="text-muted" style="margin: 1em;">
+                            <strong>REWARD: </strong> {{ user_profile.club_3_reward }}
+                        </p>
+                        {% endif %}
                     </div>
+
                     <div class="col-md-4" style="margin-bottom: 80px;">
                         <form class="form" method="post" action=".">
                             {% csrf_token %}
@@ -308,8 +320,14 @@
                                 </div>
                             </div>
                         </form>
+                        {% if user_profile.club_4_reward %}
+                        <p class="text-muted" style="margin: 1em;">
+                            <strong>REWARD: </strong> {{ user_profile.club_4_reward }}
+                        </p>
+                        {% endif %}
                     </div>
                 </div>
+
                 {% elif user.username == user_profile.username %}
                 <h4 class="text-center">Are you a creator yourself?</h4>
                 <a href="{% url 'creator_details' %}">

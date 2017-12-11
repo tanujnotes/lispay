@@ -64,8 +64,6 @@
             checkbox.checked = true;
         }
     }
-
-
 </script>
 
 <div class="container-fluid">
@@ -101,10 +99,10 @@
     </div>
     {% endif %}
 
-    <div class="row">
-        <div class="col-md-8">
-            <form class="form" method="post" enctype="multipart/form-data" action=".">
-                {% csrf_token %}
+    <form class="form" method="post" enctype="multipart/form-data" action=".">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
                         <h4 class="title">Creator Details</h4>
@@ -223,31 +221,97 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-round pull-right">
-                            Update Profile
+                            Update Creator Details
                         </button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
-            </form>
+            </div>
+
+            <!--User Card-->
+            <div class="col-md-4">
+                <a href="{% url 'show_user_profile' user.username %}">
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <img class="img" src="{{ user.thumbnail.url }}"/>
+                        </div>
+                        <div class="content">
+                            <h4 class="card-title">{{ user.full_name }}</h4>
+                            <p class="text-muted">{{ "@"|add:user.username }}</p>
+                            <h6 class="category text-gray">{{ user.short_bio }}</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!--End: User Card-->
         </div>
 
-        <!--User Card-->
-        <div class="col-md-4">
-            <a href="{% url 'show_user_profile' user.username %}">
-                <div class="card card-profile">
-                    <div class="card-avatar">
-                        <img class="img" src="{{ user.thumbnail.url }}"/>
+        <!--Supporter Rewards-->
+        {% if user.is_creator %}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header" data-background-color="purple">
+                        <h4 class="title">Supporter Rewards (optional)</h4>
+                        <p class="category">Fill out rewards to be shown on your profile for your supporters</p>
                     </div>
-                    <div class="content">
-                        <h4 class="card-title">{{ user.full_name }}</h4>
-                        <p class="text-muted">{{ "@"|add:user.username }}</p>
-                        <h6 class="category text-gray">{{ user.short_bio }}</h6>
+                    <div class="card-content">
+                        <div class="row form-group">
+                            <h4>Club 2 Reward</h4>
+                            <p>Reward for your supporters in Club 2. [Max 200 characters]</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Club 2 Reward</label>
+                                    <textarea class="form-control" rows="3" name="club_2_reward" id="id_club_2_reward"
+                                              minlength="10" maxlength="200"
+                                              required>{{ form.club_2_reward.value }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <h4>Club 3 Reward</h4>
+                            <p>Reward for your supporters in Club 3. [Max 200 characters]</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Club 3 Reward</label>
+                                    <textarea class="form-control" rows="3" name="club_3_reward" id="id_club_3_reward"
+                                              minlength="10" maxlength="200"
+                                              required>{{ form.club_3_reward.value }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <h4>Club 4 Reward</h4>
+                            <p>Reward for your supporters in Club 4. [Max 200 characters]</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Club 4 Reward</label>
+                                    <textarea class="form-control" rows="3" name="club_4_reward" id="id_club_4_reward"
+                                              minlength="10" maxlength="200"
+                                              required>{{ form.club_4_reward.value }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-round pull-right">
+                            Update Rewards
+                        </button>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
-        <!--End: User Card-->
-    </div>
+    </form>
+    {% endif %}
+    <!--End: Supporter Rewards-->
 </div>
 
 {% endblock %}
