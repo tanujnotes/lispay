@@ -144,6 +144,8 @@ def creator_details(request):
 
     if request.method == 'POST':
         if form.is_valid():
+            was_creator_already = user.is_creator
+
             user.is_creator = ("is_creator" in request.POST)
             user.category = request.POST.get('category', "")
             user.full_name = request.POST.get('full_name', "").strip()
@@ -163,7 +165,10 @@ def creator_details(request):
                 return render(request, 'dash/creator_details.html', context)
 
             user.save()
-            message = "Creator details updated successfully!"
+            if was_creator_already:
+                message = "Creator details updated successfully!"
+            else:
+                message = "Congratulations! Your creator page is active now."
             context = {
                 "form": form,
                 "categories": CATEGORY_CHOICES,
