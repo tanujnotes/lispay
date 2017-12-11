@@ -64,6 +64,10 @@
             checkbox.checked = true;
         }
     }
+
+
+
+
 </script>
 
 <div class="container-fluid">
@@ -265,8 +269,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Club 2 Reward</label>
                                     <textarea class="form-control" rows="3" name="club_2_reward" id="id_club_2_reward"
-                                              minlength="10" maxlength="200"
-                                              required>{{ form.club_2_reward.value }}</textarea>
+                                              minlength="10" maxlength="200">{{ form.club_2_reward.value|default_if_none:'' }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -280,8 +283,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Club 3 Reward</label>
                                     <textarea class="form-control" rows="3" name="club_3_reward" id="id_club_3_reward"
-                                              minlength="10" maxlength="200"
-                                              required>{{ form.club_3_reward.value }}</textarea>
+                                              minlength="10" maxlength="200">{{ form.club_3_reward.value|default_if_none:'' }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -295,8 +297,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Club 4 Reward</label>
                                     <textarea class="form-control" rows="3" name="club_4_reward" id="id_club_4_reward"
-                                              minlength="10" maxlength="200"
-                                              required>{{ form.club_4_reward.value }}</textarea>
+                                              minlength="10" maxlength="200">{{ form.club_4_reward.value|default_if_none:'' }}</textarea>
                                 </div>
                             </div>
                         </div>
