@@ -174,7 +174,8 @@ def creator_details(request):
             if was_creator_already:
                 message = "Creator details updated successfully!"
             else:
-                message = "Congratulations! Your creator page is active now."
+                message = "Congratulations! Your creator page is active now.\n" \
+                          "You can also set rewards for your supporters (scroll down)."
             context = {
                 "form": form,
                 "categories": CATEGORY_CHOICES,
