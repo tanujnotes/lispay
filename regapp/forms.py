@@ -22,7 +22,7 @@ class CustomUserForm(RegistrationForm):
 
 class UpdateProfileForm(forms.ModelForm):
     full_name = forms.CharField(max_length=30, required=True)
-    short_bio = forms.CharField(max_length=30, required=False)
+    short_bio = forms.CharField(max_length=50, required=False)
     email = forms.EmailField(max_length=75, required=False)
     mobile = forms.CharField(max_length=20, required=False)
     social_links = forms.CharField(required=False)
