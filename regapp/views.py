@@ -26,7 +26,7 @@ HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 logger = logging.getLogger(__name__)
 
 CATEGORY_BACKGROUND = {
-    "ALL": 'https://images.unsplash.com/photo-1504131582848-89af412e36e0?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "ALL": 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1652&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
     "MUSIC": 'https://images.unsplash.com/photo-1445985543470-41fba5c3144a?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
     "MEDIA": 'https://images.unsplash.com/photo-1497015289639-54688650d173?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
     "GAMES": 'https://images.unsplash.com/photo-1489850846882-35ef10a4b480?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
@@ -41,7 +41,7 @@ CATEGORY_BACKGROUND = {
     "DANCE AND THEATER": 'https://images.unsplash.com/photo-1479813183133-f2e9b38ed6c4?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
     "DRAWING AND PAINTING": 'https://images.unsplash.com/photo-1456086272160-b28b0645b729?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
     "SCIENCE AND TECHNOLOGY": 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1650&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
-    "OTHERS": 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1652&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
+    "OTHERS": 'https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?auto=format&fit=crop&w=1200&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',
 }
 
 
