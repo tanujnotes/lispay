@@ -63,6 +63,7 @@
             document.getElementById('featured_image_file_name').innerHTML = fileName;
         });
     });
+
 </script>
 
 <div class="container-fluid">
@@ -117,8 +118,8 @@
                             <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
                                     <input type="text" class="form-control" name="short_bio" id="id_short_bio"
-                                           maxlength="50" value="{{ form.short_bio.value }}"
-                                           placeholder="One short line about you"/>
+                                           maxlength="30" value="{{ form.short_bio.value }}"
+                                           placeholder="One short line about your work"/>
                                 </div>
                             </div>
                         </div>

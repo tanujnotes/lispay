@@ -6,7 +6,7 @@ from regapp.models import MyUser, CATEGORY_CHOICES
 class UpdateCreatorForm(forms.ModelForm):
     is_creator = forms.BooleanField(required=False)
     full_name = forms.CharField(max_length=30, required=True)
-    short_bio = forms.CharField(max_length=50, required=False)
+    short_bio = forms.CharField(max_length=30, required=False)
     profile_description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea)
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, required=False)
     featured_video = forms.URLField(required=False)
