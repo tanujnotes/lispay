@@ -65,6 +65,45 @@ def webhook(request):
     if event_type == 'event_not_found' or 'payload' not in jsondata or 'contains' not in jsondata:
         return HttpResponse(200)
 
+    if event_type == 'invoice.paid':
+        invoice_entity = jsondata['payload']['invoice']['entity']
+        payment_entity = jsondata['payload']['payment']['entity']
+        subscription_id = invoice_entity['subscription_id']
+        payment_id = payment_entity['id']
+        subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+        if subscription.status == 'created':
+            subscription.status = 'authenticated'
+            subscription.save()
+
+        if PaymentModel.objects.filter(payment_id=payment_id).exists():
+            payment = PaymentModel.objects.get(payment_id=payment_id)
+            if payment.payment_status != "captured":
+                payment.payment_status = payment_entity['status']
+            if not payment.tax or not payment.fee:
+                payment.tax = payment_entity['tax'] / 100 if payment_entity['tax'] is not None else None
+                payment.fee = payment_entity['fee'] / 100 if payment_entity['fee'] is not None else None
+            payment.save()
+
+        else:
+            payment = PaymentModel(invoice_id=payment_entity['invoice_id'],
+                                   subscription_id=subscription_id,
+                                   payment_id=payment_id,
+                                   payment_type=payment_entity['method'],
+                                   payment_status=payment_entity['status'],
+                                   subscriber=subscription.subscriber,
+                                   creator=subscription.creator,
+                                   tax=payment_entity['tax'] / 100 if payment_entity['tax'] is not None else None,
+                                   fee=payment_entity['fee'] / 100 if payment_entity['fee'] is not None else None,
+                                   captured_amount=payment_entity['amount'] // 100,
+                                   total_amount=payment_entity['amount'] // 100,
+                                   currency=payment_entity['currency'],
+                                   message=payment_entity['notes'])
+            payment.save()
+
+            if not subscription.subscriber.mobile:
+                subscription.subscriber.mobile = payment_entity['contact']
+                subscription.subscriber.save()
+
     if 'subscription' in jsondata['contains']:
         subscription_id = jsondata['payload']['subscription']['entity']['id']
         subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
@@ -136,29 +175,6 @@ def webhook(request):
                 payment.tax = entity['tax'] / 100 if entity['tax'] is not None else None
                 payment.fee = entity['fee'] / 100 if entity['fee'] is not None else None
             payment.save()
-
-        elif entity['notes']:
-            notes = entity['notes']
-            if SubscriptionModel.objects.filter(notes=notes).exists():
-                subscription = SubscriptionModel.objects.filter(notes=notes).order_by('-created_at')[0]
-                payment = PaymentModel(invoice_id=entity['invoice_id'],
-                                       subscription_id=subscription.subscription_id,
-                                       payment_id=entity['id'],
-                                       payment_type=entity['method'],
-                                       payment_status=entity['status'],
-                                       subscriber=MyUser.objects.get(username=notes['subscriber']),
-                                       creator=MyUser.objects.get(username=notes['creator']),
-                                       tax=entity['tax'] / 100 if entity['tax'] is not None else None,
-                                       fee=entity['fee'] / 100 if entity['fee'] is not None else None,
-                                       captured_amount=entity['amount'] // 100,
-                                       total_amount=entity['amount'] // 100,
-                                       currency=entity['currency'],
-                                       message=notes)
-                payment.save()
-
-                if not subscription.subscriber.mobile:
-                    subscription.subscriber.mobile = entity['contact']
-                    subscription.subscriber.save()
 
     return HttpResponse(status=200)
 
