@@ -164,6 +164,7 @@ def webhook(request):
 
         elif event_type == "subscription.completed":
             subscription.status = "completed"
+            subscription.ended_at = datetime.datetime.now()
             subscription.save()
 
     if 'payment' in jsondata['contains']:
