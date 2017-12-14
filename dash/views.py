@@ -21,7 +21,7 @@ def dashboard(request):
     user = MyUser.objects.get(username=request.user.username)
 
     current_subscribers_count = SubscriptionModel.objects.filter(creator=user).filter(
-        status__in=['authorized', 'active', 'pending']).count()
+        status__in=['authenticated', 'active', 'pending']).count()
     this_month_revenue = PaymentModel.objects.filter(created_at__month=current_month).filter(
         payment_status='captured').aggregate(Sum('total_amount')).get('total_amount__sum', 0.0)
     joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
@@ -29,7 +29,7 @@ def dashboard(request):
     left_this_month = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
         status='cancelled').count()  # TODO: What about 'halted' and 'completed'?
     subscribers = SubscriptionModel.objects.filter(creator=user).filter(
-        status__in=['authorized', 'active', 'pending'])
+        status__in=['authenticated', 'active', 'pending'])
     subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(status='cancelled')
 
     context = {
