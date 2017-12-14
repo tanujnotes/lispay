@@ -147,13 +147,15 @@ def webhook(request):
                         payment.save()
 
         elif event_type == "subscription.pending":
-            subscription.status = "pending"
-            subscription.save()
+            if subscription.status not in ['halted', 'cancelled', 'completed']:
+                subscription.status = "pending"
+                subscription.save()
 
         # TODO: Handle following three events regarding what to show in Dashboard
         elif event_type == "subscription.halted":
-            subscription.status = "halted"
-            subscription.save()
+            if subscription.status not in ['halted', 'cancelled', 'completed']:
+                subscription.status = "halted"
+                subscription.save()
 
         elif event_type == "subscription.cancelled":
             subscription.status = "cancelled"
