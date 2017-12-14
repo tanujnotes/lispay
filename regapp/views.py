@@ -68,22 +68,12 @@ def webhook(request):
     if event_type == 'invoice.paid':
         invoice_entity = jsondata['payload']['invoice']['entity']
         payment_entity = jsondata['payload']['payment']['entity']
-        invoice_id = invoice_entity['id']
         subscription_id = invoice_entity['subscription_id']
         payment_id = payment_entity['id']
         subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
         if subscription.status == 'created':
             subscription.status = 'authenticated'
             subscription.save()
-
-        if PaymentModel.objects.filter(invoice_id=invoice_id).exists():
-            payment = PaymentModel.objects.get(invoice_id=invoice_id)
-            if payment.payment_status != "captured":
-                payment.payment_status = payment_entity['status']
-            if not payment.tax or not payment.fee:
-                payment.tax = payment_entity['tax'] / 100 if payment_entity['tax'] is not None else None
-                payment.fee = payment_entity['fee'] / 100 if payment_entity['fee'] is not None else None
-            payment.save()
 
         if PaymentModel.objects.filter(payment_id=payment_id).exists():
             payment = PaymentModel.objects.get(payment_id=payment_id)
@@ -113,23 +103,6 @@ def webhook(request):
             if not subscription.subscriber.mobile:
                 subscription.subscriber.mobile = payment_entity['contact']
                 subscription.subscriber.save()
-
-    if event_type == 'payment.failed':
-        payment_entity = jsondata['payload']['payment']['entity']
-        payment = PaymentModel(invoice_id=payment_entity['invoice_id'],
-                               subscription_id="",
-                               payment_id=payment_entity['id'],
-                               payment_type=payment_entity['method'],
-                               payment_status=payment_entity['status'],
-                               subscriber="",
-                               creator="",
-                               tax=payment_entity['tax'] / 100 if payment_entity['tax'] is not None else None,
-                               fee=payment_entity['fee'] / 100 if payment_entity['fee'] is not None else None,
-                               captured_amount=payment_entity['amount'] // 100,
-                               total_amount=payment_entity['amount'] // 100,
-                               currency=payment_entity['currency'],
-                               message=payment_entity)
-        payment.save()
 
     if 'subscription' in jsondata['contains']:
         subscription_id = jsondata['payload']['subscription']['entity']['id']
