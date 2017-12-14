@@ -265,7 +265,7 @@ def show_user_profile(request, profile_username):
     # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
     subscribed_to = {}
-    if request.user.is_authorized() and request.user.username == profile_username:
+    if request.user.is_authenticated() and request.user.username == profile_username:
         subscribed_to = SubscriptionModel.objects.filter(
             subscriber=MyUser.objects.get(username=request.user.username)).filter(
             status__in=['authorized', 'active', 'pending'])
