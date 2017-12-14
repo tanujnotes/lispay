@@ -176,6 +176,30 @@ def webhook(request):
                 payment.fee = entity['fee'] / 100 if entity['fee'] is not None else None
             payment.save()
 
+        elif entity['notes'] and 'subscription_id' in entity['notes']:
+            notes = entity['notes']
+            subscription_id = notes['subscription_id']
+            if SubscriptionModel.objects.filter(subscription_id=subscription_id).exists():
+                subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+                payment = PaymentModel(invoice_id=entity['invoice_id'],
+                                       subscription_id=subscription_id,
+                                       payment_id=entity['id'],
+                                       payment_type=entity['method'],
+                                       payment_status=entity['status'],
+                                       subscriber=MyUser.objects.get(username=notes['subscriber']),
+                                       creator=MyUser.objects.get(username=notes['creator']),
+                                       tax=entity['tax'] / 100 if entity['tax'] is not None else None,
+                                       fee=entity['fee'] / 100 if entity['fee'] is not None else None,
+                                       captured_amount=entity['amount'] // 100,
+                                       total_amount=entity['amount'] // 100,
+                                       currency=entity['currency'],
+                                       message=notes)
+                payment.save()
+
+                if not subscription.subscriber.mobile:
+                    subscription.subscriber.mobile = entity['contact']
+                    subscription.subscriber.save()
+
     return HttpResponse(status=200)
 
 
