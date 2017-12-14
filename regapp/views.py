@@ -70,7 +70,7 @@ def webhook(request):
         subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
 
         if event_type == "subscription.activated":
-            if subscription.status == "created" or subscription.status == "authenticated" \
+            if subscription.status == "created" or subscription.status == "authorized" \
                     or subscription.status == "pending" or subscription.status == "halted":
                 subscription.status = "active"
             if subscription.paid_count < jsondata['payload']['subscription']['entity']['paid_count']:
@@ -249,7 +249,7 @@ def search(request):
     subscriber_count = {}
     for creator in search_results:
         subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
-            status__in=['authenticated', 'active', 'pending']).count()
+            status__in=['authorized', 'active', 'pending']).count()
 
     return render(request, 'regapp/search.html', {'search_results': search_results,
                                                   'search_query': search_query,
@@ -265,10 +265,10 @@ def show_user_profile(request, profile_username):
     # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
     subscribed_to = {}
-    if request.user.is_authenticated() and request.user.username == profile_username:
+    if request.user.is_authorized() and request.user.username == profile_username:
         subscribed_to = SubscriptionModel.objects.filter(
             subscriber=MyUser.objects.get(username=request.user.username)).filter(
-            status__in=['authenticated', 'active', 'pending'])
+            status__in=['authorized', 'active', 'pending'])
 
     request.session['creator_username'] = profile_username
 
@@ -289,7 +289,7 @@ def show_user_profile(request, profile_username):
 
                 subscribed_to = SubscriptionModel.objects.filter(
                     subscriber=MyUser.objects.get(username=request.user.username)).filter(
-                    status__in=['authenticated', 'active', 'pending'])
+                    status__in=['authorized', 'active', 'pending'])
                 return render(request, 'regapp/profile.html',
                               {'user_profile': user_profile, 'subscribed_to': subscribed_to,
                                'message': "Your subscription was cancelled."})
@@ -473,7 +473,7 @@ def explore_creators(request, category, page="1"):
     subscriber_count = {}
     for creator in creators:
         subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
-            status__in=['authenticated', 'active', 'pending']).count()
+            status__in=['authorized', 'active', 'pending']).count()
 
     context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages,
                'subscriber_count': subscriber_count, 'background': CATEGORY_BACKGROUND[category]}

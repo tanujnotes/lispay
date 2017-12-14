@@ -29,7 +29,7 @@ CATEGORY_CHOICES = (
 SUBS_STATUS = (
     ("unknown", 'unknown'),
     ("created", 'created'),
-    ("authenticated", 'authenticated'),
+    ("authorized", 'authorized'),
     ("active", 'active'),
     ("pending", 'pending'),
     ("halted", 'halted'),
