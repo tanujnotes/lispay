@@ -150,17 +150,19 @@
                         <thead class="text-warning">
                         <th>#</th>
                         <th>Username</th>
-                        <th>Amount</th>
+                        <th>Monthly</th>
+                        <th>Total</th>
                         <th>Started at</th>
                         </thead>
                         <tbody>
-                        {% for subscriber in subscribers %}
+                        {% for subscription in subscribers %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a target="_blank" href="{% url 'show_user_profile' subscriber.subscriber %}">
-                                {{ subscriber.subscriber }}</a></td>
-                            <td>&#8377; {{ subscriber.amount }}</td>
-                            <td>{{ subscriber.created_at|date:"M d, o" }}</td>
+                            <td><a target="_blank" href="{% url 'show_user_profile' subscription.subscriber %}">
+                                {{ subscription.subscriber }}</a></td>
+                            <td>&#8377; {{ subscription.amount }}</td>
+                            <td>&#8377; {{ subscription.amount|get_total_payment:subscription.paid_count }}</td>
+                            <td>{{ subscription.created_at|date:"M d, o" }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -186,17 +188,19 @@
                         <thead class="text-danger">
                         <th>#</th>
                         <th>Username</th>
+                        <th>Monthly</th>
                         <th>Started at</th>
                         <th>Cancelled at</th>
                         </thead>
                         <tbody>
-                        {% for subscriber in subscribers_cancelled %}
+                        {% for subscription in subscribers_cancelled %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a target="_blank" href="{% url 'show_user_profile' subscriber.subscriber %}">
-                                {{ subscriber.subscriber }}</a></td>
-                            <td>{{ subscriber.created_at|date:"M d, o" }}</td>
-                            <td>{{ subscriber.ended_at|date:"M d, o" }}</td>
+                            <td><a target="_blank" href="{% url 'show_user_profile' subscription.subscriber %}">
+                                {{ subscription.subscriber }}</a></td>
+                            <td>&#8377; {{ subscription.amount }}</td>
+                            <td>{{ subscription.created_at|date:"M d, o" }}</td>
+                            <td>{{ subscription.ended_at|date:"M d, o" }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>

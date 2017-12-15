@@ -8,6 +8,7 @@ from django.core import serializers
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Sum
 from django.shortcuts import render, redirect
+from django.template.defaulttags import register
 
 import utils
 from dash.forms import UpdateCreatorForm
@@ -200,3 +201,8 @@ def creator_details(request):
         "errors": error,
     }
     return render(request, 'dash/creator_details.html', context)
+
+
+@register.filter
+def get_total_payment(monthly_amount, paid_count):
+    return monthly_amount * (paid_count + 1)
