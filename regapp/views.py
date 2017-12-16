@@ -273,8 +273,8 @@ def checkout(request, creator):
 
 def search(request):
     search_query = request.POST.get("search", "").strip()
-    if search_query is None:
-        return render(request, 'regapp/index.html', {})
+    if not search_query or search_query is None:
+        return redirect(index)
 
     try:
         dump = DataDumpModel(event_type="search_lisplay", data={'search_term': search_query})
@@ -287,7 +287,7 @@ def search(request):
         search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
     if not search_results:
         search_results_available = False
-        search_results = MyUser.objects.filter(is_creator=True).order_by('-created_at')
+        search_results = MyUser.objects.filter(is_creator=True).order_by('-created_at')[:10]
 
     subscriber_count = {}
     for creator in search_results:
