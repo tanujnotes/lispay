@@ -218,6 +218,15 @@ def index(request):
     return render(request, 'regapp/index.html', {'featured_list': featured_list})
 
 
+def home(request):
+    user1 = MyUser.objects.get(username="user1")
+    user2 = MyUser.objects.get(username="user2")
+    user3 = MyUser.objects.get(username="user3")
+    featured_list = {'user1': user1, 'user2': user2, 'user3': user3}
+    logger.info("Opening home page")
+    return render(request, 'regapp/index.html', {'featured_list': featured_list})
+
+
 def about(request):
     return render(request, 'regapp/about.html', {})
 

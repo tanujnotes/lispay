@@ -4,7 +4,7 @@ from registration.forms import RegistrationForm
 from regapp.models import MyUser
 
 RESTRICTED_USERNAMES = (
-    'admin', 'lisplay', 'accounts', 'dashboard', 'update-profile', 'creator-details', 'faq', 'about', 'search',
+    'home', 'admin', 'lisplay', 'accounts', 'dashboard', 'update-profile', 'creator-details', 'faq', 'about', 'search',
     'privacy', 'welcome', 'webhook', 'checkout', 'thank-you', 'terms-of-use', 'login-redirect', 'explore-creators')
 
 

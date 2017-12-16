@@ -1,5 +1,8 @@
 from django.conf.urls import url
+
 from dash import views
+
+# Don't forget to add the url name in RESTRICTED_USERNAMES
 
 urlpatterns = [
     url(r'^dashboard/$', views.dashboard, name='dashboard'),

@@ -1,9 +1,13 @@
 from django.conf.urls import url
+
 from regapp import views
+
+# Don't forget to add the url name in RESTRICTED_USERNAMES
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^faq/$', views.faq, name='faq'),
+    url(r'^home/$', views.home, name='home'),
     url(r'^about/$', views.about, name='about'),
     url(r'^search/$', views.search, name='search'),
     url(r'^privacy/$', views.privacy, name='privacy'),
