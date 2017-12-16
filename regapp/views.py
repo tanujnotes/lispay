@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.template.defaulttags import register
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -207,6 +207,9 @@ def webhook(request):
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('show_user_profile', args=(request.user.username,)))
+
     user1 = MyUser.objects.get(username="user1")
     user2 = MyUser.objects.get(username="user2")
     user3 = MyUser.objects.get(username="user3")
@@ -305,7 +308,6 @@ def show_user_profile(request, profile_username):
         user_profile = MyUser.objects.get(username=profile_username)
     except:
         return redirect(index)
-    # return HttpResponseRedirect(reverse('reviews-year-archive', args=(year,)))
 
     subscribed_to = {}
     if request.user.is_authenticated() and request.user.username == profile_username:
