@@ -21,15 +21,11 @@
       will-change: box-shadow, transform;
       transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-
-
-
 </style>
 
 <div class="components-page">
     <div class="wrapper">
-        <div class="header header-filter" style="background-image: url('{{ STATIC_URL }}img/examples/city.jpg');">
+        <div class="header header-filter" style="background-image: url('{{ STATIC_URL }}img/examples/thank_you.jpg');">
             {% if error %}
             <div data-notify="container"
                  class="col-xs-11 col-sm-4 alert alert-danger alert-with-icon animated fadeInDown"
@@ -50,7 +46,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h1 class="title text-center">Checkout</h1>
+                        <h1 class="title text-center">Pledge Confirmation</h1>
                     </div>
                 </div>
             </div>
@@ -66,8 +62,9 @@
                         <h3>Confirm you pledge to {{ creator.full_name }}</h3>
                         <h5>Rs. {{ amount }} per month</h5>
                         <hr/>
-                        <p>Your next charge will be at 1st of next month.</p>
-                        <p>Lisply does not issue refunds on behalf of creators. See our Return Policy.</p>
+                        <p>Your next charge will be on day {{ subscription_start_day }} of next month.</p>
+                        <p>Lisplay does not issue refunds on behalf of creators. See our
+                            <a href="{% url 'terms_of_use' %}" target="_blank">Return Policy</a>.</p>
                     </div>
                     <div class="col-md-4 col-md-offset-1" style="margin-top: 40px;">
                         <div class="card card-signup">
@@ -78,9 +75,11 @@
                                 <h5 style="color:#666"><b>Today's charge:</b> Rs. {{ amount }}/-</h5>
                                 <hr/>
                                 <p>You'll be charged Rs. {{ amount }} now and then the same
-                                    amount on the 1st of every month going forward.</p>
+                                    amount on the day {{ subscription_start_day }} of every month going forward.</p>
                                 <p>You can cancel your pledge at any time. By making this
-                                    pledge, you agree to Lisplay's <a href="#">Terms of Services.</a></p>
+                                    pledge, you agree to Lisplay's <a href="{% url 'terms_of_use' %}" target="_blank">
+                                        Terms of Use.</a>
+                                </p>
                             </div>
                             <div class="footer text-center">
                                 <form action="/thank-you/" method="POST">
@@ -103,15 +102,11 @@
                                     <input type="hidden" value="Hidden Element" name="hidden">
                                 </form>
                             </div>
-                            <p class="description text-center">We're adding more payment options but it may take some
-                                time.</p>
-                            <!--<div class="footer text-center" style="margin-bottom: 10px;">-->
-                            <!--<button class="btn btn-info btn-lg btn-round" type="submit" value="Submit"-->
-                            <!--style="padding-left: 55px; padding-right: 55px;">-->
-                            <!--Pay with paytm-->
-                            <!--</button>-->
-                            <!--</div>-->
+                            <br/>
                         </div>
+                        <br/>
+                        <br/>
+                        <p class="description text-center">More payment options are coming soon.</p>
                     </div>
                 </div>
                 <br/>

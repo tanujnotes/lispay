@@ -1,5 +1,6 @@
 # Utils
 import datetime
+
 from dateutil.relativedelta import relativedelta
 
 
@@ -89,40 +90,6 @@ def check_http(url):
     return url
 
 
-# def calculate_addons(amount):
-#     addons = []
-#     addon1_quantity = 0
-#     addon10_quantity = 0
-#     addon100_quantity = 0
-#     addon1000_quantity = 0
-#
-#     if 10 <= amount <= 99:
-#         addon1_quantity = amount % 10
-#         addon10_quantity = amount // 10 - 1
-#     elif 100 <= amount <= 999:
-#         addon1_quantity = amount % 100 % 10
-#         addon10_quantity = amount % 100 // 10
-#         addon100_quantity = amount // 100 - 1
-#     elif 1000 <= amount <= 9999:
-#         addon1_quantity = amount % 1000 % 100 % 10
-#         addon10_quantity = amount % 1000 % 100 // 10
-#         addon100_quantity = amount % 1000 // 100
-#         addon1000_quantity = amount // 1000 - 1
-#     else:
-#         return addons
-#
-#     if addon1_quantity > 0:
-#         addons.append({"addon_code": "addon1", "quantity": addon1_quantity})
-#     if addon10_quantity > 0:
-#         addons.append({"addon_code": "addon10", "quantity": addon10_quantity})
-#     if addon100_quantity > 0:
-#         addons.append({"addon_code": "addon100", "quantity": addon100_quantity})
-#     if addon1000_quantity > 0:
-#         addons.append({"addon_code": "addon1000", "quantity": addon1000_quantity})
-#
-#     return addons
-
-
 def calculate_plan(amount):
     if 10 <= amount <= 99:
         return "club2"
@@ -140,8 +107,13 @@ def is_first_day_of_month():
     return today == first
 
 
+# Recurring payment starts at either 1st or 15th of each month
 def get_subscription_start_at():
     today = datetime.date.today()
-    first_of_month = today.replace(day=1)
-    first_of_next_month = first_of_month + relativedelta(months=1)
-    return int(first_of_next_month.strftime("%s"))
+    if today.day <= 15:
+        payment_day = today.replace(day=1)
+    else:
+        payment_day = today.replace(day=15)
+
+    payment_start_date = payment_day + relativedelta(months=1)
+    return int(payment_start_date.strftime("%s"))

@@ -188,6 +188,7 @@ class SubscriptionModel(models.Model):
     amount = models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(9999)], blank=False)
     paid_count = models.PositiveSmallIntegerField(blank=True, null=True)
     notes = JSONField(blank=True, null=True)
+    start_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(blank=True, null=True)

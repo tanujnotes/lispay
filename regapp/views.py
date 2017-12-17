@@ -280,7 +280,8 @@ def checkout(request, creator):
                   {'creator': MyUser.objects.get(username=creator),
                    'key': RAZORPAY_KEY_,
                    'amount': request.session['amount'],
-                   'subscription_id': request.session['subscription_id']})
+                   'subscription_id': request.session['subscription_id'],
+                   'subscription_start_day': request.session['subscription_start_day']})
 
 
 def search(request):
@@ -470,6 +471,7 @@ def show_user_profile(request, profile_username):
 
             plan = SubsPlanModel.objects.get(plan_id=response['plan_id'])
             subscription_id = response['id']
+            subscription_start_at = datetime.datetime.fromtimestamp(response['start_at'])
             # Get the custom fields from subscription response
             subscriber_value = MyUser.objects.get(username=response['notes']['subscriber'])
             creator_value = MyUser.objects.get(username=response['notes']['creator'])
@@ -482,12 +484,14 @@ def show_user_profile(request, profile_username):
                                   status=response['status'],
                                   subs_channel="razorpay",
                                   amount=plan.amount,
+                                  start_at=subscription_start_at,
                                   paid_count=response['paid_count'],
                                   notes=response['notes'])
             s.save()
             dump = DataDumpModel(event_type="subscription_created", data=response)
             dump.save()
             request.session['subscription_id'] = subscription_id
+            request.session['subscription_start_day'] = subscription_start_at.day
             return HttpResponseRedirect('/' + profile_username + '/checkout/')
 
         else:
