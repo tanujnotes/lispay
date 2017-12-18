@@ -48,20 +48,35 @@
         <div class="main main-raised">
             <div class="container">
                 <div class="row">
-                    <div class="profile">
-                        <div class="avatar">
-                            <a href="{{ user_profile.picture.url }}" target="_blank">
-                                <img style="min-height:160px; min-width:160px;" src="{{ user_profile.thumbnail.url }}"
-                                     alt="{{ user_profile.username }}" class="img-circle img-responsive img-raised">
-                            </a>
-                        </div>
-                        <div class="name">
-                            <h3 class="title" style="margin-bottom:0em; margin-top:1em;">
-                                {{ user_profile.full_name }}</h3>
-                            <p class="text-muted">{{ "@"|add:user_profile.username }}</p>
-                            <h6 style="margin-top:20px;">{{ user_profile.short_bio }}</h6>
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <div class="profile">
+                            <div class="avatar">
+                                <a href="{{ user_profile.picture.url }}" target="_blank">
+                                    <img style="min-height:160px; min-width:160px;"
+                                         src="{{ user_profile.thumbnail.url }}"
+                                         alt="{{ user_profile.username }}" class="img-circle img-responsive img-raised">
+                                </a>
+                            </div>
+                            <div class="name">
+                                <h3 class="title" style="margin-bottom:0em; margin-top:1em;">
+                                    {{ user_profile.full_name }}</h3>
+                                <p class="text-muted">{{ "@"|add:user_profile.username }}</p>
+                                <h6 style="margin-top:20px;">{{ user_profile.short_bio }}</h6>
+                            </div>
                         </div>
                     </div>
+                    {% if user.is_authenticated %}
+                    {% ifequal user.username user_profile.username %}
+                    <div class="col-xs-2">
+                        <a href="{% url 'update_profile' %}">
+                            <button class="btn btn-fab btn-primary" rel="tooltip" title=""
+                                    data-original-title="Edit profile" style="margin-top: -1.1em;">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </a>
+                    </div>
+                    {% endifequal %}
+                    {% endif %}
                 </div>
                 <!--<div class="description text-center">-->
                 <!--<p>{{ user_profile.profile_description }}</p>-->
