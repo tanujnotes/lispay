@@ -23,15 +23,15 @@
             <div class="section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
+                        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                             <div class="nav-align-center">
                                 <div class="gallery">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-sm-6">
                                             {% for creator in creators_part_1 %}
                                             <a href="{% url 'show_user_profile' creator.username %}">
-                                                <img src="{{ creator.thumbnail.url }}" alt="{{ creator.username }}"
-                                                     class="img-rounded">
+                                                <img src="{{ creator.picture.url }}" alt="{{ creator.username }}"
+                                                     class="img-rounded img-responsive">
                                                 <h4>{{ creator.full_name }}</h4>
                                                 <h6 class="text-muted">{{ creator.short_bio|upper }}</h6>
                                             </a>
@@ -40,11 +40,11 @@
                                             {% endfor %}
 
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-sm-6">
                                             {% for creator in creators_part_2 %}
                                             <a href="{% url 'show_user_profile' creator.username %}">
-                                                <img src="{{ creator.thumbnail.url }}" alt="{{ creator.username }}"
-                                                     class="img-rounded">
+                                                <img src="{{ creator.picture.url }}" alt="{{ creator.username }}"
+                                                     class="img-rounded img-responsive">
                                                 <h4>{{ creator.full_name }}</h4>
                                                 <h6 class="text-muted">{{ creator.short_bio|upper }}</h6>
                                             </a>
