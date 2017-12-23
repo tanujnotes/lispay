@@ -509,14 +509,15 @@ def explore_creators(request, category, page="1"):
         page = 1
 
     category = category.replace("-", " ").upper()
-    try:
-        if category == "ALL":
-            creators = MyUser.objects.filter(is_creator=True)
-        else:
-            creators = MyUser.objects.filter(category=category, is_creator=True)
-    except:
-        creators = MyUser.objects.filter(is_creator=True)
+    # try:
+    #     if category == "ALL":
+    #         creators = MyUser.objects.filter(is_creator=True)
+    #     else:
+    #         creators = MyUser.objects.filter(category=category, is_creator=True)
+    # except:
+    #     creators = MyUser.objects.filter(is_creator=True)
 
+    creators = MyUser.objects.filter(is_creator=True).order_by('-created_at')
     paginator = Paginator(creators, 20)
     try:
         creators = paginator.page(page)
@@ -533,8 +534,14 @@ def explore_creators(request, category, page="1"):
         subscriber_count[creator.username] = SubscriptionModel.objects.filter(creator=creator).filter(
             status__in=['authenticated', 'active', 'pending']).count()
 
-    context = {"creators": creators, "category": category, "page": page, "total_pages": paginator.num_pages,
-               'subscriber_count': subscriber_count, 'background': CATEGORY_BACKGROUND[category]}
+    number_of_creators = len(creators)
+    half = number_of_creators // 2 if number_of_creators % 2 == 0 else (number_of_creators // 2) + 1
+    creators_part_1 = creators[0:half]
+    creators_part_2 = creators[half:number_of_creators]
+
+    context = {"creators_part_1": creators_part_1, "creators_part_2": creators_part_2, "category": category,
+               "page": page, "total_pages": paginator.num_pages, 'subscriber_count': subscriber_count,
+               'background': CATEGORY_BACKGROUND[category]}
     return render(request, 'regapp/explore_creators.html', context)
 
 
