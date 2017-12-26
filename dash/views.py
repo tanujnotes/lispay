@@ -1,6 +1,8 @@
 import datetime
+import json
 from io import BytesIO
 
+import requests
 from PIL import Image, ImageOps
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -14,6 +16,9 @@ import utils
 from dash.forms import UpdateCreatorForm
 from regapp.forms import UpdateProfileForm
 from regapp.models import CATEGORY_CHOICES, SubscriptionModel, MyUser, PaymentModel, DataDumpModel
+from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
+
+HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
 
 @login_required
@@ -33,9 +38,10 @@ def dashboard(request):
         status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
     subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(
         status='cancelled').order_by('-created_at')
+
     active_subscriptions = SubscriptionModel.objects.filter(subscriber=user).filter(
         status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
-    cancelled_subscriptions = SubscriptionModel.objects.filter(creator=user).filter(
+    cancelled_subscriptions = SubscriptionModel.objects.filter(subscriber=user).filter(
         status='cancelled').order_by('-created_at')
 
     context = {
@@ -48,6 +54,59 @@ def dashboard(request):
         'active_subscriptions': active_subscriptions,
         'cancelled_subscriptions': cancelled_subscriptions,
     }
+
+    if request.method == 'POST':
+        # Cancel subscription
+        subscription_id = request.POST.get('subscription_id', "").strip()
+        if subscription_id:
+            url = "https://api.razorpay.com/v1/subscriptions/" + subscription_id + "/cancel"
+            r = requests.post(url, headers=HEADERS, auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
+            response = json.loads(r.text)
+            if 'error' not in response:
+                subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+                subscription.status = "cancelled"
+                subscription.ended_at = datetime.datetime.now()
+                subscription.save()
+                dump = DataDumpModel(event_type="subscription_cancelled", data=response)
+                dump.save()
+
+                current_subscribers_count = SubscriptionModel.objects.filter(creator=user).filter(
+                    status__in=['authenticated', 'active', 'pending', 'halted']).count()
+                this_month_revenue = PaymentModel.objects.filter(creator=user).filter(
+                    created_at__month=current_month).filter(
+                    payment_status='captured').aggregate(Sum('total_amount')).get('total_amount__sum', 0.0)
+                joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
+                    created_at__month=current_month).count()
+                left_this_month = SubscriptionModel.objects.filter(creator=user).filter(
+                    ended_at__month=current_month).filter(
+                    status__in=['cancelled', 'completed']).count()
+                active_subscribers = SubscriptionModel.objects.filter(creator=user).filter(
+                    status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
+                subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(
+                    status='cancelled').order_by('-created_at')
+                active_subscriptions = SubscriptionModel.objects.filter(subscriber=user).filter(
+                    status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
+                cancelled_subscriptions = SubscriptionModel.objects.filter(creator=user).filter(
+                    status='cancelled').order_by('-created_at')
+
+                context = {
+                    'current_subscribers_count': current_subscribers_count,
+                    'this_month_revenue': this_month_revenue if this_month_revenue is not None else 0,
+                    'joined_this_month': joined_this_month,
+                    'left_this_month': left_this_month,
+                    'subscribers': active_subscribers,
+                    'subscribers_cancelled': subscribers_cancelled,
+                    'active_subscriptions': active_subscriptions,
+                    'cancelled_subscriptions': cancelled_subscriptions,
+
+                    'message': "Your subscription was cancelled."
+                }
+                return render(request, 'dash/dashboard.html', context)
+
+            else:
+                context['error'] = "Subscription cancellation failed. Please try again or contact us."
+                return render(request, 'dash/dashboard.html', context)
+
     return render(request, 'dash/dashboard.html', context)
 
 
