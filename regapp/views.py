@@ -548,22 +548,24 @@ def explore_creators(request, category, page="1"):
 @login_required
 def welcome(request):
     error = ""
-    if request.user.full_name:
-        return HttpResponseRedirect('/%s/' % request.user.username)
+    # if request.user.full_name:
+    #     return HttpResponseRedirect('/%s/' % request.user.username)
 
     form = UpdateProfileForm(request.POST or None, initial={'full_name': request.user.full_name})
     if request.method == 'POST':
         if form.is_valid():
             request.user.full_name = request.POST['full_name'].strip()
             request.user.save()
-            return HttpResponseRedirect('/%s/' % request.user.username)
+            if "is_creator" in request.POST:
+                return HttpResponseRedirect('/creator-details/')
+            else:
+                return HttpResponseRedirect('/%s/' % request.user.username)
         else:
-            error = "Please enter your full name!"
             print(form.errors)
 
     context = {
         "form": form,
-        "errors": error,
+        "errors": form.errors,
     }
     return render(request, 'regapp/welcome.html', context)
 
