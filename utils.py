@@ -34,6 +34,8 @@ def get_social_details(request):
     snapchat_link = check_http(request.POST.get('snapchat_link', ""))
     youtube_username = request.POST.get('youtube_username', "")
     youtube_link = check_http(request.POST.get('youtube_link', ""))
+    soundcloud_username = request.POST.get('soundcloud_username', "")
+    soundcloud_link = check_http(request.POST.get('soundcloud_link', ""))
     twitch_username = request.POST.get('twitch_username', "")
     twitch_link = check_http(request.POST.get('twitch_link', ""))
     dribble_username = request.POST.get('dribble_username', "")
@@ -48,6 +50,10 @@ def get_social_details(request):
     merchandise_link = check_http(request.POST.get('merchandise_link', ""))
     github_username = request.POST.get('github_username', "")
     github_link = check_http(request.POST.get('github_link', ""))
+    playstore_username = request.POST.get('playstore_username', "")
+    playstore_link = check_http(request.POST.get('playstore_link', ""))
+    appstore_username = request.POST.get('appstore_username', "")
+    appstore_link = check_http(request.POST.get('appstore_link', ""))
     other_username = request.POST.get('other_username', "")
     other_link = check_http(request.POST.get('other_link', ""))
 
@@ -61,6 +67,8 @@ def get_social_details(request):
                                            "snapchat_link": snapchat_link},
                       "youtube_details": {"youtube_username": youtube_username,
                                           "youtube_link": youtube_link},
+                      "soundcloud_details": {"soundcloud_username": soundcloud_username,
+                                             "soundcloud_link": soundcloud_link},
                       "twitch_details": {"twitch_username": twitch_username,
                                          "twitch_link": twitch_link},
                       "dribble_details": {"dribble_username": dribble_username,
@@ -75,6 +83,10 @@ def get_social_details(request):
                                               "merchandise_link": merchandise_link},
                       "github_details": {"github_username": github_username,
                                          "github_link": github_link},
+                      "playstore_details": {"playstore_username": playstore_username,
+                                            "playstore_link": playstore_link},
+                      "appstore_details": {"appstore_username": appstore_username,
+                                           "appstore_link": appstore_link},
                       "other_details": {"other_username": other_username,
                                         "other_link": other_link}
                       }

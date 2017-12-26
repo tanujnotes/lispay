@@ -286,6 +286,20 @@
 
                         <div class="row">
                             <div class="col-md-3 col-sm-3 col-xs-4 form-group">
+                                <h5>SoundCloud</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="form-group label-floating">
+                                    <input type="url" class="form-control" name="soundcloud_link"
+                                           id="id_soundcloud_link"
+                                           value="{{ user.social_links|get_item:'soundcloud_details,soundcloud_link' }}"
+                                           placeholder="Enter a valid URL"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Twitch</h5>
                             </div>
                             <div class="col-md-9 col-sm-9 col-xs-8">
@@ -325,19 +339,6 @@
 
                         <div class="row">
                             <div class="col-md-3 col-sm-3 col-xs-4 form-group">
-                                <h5>Github</h5>
-                            </div>
-                            <div class="col-md-9 col-sm-9 col-xs-8">
-                                <div class="form-group label-floating">
-                                    <input type="url" class="form-control" name="github_link" id="id_github_link"
-                                           value="{{ user.social_links|get_item:'github_details,github_link' }}"
-                                           placeholder="Enter a valid URL"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
                                 <h5>Blog</h5>
                             </div>
                             <div class="col-md-9 col-sm-9 col-xs-8">
@@ -357,6 +358,72 @@
                                 <div class="form-group label-floating">
                                     <input type="url" class="form-control" name="website_link" id="id_website_link"
                                            value="{{ user.social_links|get_item:'website_details,website_link' }}"
+                                           placeholder="Enter a valid URL"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
+                                <h5>Merchandise</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="form-group label-floating">
+                                    <input type="url" class="form-control" name="merchandise_link"
+                                           id="id_merchandise_link"
+                                           value="{{ user.social_links|get_item:'merchandise_details,merchandise_link' }}"
+                                           placeholder="Enter a valid URL"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
+                                <h5>Play Store</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="form-group label-floating">
+                                    <input type="url" class="form-control" name="playstore_link" id="id_playstore_link"
+                                           value="{{ user.social_links|get_item:'playstore_details,playstore_link' }}"
+                                           placeholder="Enter a valid URL"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
+                                <h5>App Store</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="form-group label-floating">
+                                    <input type="url" class="form-control" name="appstore_link" id="id_appstore_link"
+                                           value="{{ user.social_links|get_item:'appstore_details,appstore_link' }}"
+                                           placeholder="Enter a valid URL"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
+                                <h5>Github</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="form-group label-floating">
+                                    <input type="url" class="form-control" name="github_link" id="id_github_link"
+                                           value="{{ user.social_links|get_item:'github_details,github_link' }}"
+                                           placeholder="Enter a valid URL"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-4 form-group">
+                                <h5>Other</h5>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="form-group label-floating">
+                                    <input type="url" class="form-control" name="other_link" id="id_other_link"
+                                           value="{{ user.social_links|get_item:'other_details,other_link' }}"
                                            placeholder="Enter a valid URL"/>
                                 </div>
                             </div>
