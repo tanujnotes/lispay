@@ -29,6 +29,12 @@
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
 
+
+
+
+
+
+
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -53,6 +59,12 @@
         width: 100%;
         color: white;
     }
+
+
+
+
+
+
 
     </style>
 </head>
@@ -132,7 +144,9 @@
                 <li><a href="http://fb.com/lisplay" target="_blank">Facebook</a></li>
                 <li><a href="https://twitter.com/lisplayon" target="_blank">Twitter</a></li>
                 <li><a href="http://fb.com/lisplay" target="_blank">YouTube</a></li>
-                <li><a href="mailto:support@lisplay.com" target="_blank">Email</a></li>
+                <li data-toggle="popover" data-placement="top" title="Contact"
+                    data-content="Email: support@lisplay.com or Whatsapp: +919582934701">
+                    <a href="#" onclick="return false;">Contact</a></li>
                 <li><a href="https://play.google.com/store/apps/details?id=com.lisplay&utm_source=lisplay_footer"
                        target="_blank">Play Store</a>
                 </li>
@@ -171,6 +185,11 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
+
+
+
 
 </script>
 
