@@ -56,9 +56,6 @@
     jQuery(function($){
         $('[data-toggle="popover"]').popover();
     });
-
-
-
 </script>
 
 <div class="container-fluid">
@@ -283,6 +280,107 @@
         <!--End: User Card-->
     </div>
     {% endif %}
+
+    <!--User subscriptions-->
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card card-nav-tabs">
+                <div class="card-header" data-background-color="purple">
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                            <span class="nav-tabs-title">Subscriptions:</span>
+                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                <li class="active">
+                                    <a href="#active_subscriptions" data-toggle="tab">
+                                        <i class="fa fa-heart"></i>
+                                        Active
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#cancelled_subscriptions" data-toggle="tab">
+                                        <i class="fa fa-minus-circle"></i>
+                                        Cancelled
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="active_subscriptions">
+                            <div class="card-content table-responsive">
+                                {% if active_subscriptions %}
+                                <table class="table table-hover">
+                                    <thead class="text-primary">
+                                    <th>#</th>
+                                    <th>Creator</th>
+                                    <th>Monthly</th>
+                                    <th>Total</th>
+                                    <th>Started at</th>
+                                    </thead>
+                                    <tbody>
+                                    {% for subscription in active_subscriptions %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a target="_blank"
+                                               href="{% url 'show_user_profile' subscription.creator %}">
+                                            {{ subscription.creator }}</a></td>
+                                        <td>&#8377; {{ subscription.amount }}</td>
+                                        <td>&#8377;
+                                            {{subscription.amount|get_total_payment:subscription.paid_count}}
+                                        </td>
+                                        <td>{{ subscription.created_at|date:"M d, o" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                <h5 class="text-gray">Looks like your you're not supporting your favourite creators yet.
+                                    <a href="{% url 'explore_creators' 'all' %}"> Explore creators.</a>
+                                </h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="cancelled_subscriptions">
+                            <div class="card-content table-responsive">
+                                {% if cancelled_subscriptions %}
+                                <table class="table table-hover">
+                                    <thead class="text-danger">
+                                    <th>#</th>
+                                    <th>Creator</th>
+                                    <th>Monthly</th>
+                                    <th>Started at</th>
+                                    <th>Cancelled at</th>
+                                    </thead>
+                                    <tbody>
+                                    {% for subscription in subscribers_cancelled %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a target="_blank"
+                                               href="{% url 'show_user_profile' subscription.creator %}">
+                                            {{ subscription.creator }}</a></td>
+                                        <td>&#8377; {{ subscription.amount }}</td>
+                                        <td>{{ subscription.created_at|date:"M d, o" }}</td>
+                                        <td>{{ subscription.ended_at|date:"M d, o" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                <h5 class="text-gray">We hope that this section always remains empty. ;)</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End: User subscriptions-->
 </div>
 
 {% endblock %}
