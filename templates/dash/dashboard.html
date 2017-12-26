@@ -56,6 +56,9 @@
     jQuery(function($){
         $('[data-toggle="popover"]').popover();
     });
+
+
+
 </script>
 
 <div class="container-fluid">
@@ -120,7 +123,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="red">
-                    <i class="fa fa-warning"></i>
+                    <i class="fa fa-minus-circle"></i>
                 </div>
                 <div class="card-content">
                     <p class="category">Supporters Left</p>
@@ -135,88 +138,112 @@
         </div>
     </div>
     <!--End: Cards with quick numbers-->
-    <hr/>
-    <div class="row">
-        <!--Active Subscribers Table-->
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header" data-background-color="orange">
-                    <h4 class="title">Active Supporters</h4>
-                    <p class="category">List of people subscribed to you as of today</p>
-                </div>
-                <div class="card-content table-responsive">
-                    {% if subscribers %}
-                    <table class="table table-hover">
-                        <thead class="text-warning">
-                        <th>#</th>
-                        <th>Username</th>
-                        <th>Monthly</th>
-                        <th>Total</th>
-                        <th>Started at</th>
-                        </thead>
-                        <tbody>
-                        {% for subscription in subscribers %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td><a target="_blank" href="{% url 'show_user_profile' subscription.subscriber %}">
-                                {{ subscription.subscriber }}</a></td>
-                            <td>&#8377; {{ subscription.amount }}</td>
-                            <td>&#8377; {{ subscription.amount|get_total_payment:subscription.paid_count }}</td>
-                            <td>{{ subscription.created_at|date:"M d, o" }}</td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <h5 class="text-gray">Looks like your fans don't know that you're on Lisplay.</h5>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <!--End: Active Subscribers Table-->
+    <br/>
 
-        <!--Subscribers Left Table-->
+    <!--Supporter stats-->
+    <div class="row">
         <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header" data-background-color="red">
-                    <h4 class="title">Supporters Left</h4>
-                    <p class="category">List of people who cancelled your subscription</p>
+            <div class="card card-nav-tabs">
+                <div class="card-header" data-background-color="orange">
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                            <span class="nav-tabs-title">Supporters:</span>
+                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                <li class="active">
+                                    <a href="#active_subscribers" data-toggle="tab">
+                                        <i class="fa fa-group"></i>
+                                        Active
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#cancelled_subscribers" data-toggle="tab">
+                                        <i class="fa fa-minus-circle"></i>
+                                        Cancelled
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content table-responsive">
-                    {% if subscribers_cancelled %}
-                    <table class="table table-hover">
-                        <thead class="text-danger">
-                        <th>#</th>
-                        <th>Username</th>
-                        <th>Monthly</th>
-                        <th>Started at</th>
-                        <th>Cancelled at</th>
-                        </thead>
-                        <tbody>
-                        {% for subscription in subscribers_cancelled %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td><a target="_blank" href="{% url 'show_user_profile' subscription.subscriber %}">
-                                {{ subscription.subscriber }}</a></td>
-                            <td>&#8377; {{ subscription.amount }}</td>
-                            <td>{{ subscription.created_at|date:"M d, o" }}</td>
-                            <td>{{ subscription.ended_at|date:"M d, o" }}</td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                    {% if subscribers %}
-                    <h5 class="text-gray">No supporter has unsubscribed you so far. Awesome!</h5>
-                    {% else %}
-                    <h5 class="text-gray">Let's hope that this section always remains empty. Good luck!</h5>
-                    {% endif %}
-                    {% endif %}
+
+                <div class="card-content">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="active_subscribers">
+                            <div class="card-content table-responsive">
+                                {% if subscribers %}
+                                <table class="table table-hover">
+                                    <thead class="text-warning">
+                                    <th>#</th>
+                                    <th>Username</th>
+                                    <th>Monthly</th>
+                                    <th>Total</th>
+                                    <th>Started at</th>
+                                    </thead>
+                                    <tbody>
+                                    {% for subscription in subscribers %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a target="_blank"
+                                               href="{% url 'show_user_profile' subscription.subscriber %}">
+                                            {{ subscription.subscriber }}</a></td>
+                                        <td>&#8377; {{ subscription.amount }}</td>
+                                        <td>&#8377;
+                                            {{subscription.amount|get_total_payment:subscription.paid_count}}
+                                        </td>
+                                        <td>{{ subscription.created_at|date:"M d, o" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                <h5 class="text-gray">Looks like your fans don't know that you're on Lisplay.</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="cancelled_subscribers">
+                            <div class="card-content table-responsive">
+                                {% if subscribers_cancelled %}
+                                <table class="table table-hover">
+                                    <thead class="text-danger">
+                                    <th>#</th>
+                                    <th>Username</th>
+                                    <th>Monthly</th>
+                                    <th>Started at</th>
+                                    <th>Cancelled at</th>
+                                    </thead>
+                                    <tbody>
+                                    {% for subscription in subscribers_cancelled %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a target="_blank"
+                                               href="{% url 'show_user_profile' subscription.subscriber %}">
+                                            {{ subscription.subscriber }}</a></td>
+                                        <td>&#8377; {{ subscription.amount }}</td>
+                                        <td>{{ subscription.created_at|date:"M d, o" }}</td>
+                                        <td>{{ subscription.ended_at|date:"M d, o" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                {% if subscribers %}
+                                <h5 class="text-gray">No supporter has unsubscribed you so far.
+                                    Awesome!</h5>
+                                {% else %}
+                                <h5 class="text-gray">Let's hope that this section always remains empty.
+                                    Good luck!</h5>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--End: Subscribers Left Table-->
     </div>
+    <!--End: Supporter stats-->
 
     {% else %}
     <div class="row">

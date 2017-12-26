@@ -29,17 +29,17 @@ def dashboard(request):
         created_at__month=current_month).count()
     left_this_month = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
         status__in=['cancelled', 'completed']).count()
-    subscribers = SubscriptionModel.objects.filter(creator=user).filter(
-        status__in=['authenticated', 'active', 'pending', 'halted'])
+    active_subscribers = SubscriptionModel.objects.filter(creator=user).filter(
+        status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
     subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(
-        status='cancelled')
+        status='cancelled').order_by('-created_at')
 
     context = {
         'current_subscribers_count': current_subscribers_count,
         'this_month_revenue': this_month_revenue if this_month_revenue is not None else 0,
         'joined_this_month': joined_this_month,
         'left_this_month': left_this_month,
-        'subscribers': subscribers,
+        'subscribers': active_subscribers,
         'subscribers_cancelled': subscribers_cancelled
     }
     return render(request, 'dash/dashboard.html', context)
