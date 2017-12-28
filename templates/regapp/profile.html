@@ -266,8 +266,8 @@
 
                         <div class="tab-content">
                             <div class="tab-pane" id="club2">
-                                <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3"
-                                     style="margin-bottom: 80px;">
+                                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"
+                                     style="margin-bottom: 2em;">
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="card card-signup">
@@ -295,16 +295,19 @@
                                             </div>
                                         </div>
                                     </form>
-                                    {% if user_profile.club_2_reward %}
-                                    <p class="text-muted" style="margin: 1em;">
-                                        <strong>REWARD: </strong> {{ user_profile.club_2_reward }}
-                                    </p>
-                                    {% endif %}
                                 </div>
+                                {% if user_profile.club_2_reward %}
+                                <div class="col-md-4"
+                                     style="padding-left: 1em; padding-right: 1em;">
+                                    <h4>Reward for Club 2 members:</h4>
+                                    <p class="text-muted">
+                                        {{ user_profile.club_2_reward }}</p>
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="tab-pane active" id="club3">
-                                <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3"
-                                     style="margin-bottom: 80px;">
+                                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"
+                                     style="margin-bottom: 2em;">
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="card card-signup">
@@ -332,16 +335,19 @@
                                             </div>
                                         </div>
                                     </form>
-                                    {% if user_profile.club_3_reward %}
-                                    <p class="text-muted" style="margin: 1em;">
-                                        <strong>REWARD: </strong> {{ user_profile.club_3_reward }}
-                                    </p>
-                                    {% endif %}
                                 </div>
+                                {% if user_profile.club_3_reward %}
+                                <div class="col-md-4"
+                                     style="padding-left: 1em; padding-right: 1em;">
+                                    <h4>Reward for Club 3 members:</h4>
+                                    <p class="text-muted">
+                                        {{ user_profile.club_3_reward }}</p>
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="tab-pane" id="club4">
-                                <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3"
-                                     style="margin-bottom: 80px;">
+                                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"
+                                     style="margin-bottom: 2em;">
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="card card-signup">
@@ -369,16 +375,21 @@
                                             </div>
                                         </div>
                                     </form>
-                                    {% if user_profile.club_4_reward %}
-                                    <p class="text-muted" style="margin: 1em;">
-                                        <strong>REWARD: </strong> {{ user_profile.club_4_reward }}
-                                    </p>
-                                    {% endif %}
                                 </div>
+                                {% if user_profile.club_4_reward %}
+                                <div class="col-md-4"
+                                     style="padding-left: 1em; padding-right: 1em;">
+                                    <h4>Reward for Club 4 members:</h4>
+                                    <p class="text-muted">
+                                        {{ user_profile.club_4_reward }}</p>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
+                <br/>
+                <br/>
 
                 {% elif user.username == user_profile.username %}
                 <h4 class="text-center">Are you a creator yourself?</h4>
