@@ -26,6 +26,17 @@ REGISTRATION_AUTO_LOGIN = False
 LOGIN_REDIRECT_URL = '/login-redirect/'
 LOGIN_URL = '/accounts/login/'
 
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_USERNAME_BLACKLIST = ['home', 'admin', 'lisplay', 'lisplayer', 'accounts', 'dashboard', 'update-profile',
+                              'creator-details', 'faq', 'about', 'search', 'privacy', 'welcome', 'webhook', 'checkout',
+                              'thank-you', 'terms-of-use', 'login-redirect', 'explore-creators']
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -56,11 +67,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'regapp',  # Should be above registration
-    'registration',  # Should be above admin and immediately above auth
+    # 'registration',  # Should be above admin and immediately above auth
     'django.contrib.auth',
     'django.contrib.admin',
     'raven.contrib.django.raven_compat',
     'storages',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +105,14 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'userregistration.wsgi.application'
 

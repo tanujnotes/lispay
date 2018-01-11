@@ -13,13 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
 from django.conf import settings
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
-from registration.backends.default.views import RegistrationView
-from regapp.forms import CustomUserForm
+
 from regapp import views
 
 urlpatterns = [
@@ -29,7 +28,5 @@ urlpatterns = [
                       name="robots_file"),
                   url(r'^', include('dash.urls')),
                   url(r'^', include('regapp.urls')),
-                  url(r'^accounts/register/$', RegistrationView.as_view(
-                      form_class=CustomUserForm), name='registration_register'),
-                  url(r'^accounts/', include('registration.backends.default.urls')),
+                  url(r'^accounts/', include('allauth.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

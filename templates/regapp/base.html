@@ -28,13 +28,6 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-105850928-1', 'auto');
     ga('send', 'pageview');
-
-
-
-
-
-
-
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -59,13 +52,6 @@
         width: 100%;
         color: white;
     }
-
-
-
-
-
-
-
     </style>
 </head>
 
@@ -107,14 +93,14 @@
                             <li><a href="{% url 'update_profile' %}">Edit Profile</a></li>
                             <li><a href="{% url 'creator_details' %}">Creator Details</a></li>
                             <li class="divider"></li>
-                            <li><a href="{% url 'auth_password_change' %}">Change Password</a></li>
+                            <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
                             <li class="divider"></li>
-                            <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                            <li><a href="{% url 'account_logout' %}">Logout</a></li>
                         </ul>
                     </li>
                     {% else %}
-                    <li><a href="{% url 'auth_login' %}">Login</a></li>
-                    <li><a href="{% url 'registration_register' %}">Sign up</a></li>
+                    <li><a href="{% url 'account_login' %}">Login</a></li>
+                    <li><a href="{% url 'account_signup' %}">Sign up</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -185,6 +171,7 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
 
 
 
