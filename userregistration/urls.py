@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from allauth.account.views import confirm_email as allauthemailconfirmation
 from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
@@ -29,4 +30,8 @@ urlpatterns = [
                   url(r'^', include('dash.urls')),
                   url(r'^', include('regapp.urls')),
                   url(r'^accounts/', include('allauth.urls')),
+                  url(r'^rest-auth/', include('rest_auth.urls')),
+                  url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', allauthemailconfirmation,
+                      name="account_confirm_email"),
+                  url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

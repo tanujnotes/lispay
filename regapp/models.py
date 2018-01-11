@@ -84,6 +84,8 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    first_name = models.CharField(max_length=30, blank=True)  # Added for rest auth library
+    last_name = models.CharField(max_length=30, blank=True)  # Added for rest auth library
     full_name = models.CharField(max_length=30, blank=True)
     mobile = models.CharField(max_length=20, blank=True)
     short_bio = models.CharField(max_length=50, blank=True)
