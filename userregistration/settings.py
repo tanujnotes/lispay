@@ -33,6 +33,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_BLACKLIST = ['home', 'admin', 'lisplay', 'lisplayer', 'accounts', 'dashboard', 'update-profile',
                               'creator-details', 'faq', 'about', 'search', 'privacy', 'welcome', 'webhook', 'checkout',
                               'thank-you', 'terms-of-use', 'login-redirect', 'explore-creators']
