@@ -1,0 +1,35 @@
+{% extends "regapp/base.html" %}
+{% load i18n %}
+
+{% block title %}
+Lisplay - Registration Email Sent
+{% endblock %}
+
+{% block content %}
+
+<div class="signup-page">
+
+    <div class="wrapper">
+        <div class="header header-filter"
+             style="background-image: url('{{ STATIC_URL }}img/login_background.jpg'); background-size: cover; background-position: top center;">
+            <div class="container">
+                <div class="row" style="margin-top: 5%;">
+                    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                        <div class="card card-signup">
+                            <div class="header header-primary text-center">
+                                <h4>Registration email sent</h4>
+                            </div>
+                            <p class="description text-center">
+                                Please check you email
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
