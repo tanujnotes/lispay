@@ -34,9 +34,9 @@ Lisplay - Login
                                         <span class="input-group-addon"> <i class="fa fa-user"></i></span>
                                         <input type="text" name="login" id="id_login" class="form-control"
                                                maxlength="30" placeholder="Email or username"
-                                               required autofocus>
+                                               value="{{ form.login.value|default_if_none:'' }}" required autofocus>
                                     </div>
-                                    {{ form.username.errors }}
+                                    {{ form.login.errors }}
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-lock"></i>
@@ -57,10 +57,10 @@ Lisplay - Login
                             </form>
                         </div>
                         <p class="description text-center">Forgot password?
-                            <a href="{% url 'account_reset_password' %}">{% trans "Reset it!" %}</a>
+                            <a href="{% url 'account_reset_password' %}">{% trans "Reset it." %}</a>
                         </p>
                         <p class="description text-center">Not a member?
-                            <a href="{% url 'account_signup' %}">{% trans "Register here!" %}</a>
+                            <a href="{% url 'account_signup' %}">{% trans "Register here." %}</a>
                         </p>
 
                     </div>
