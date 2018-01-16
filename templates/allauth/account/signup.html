@@ -22,21 +22,8 @@ Lisplay - Sign up
                                 {% csrf_token %}
                                 <div class="header header-primary text-center">
                                     <h4>Sign Up</h4>
-                                    <!--<div class="social-line">
-                                        <a href="#pablo" class="btn btn-simple btn-just-icon">
-                                            <i class="fa fa-facebook-square"></i>
-                                        </a>
-                                        <a href="#pablo" class="btn btn-simple btn-just-icon">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="#pablo" class="btn btn-simple btn-just-icon">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                    </div>-->
                                 </div>
-                                <!--<p class="text-divider">Or Be Classical</p>-->
                                 <div class="content">
-                                    <!--{{ form.errors }}-->
                                     <ul class="errorlist">
                                         {% for error in form.non_field_errors %}
                                         <li>{{ error }}</li>
