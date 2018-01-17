@@ -29,6 +29,7 @@ urlpatterns = [
                       name="robots_file"),
                   url(r'^', include('dash.urls')),
                   url(r'^', include('regapp.urls')),
+                  url(r'^api/', include('drfapp.urls')),
                   url(r'^accounts/', include('allauth.urls')),
                   url(r'^rest-auth/', include('rest_auth.urls')),
                   url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', allauthemailconfirmation,

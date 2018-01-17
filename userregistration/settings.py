@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
+    'drfapp.apps.DrfappConfig',
 ]
 
 MIDDLEWARE = [
