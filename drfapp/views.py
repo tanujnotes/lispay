@@ -8,7 +8,7 @@ from regapp.models import MyUser
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
-def get_creators():
+def get_creators(request):
     users = MyUser.objects.all()
     serializer = UserSerializer(users, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return JsonResponse({"users": serializer.data}, safe=False)
