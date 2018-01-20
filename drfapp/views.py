@@ -33,26 +33,37 @@ def get_user(request):
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
+def subscription_authenticated(request):
+    subscription_id = request.data['subscription_id']
+    subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
+    if subscription.status == 'created':
+        subscription.status = 'authenticated'
+        subscription.save()
+    return JsonResponse({'response_code': 0, 'response_message': "Subscription status updated"}, safe=False)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def create_subscription(request):
     amount = int(request.data['amount'])
     profile_username = request.data['creator']
 
     # Register customer
-    if not request.user.customer_id:
-        url = 'https://api.razorpay.com/v1/customers'
-        data = {"name": request.user.username, "email": request.user.email}
-        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
-        response = json.loads(r.text)
-        if 'error' not in response:
-            request.user.customer_id = response['id']
-            request.user.save()
-            dump = DataDumpModel(event_type="customer_registered", data=response)
-            dump.save()
-        else:
-            print(response['error'])
-            return JsonResponse({'response_code': 1,
-                                 'response_message': response['error']['description']},
-                                safe=False)
+    # if not request.user.customer_id:
+    #     url = 'https://api.razorpay.com/v1/customers'
+    #     data = {"name": request.user.username, "email": request.user.email}
+    #     r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
+    #     response = json.loads(r.text)
+    #     if 'error' not in response:
+    #         request.user.customer_id = response['id']
+    #         request.user.save()
+    #         dump = DataDumpModel(event_type="customer_registered", data=response)
+    #         dump.save()
+    #     else:
+    #         print(response['error'])
+    #         return JsonResponse({'response_code': 1,
+    #                              'response_message': response['error']['description']},
+    #                             safe=False)
 
     # Create the plan
     url = "https://api.razorpay.com/v1/plans"
