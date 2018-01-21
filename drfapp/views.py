@@ -49,21 +49,21 @@ def create_subscription(request):
     profile_username = request.data['creator']
 
     # Register customer
-    # if not request.user.customer_id:
-    #     url = 'https://api.razorpay.com/v1/customers'
-    #     data = {"name": request.user.username, "email": request.user.email}
-    #     r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
-    #     response = json.loads(r.text)
-    #     if 'error' not in response:
-    #         request.user.customer_id = response['id']
-    #         request.user.save()
-    #         dump = DataDumpModel(event_type="customer_registered", data=response)
-    #         dump.save()
-    #     else:
-    #         print(response['error'])
-    #         return JsonResponse({'response_code': 1,
-    #                              'response_message': response['error']['description']},
-    #                             safe=False)
+    if not request.user.customer_id:
+        url = 'https://api.razorpay.com/v1/customers'
+        data = {"name": request.user.username, "email": request.user.email}
+        r = requests.post(url, headers=HEADERS, data=json.dumps(data), auth=(RAZORPAY_KEY_, RAZORPAY_SECRET_))
+        response = json.loads(r.text)
+        if 'error' not in response:
+            request.user.customer_id = response['id']
+            request.user.save()
+            dump = DataDumpModel(event_type="customer_registered", data=response)
+            dump.save()
+        else:
+            print(response['error'])
+            return JsonResponse({'response_code': 1,
+                                 'response_message': response['error']['description']},
+                                safe=False)
 
     # Create the plan
     url = "https://api.razorpay.com/v1/plans"
