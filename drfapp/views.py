@@ -33,6 +33,17 @@ def get_user(request):
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
+def update_user(request):
+    full_name = request.POST.get('full_name', '')
+    user = MyUser.objects.get(username=request.user.username)
+    user.full_name = full_name
+    user.save()
+    serializer = UserSerializer(user, many=False)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def subscription_authenticated(request):
     subscription_id = request.data['subscription_id']
     subscription = SubscriptionModel.objects.get(subscription_id=subscription_id)
