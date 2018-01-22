@@ -1,7 +1,10 @@
 import datetime
 import json
+from io import BytesIO
 
 import requests
+from PIL import Image, ImageOps
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -35,8 +38,68 @@ def get_user(request):
 @permission_classes((IsAuthenticated,))
 def update_user(request):
     full_name = request.POST.get('full_name', '')
+    short_bio = request.POST.get('short_bio', '')
+    mobile = request.POST.get('mobile', '')
+    print("=================================")
+    print(request.FILES)
+
     user = MyUser.objects.get(username=request.user.username)
-    user.full_name = full_name
+    if full_name:
+        user.full_name = full_name
+    if short_bio:
+        user.short_bio = short_bio
+    if mobile:
+        user.mobile = mobile
+    if 'featured_image' in request.FILES:
+        featured_image = request.FILES['featured_image']
+        user.featured_image = featured_image
+        image = Image.open(BytesIO(request.FILES['featured_image'].read()))
+        image_buffer = BytesIO()
+        if image.mode != "RGB":
+            image = image.convert("RGB")
+
+        cover_image = ImageOps.fit(image, (1000, 500), Image.ANTIALIAS)
+        cover_image.save(image_buffer, format='JPEG')
+        im = InMemoryUploadedFile(
+            image_buffer,
+            None,
+            user.username + '_featured.jpeg',
+            'image/jpeg',
+            image_buffer.tell(),
+            None)
+        user.featured_image = im
+
+    if 'picture' in request.FILES:
+        picture = request.FILES['picture']
+        user.picture = picture
+        image = Image.open(BytesIO(request.FILES['picture'].read()))
+        image_buffer = BytesIO()
+        thumbnail_image_buffer = BytesIO()
+        if image.mode != "RGB":
+            image = image.convert("RGB")
+
+        profile_image = ImageOps.fit(image, (500, 500), Image.ANTIALIAS)
+        profile_image.save(image_buffer, format='JPEG')
+        im = InMemoryUploadedFile(
+            image_buffer,
+            None,
+            user.username + '_profile.jpeg',
+            'image/jpeg',
+            image_buffer.tell(),
+            None)
+        user.picture = im
+
+        thumbnail_image = ImageOps.fit(image, (200, 200), Image.ANTIALIAS)
+        thumbnail_image.save(thumbnail_image_buffer, format='JPEG')
+        im = InMemoryUploadedFile(
+            thumbnail_image_buffer,
+            None,
+            user.username + '_thumbnail.jpeg',
+            'image/jpeg',
+            thumbnail_image_buffer.tell(),
+            None)
+        user.thumbnail = im
+
     user.save()
     serializer = UserSerializer(user, many=False)
     return JsonResponse(serializer.data, safe=False)
