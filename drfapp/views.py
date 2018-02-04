@@ -40,7 +40,6 @@ def update_user(request):
     full_name = request.POST.get('full_name', '')
     short_bio = request.POST.get('short_bio', '')
     mobile = request.POST.get('mobile', '')
-    print("=================================")
     print(request.FILES)
 
     user = MyUser.objects.get(username=request.user.username)
@@ -99,6 +98,41 @@ def update_user(request):
             thumbnail_image_buffer.tell(),
             None)
         user.thumbnail = im
+
+    user.save()
+    serializer = UserSerializer(user, many=False)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def update_creator(request):
+    full_name = request.POST.get('full_name', '')
+    short_bio = request.POST.get('short_bio', '')
+    mobile = request.POST.get('mobile', '')
+
+    user = MyUser.objects.get(username=request.user.username)
+    is_creator_string = request.POST.get('is_creator', "")
+    user.is_creator = True if is_creator_string == 'true' else False
+    user.category = request.POST.get('category', "")
+    user.profile_description = request.POST.get('profile_description', "").strip()
+    user.featured_text = request.POST.get('featured_text', "").strip()
+    user.club_2_reward = request.POST.get('club_2_reward', "").strip()
+    user.club_3_reward = request.POST.get('club_3_reward', "").strip()
+    user.club_4_reward = request.POST.get('club_4_reward', "").strip()
+    featured_video = request.POST.get('featured_video', "").strip()
+    user.featured_video = utils.clean_youtube_link(featured_video)
+
+    if full_name:
+        user.full_name = full_name
+    if short_bio:
+        user.short_bio = short_bio
+    if mobile:
+        user.mobile = mobile
+
+    if not user.full_name or not user.short_bio:  # or not user.profile_description or not user.featured_text:
+        return JsonResponse(
+            {'response_code': 1, 'response_message': "Please fill all the details"}, safe=False)
 
     user.save()
     serializer = UserSerializer(user, many=False)
