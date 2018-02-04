@@ -265,6 +265,8 @@ def thank_you(request):
     digest = hmac.new(key_binary, string_binary, digestmod=hashlib.sha256).hexdigest()
 
     if digest == key_value_dict['razorpay_signature']:
+        subscription.status = 'authenticated'
+        subscription.save()
         amount = subscription.amount
         creator_username = subscription.creator.username
         creator = MyUser.objects.get(username=creator_username)
