@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 import utils
-from drfapp.serializers import UserSerializer
+from drfapp.serializers import UserSerializer, SubscriptionSerializer
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel
 from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
 
@@ -137,6 +137,16 @@ def update_creator(request):
     user.save()
     serializer = UserSerializer(user, many=False)
     return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def my_subscriptions(request):
+    subscriptions = SubscriptionModel.objects.filter(subscriber=request.user).filter(
+        status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
+
+    subscription_serializer = SubscriptionSerializer(subscriptions, many=True)
+    return JsonResponse({"subscriptions": subscription_serializer.data}, safe=False)
 
 
 @api_view(['POST'])
