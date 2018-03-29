@@ -68,6 +68,7 @@
 
 
 
+
 </script>
 
 <div class="container-fluid">
@@ -203,7 +204,7 @@
                         </div>
 
                         <div class="row form-group">
-                            <h4>Featured Video <span class="text-gray"> (optional)</span></h4>
+                            <h4>Featured Video</h4>
                             <div class="stats" data-placement="top" title="No YouTube Video?" data-toggle="popover"
                                  data-content="If you don't have a YouTube channel/video, just record a short video
                                  using your smartphone and send it to us. We will upload it on our channel and feature
@@ -219,7 +220,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Featured video link</label>
                                     <input type="url" class="form-control" name="featured_video" id="id_featured_video"
-                                           value="{{ form.featured_video.value }}"/>
+                                           value="{{ form.featured_video.value }}" required/>
                                 </div>
                             </div>
                         </div>
