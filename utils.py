@@ -5,25 +5,27 @@ from dateutil.relativedelta import relativedelta
 
 
 def clean_youtube_link(youtube_link):
-    if not youtube_link or youtube_link is None:
-        return ""
+    try:
+        if not youtube_link or youtube_link is None:
+            return "https://www.youtube.com/embed/caxNXMpQND4"  # default video link
+        if "youtube.com" not in youtube_link and "youtu.be" not in youtube_link:
+            return "https://www.youtube.com/embed/caxNXMpQND4"  # default video link
 
-    if "youtube.com" not in youtube_link and "youtu.be" not in youtube_link:
-        return ""
-
-    if "watch" in youtube_link and "&" in youtube_link:
-        key_values = youtube_link.split("?")[1]
-        key_values = key_values.split("&")
-        for pair in key_values:
-            if "v=" in pair:
-                return "https://www.youtube.com/embed/" + pair.split("=")[1]
-    elif "watch" in youtube_link:
-        return youtube_link.replace('watch?v=', 'embed/')
-    elif "youtu.be" in youtube_link:
-        video_id = youtube_link.split("/")[1]
-        return "https://www.youtube.com/embed/" + video_id
-    else:
-        return youtube_link
+        if "watch" in youtube_link and "&" in youtube_link:
+            key_values = youtube_link.split("?")[1]
+            key_values = key_values.split("&")
+            for pair in key_values:
+                if "v=" in pair:
+                    return "https://www.youtube.com/embed/" + pair.split("=")[1]
+        elif "watch" in youtube_link:
+            return youtube_link.replace('watch?v=', 'embed/')
+        elif "youtu.be" in youtube_link:
+            video_id = youtube_link.split("/")[1]
+            return "https://www.youtube.com/embed/" + video_id
+        else:
+            return youtube_link
+    except:
+        return "https://www.youtube.com/embed/caxNXMpQND4"  # default video link
 
 
 def get_social_details(request):

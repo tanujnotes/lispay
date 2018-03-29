@@ -237,15 +237,6 @@ def creator_details(request):
                 }
                 return render(request, 'dash/creator_details.html', context)
 
-            if not user.featured_video:
-                error = "Please enter a valid YouTube video link."
-                context = {
-                    "form": form,
-                    "categories": CATEGORY_CHOICES,
-                    "errors": error,
-                }
-                return render(request, 'dash/creator_details.html', context)
-
             user.save()
             if was_creator_already:
                 message = "Creator details updated successfully!"
