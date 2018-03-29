@@ -6,7 +6,10 @@ from dateutil.relativedelta import relativedelta
 
 def clean_youtube_link(youtube_link):
     if not youtube_link or youtube_link is None:
-        return "https://www.youtube.com/embed/oc_vB5Xcx1o"  # default video link
+        return ""
+
+    if "youtube.com" not in youtube_link and "youtu.be" not in youtube_link:
+        return ""
 
     if "watch" in youtube_link and "&" in youtube_link:
         key_values = youtube_link.split("?")[1]
