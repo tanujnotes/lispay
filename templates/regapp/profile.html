@@ -235,7 +235,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="profile-tabs">
+                    <div class="profile-tabs col-md-6 col-sm-6">
                         <div class="nav-align-center">
                             <ul class="nav nav-pills nav-pills-primary" role="tablist">
                                 <li>
@@ -266,7 +266,7 @@
 
                         <div class="tab-content">
                             <div class="tab-pane" id="club2">
-                                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"
+                                <div class="col-md-8 col-md-offset-2 col-sm-12"
                                      style="margin-bottom: 2em;">
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
@@ -297,7 +297,7 @@
                                     </form>
                                 </div>
                                 {% if user_profile.club_2_reward %}
-                                <div class="col-md-4"
+                                <div class="col-md-8 col-md-offset-2"
                                      style="padding-left: 1em; padding-right: 1em;">
                                     <h4>Reward for Club 2 members:</h4>
                                     <p class="text-muted">
@@ -306,13 +306,13 @@
                                 {% endif %}
                             </div>
                             <div class="tab-pane active" id="club3">
-                                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"
+                                <div class="col-md-8 col-md-offset-2 col-sm-12"
                                      style="margin-bottom: 2em;">
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
                                         <div class="card card-signup">
                                             <div class="header header-danger text-center">
-                                                <h4>Club <3</h4>
+                                                <h4>Club 3</h4>
                                             </div>
                                             <div class="content">
                                                 <p style="margin-left: 30px;">Become a member of Club 3 by pledging
@@ -337,7 +337,7 @@
                                     </form>
                                 </div>
                                 {% if user_profile.club_3_reward %}
-                                <div class="col-md-4"
+                                <div class="col-md-8 col-md-offset-2"
                                      style="padding-left: 1em; padding-right: 1em;">
                                     <h4>Reward for Club 3 members:</h4>
                                     <p class="text-muted">
@@ -346,7 +346,7 @@
                                 {% endif %}
                             </div>
                             <div class="tab-pane" id="club4">
-                                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"
+                                <div class="col-md-8 col-md-offset-2 col-sm-12"
                                      style="margin-bottom: 2em;">
                                     <form class="form" method="post" action=".">
                                         {% csrf_token %}
@@ -377,7 +377,7 @@
                                     </form>
                                 </div>
                                 {% if user_profile.club_4_reward %}
-                                <div class="col-md-4"
+                                <div class="col-md-8 col-md-offset-2"
                                      style="padding-left: 1em; padding-right: 1em;">
                                     <h4>Reward for Club 4 members:</h4>
                                     <p class="text-muted">
@@ -387,6 +387,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4 col-md-offset-1 col-sm-6" style="margin-top: 4em;">
+                        <img src="{% static 'img/app_coming_soon.png' %}" alt="Circle Image"
+                             class="img-responsive">
+                    </div>
+
                 </div>
                 <br/>
                 <br/>
