@@ -1,9 +1,12 @@
+from allauth.account.signals import email_confirmed
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.core.mail import send_mail
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -222,3 +225,14 @@ class DataDumpModel(models.Model):
     data = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+@receiver(email_confirmed)
+def email_confirmed_(request, email_address, **kwargs):
+    send_mail(
+        'NEW USER SIGNED UP! ' + email_address.email,
+        email_address.email,
+        'support@lisplay.com',
+        ['tanuj@lisplay.com'],
+        fail_silently=False,
+    )
