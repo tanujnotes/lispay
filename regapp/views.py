@@ -239,8 +239,8 @@ def privacy(request):
     return render(request, 'regapp/privacy_policy.html', {})
 
 
-def terms_of_use(request):
-    return render(request, 'regapp/terms_of_use.html', {})
+def terms_of_service(request):
+    return render(request, 'regapp/terms_of_service.html', {})
 
 
 def thank_you(request):
