@@ -46,6 +46,14 @@ EMAIL_HOST_USER = EMAIL_HOST_USER_VALUE
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD_VALUE  # This is not your gmail password.
 EMAIL_USE_TLS = True
 
+# Django database backup settings
+DBBACKUP_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DBBACKUP_STORAGE_OPTIONS = {
+    'access_key': AWS_ACCESS_KEY_ID_VALUE,
+    'secret_key': AWS_SECRET_ACCESS_KEY_VALUE,
+    'bucket_name': 'backups-lisplay'
+}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -82,6 +90,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'drfapp.apps.DrfappConfig',
+    'dbbackup',
 ]
 
 MIDDLEWARE = [
