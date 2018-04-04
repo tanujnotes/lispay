@@ -20,7 +20,7 @@ HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def get_creators(request):
-    users = MyUser.objects.all()
+    users = MyUser.objects.filter(is_creator=True)
     serializer = UserSerializer(users, many=True)
     return JsonResponse({"users": serializer.data}, safe=False)
 
