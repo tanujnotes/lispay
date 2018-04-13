@@ -6,7 +6,7 @@ from regapp.models import MyUser, SubscriptionModel
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
-        fields = ('username', 'full_name', 'short_bio', 'email', 'profile_description', 'picture', 'featured_image',
+        fields = ('username', 'first_name', 'short_bio', 'email', 'profile_description', 'picture', 'featured_image',
                   'featured_video', 'mobile', 'club_2_reward', 'club_3_reward', 'club_4_reward', 'social_links',
                   'is_creator')
 

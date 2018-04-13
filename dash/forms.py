@@ -5,7 +5,7 @@ from regapp.models import MyUser, CATEGORY_CHOICES
 
 class UpdateCreatorForm(forms.ModelForm):
     is_creator = forms.BooleanField(required=False)
-    full_name = forms.CharField(max_length=30, required=True)
+    first_name = forms.CharField(max_length=30, required=True)
     short_bio = forms.CharField(max_length=50, required=False)
     profile_description = forms.CharField(max_length=1000, required=False, widget=forms.Textarea)
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, required=False)
@@ -17,5 +17,5 @@ class UpdateCreatorForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('is_creator', 'full_name', 'short_bio', 'profile_description', 'category', 'featured_video',
+        fields = ('is_creator', 'first_name', 'short_bio', 'profile_description', 'category', 'featured_video',
                   'featured_text', 'club_2_reward', 'club_3_reward', 'club_4_reward')

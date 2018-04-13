@@ -39,7 +39,7 @@
                             <h3>{{ message }}</h3>
 
                             {% if creator %}
-                            <h4 class="description" style="margin-top:20px;">Let {{ creator.full_name }} know on social
+                            <h4 class="description" style="margin-top:20px;">Let {{ creator.first_name }} know on social
                                 media that now they have your support.</h4>
                             <div class="nav-align-center" style="margin-top:20px;margin-bottom:20px;">
                                 {% if creator.social_links|get_item:'facebook_details,facebook_link' %}

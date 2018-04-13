@@ -299,7 +299,7 @@ def search(request):
 
     search_results_available = True
     search_results = MyUser.objects.filter(is_creator=True).annotate(
-        search=SearchVector('username', 'full_name', 'profile_description'), ).filter(search=search_query)
+        search=SearchVector('username', 'first_name', 'profile_description'), ).filter(search=search_query)
     if not search_results:
         search_results_available = False
         search_results = MyUser.objects.filter(is_creator=True).order_by('-created_at')[:10]
@@ -550,13 +550,13 @@ def explore_creators(request, category, page="1"):
 @login_required
 def welcome(request):
     error = ""
-    # if request.user.full_name:
+    # if request.user.first_name:
     #     return HttpResponseRedirect('/%s/' % request.user.username)
 
-    form = UpdateProfileForm(request.POST or None, initial={'full_name': request.user.full_name})
+    form = UpdateProfileForm(request.POST or None, initial={'first_name': request.user.first_name})
     if request.method == 'POST':
         if form.is_valid():
-            request.user.full_name = request.POST['full_name'].strip()
+            request.user.first_name = request.POST['first_name'].strip()
             request.user.save()
             if "is_creator" in request.POST:
                 return HttpResponseRedirect('/creator-details/')
@@ -576,7 +576,7 @@ def welcome(request):
 def login_redirect(request):
     next_url = request.GET.get('next', '')
 
-    if request.user.full_name:
+    if request.user.first_name:
         if next_url:
             url = next_url
         else:

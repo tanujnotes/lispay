@@ -37,14 +37,14 @@ def get_user(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def update_user(request):
-    full_name = request.POST.get('full_name', '')
+    first_name = request.POST.get('first_name', '')
     short_bio = request.POST.get('short_bio', '')
     mobile = request.POST.get('mobile', '')
     print(request.FILES)
 
     user = MyUser.objects.get(username=request.user.username)
-    if full_name:
-        user.full_name = full_name
+    if first_name:
+        user.first_name = first_name
     if short_bio:
         user.short_bio = short_bio
     if mobile:
@@ -107,7 +107,7 @@ def update_user(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def update_creator(request):
-    full_name = request.POST.get('full_name', '')
+    first_name = request.POST.get('first_name', '')
     short_bio = request.POST.get('short_bio', '')
     mobile = request.POST.get('mobile', '')
 
@@ -123,14 +123,14 @@ def update_creator(request):
     featured_video = request.POST.get('featured_video', "").strip()
     user.featured_video = utils.clean_youtube_link(featured_video)
 
-    if full_name:
-        user.full_name = full_name
+    if first_name:
+        user.first_name = first_name
     if short_bio:
         user.short_bio = short_bio
     if mobile:
         user.mobile = mobile
 
-    if not user.full_name or not user.short_bio:  # or not user.profile_description or not user.featured_text:
+    if not user.first_name or not user.short_bio:  # or not user.profile_description or not user.featured_text:
         return JsonResponse(
             {'response_code': 1, 'response_message': "Please fill all the details"}, safe=False)
 

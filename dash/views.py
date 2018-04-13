@@ -115,7 +115,7 @@ def update_profile(request):
     error = ""
     user = request.user
     form = UpdateProfileForm(request.POST or None,
-                             initial={'full_name': user.full_name,
+                             initial={'first_name': user.first_name,
                                       'email': user.email,
                                       'mobile': user.mobile,
                                       'short_bio': user.short_bio,
@@ -123,7 +123,7 @@ def update_profile(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            user.full_name = request.POST.get('full_name', "").strip()
+            user.first_name = request.POST.get('first_name', "").strip()
             user.short_bio = request.POST.get('short_bio', "").strip()
             user.mobile = request.POST.get('mobile', "").strip()
             user.social_links = utils.get_social_details(request)
@@ -202,7 +202,7 @@ def creator_details(request):
     user = request.user
     form = UpdateCreatorForm(request.POST or None,
                              initial={'is_creator': user.is_creator,
-                                      'full_name': user.full_name,
+                                      'first_name': user.first_name,
                                       'short_bio': user.short_bio,
                                       'profile_description': user.profile_description,
                                       'category': user.category,
@@ -218,7 +218,7 @@ def creator_details(request):
 
             user.is_creator = ("is_creator" in request.POST)
             user.category = request.POST.get('category', "")
-            user.full_name = request.POST.get('full_name', "").strip()
+            user.first_name = request.POST.get('first_name', "").strip()
             user.short_bio = request.POST.get('short_bio', "").strip()
             user.profile_description = request.POST.get('profile_description', "").strip()
             user.featured_text = request.POST.get('featured_text', "").strip()
@@ -228,7 +228,7 @@ def creator_details(request):
             featured_video = request.POST.get('featured_video', "").strip()
             user.featured_video = utils.clean_youtube_link(featured_video)
 
-            if not user.full_name or not user.short_bio or not user.profile_description or not user.featured_text:
+            if not user.first_name or not user.short_bio or not user.profile_description or not user.featured_text:
                 error = "Please fill up all the required fields!"
                 context = {
                     "form": form,

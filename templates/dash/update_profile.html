@@ -104,8 +104,8 @@
                             </div>
                             <div class="col-md-9 col-sm-9 col-xs-9">
                                 <div class="form-group label-floating">
-                                    <input type="text" class="form-control" name="full_name" id="id_full_name"
-                                           maxlength="30" value="{{ form.full_name.value }}"
+                                    <input type="text" class="form-control" name="first_name" id="id_first_name"
+                                           maxlength="30" value="{{ form.first_name.value }}"
                                            placeholder="Your popular name" required/>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@
                             <img class="img" src="{{ user.thumbnail.url }}"/>
                         </div>
                         <div class="content">
-                            <h4 class="card-title">{{ user.full_name }}</h4>
+                            <h4 class="card-title">{{ user.first_name }}</h4>
                             <p class="text-muted">{{ "@"|add:user.username }}</p>
                             <h6 class="category text-gray">{{ user.short_bio }}</h6>
                         </div>

@@ -32,7 +32,7 @@
                                             <a href="{% url 'show_user_profile' creator.username %}">
                                                 <img src="{{ creator.picture.url }}" alt="{{ creator.username }}"
                                                      class="img-rounded img-responsive">
-                                                <h4>{{ creator.full_name }}</h4>
+                                                <h4>{{ creator.first_name }}</h4>
                                                 <h6 class="text-muted">{{ creator.short_bio|upper }}</h6>
                                             </a>
                                             <br/>
@@ -45,7 +45,7 @@
                                             <a href="{% url 'show_user_profile' creator.username %}">
                                                 <img src="{{ creator.picture.url }}" alt="{{ creator.username }}"
                                                      class="img-rounded img-responsive">
-                                                <h4>{{ creator.full_name }}</h4>
+                                                <h4>{{ creator.first_name }}</h4>
                                                 <h6 class="text-muted">{{ creator.short_bio|upper }}</h6>
                                             </a>
                                             <br/>

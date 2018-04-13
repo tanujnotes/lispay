@@ -45,7 +45,7 @@ Lisplay - Search
                                              class="img-raised img-circle img-responsive">
                                     </div>
                                     <div class="col-md-8 col-sm-8 col-xs-7">
-                                        <h4>{{ creator.full_name }}<br/>
+                                        <h4>{{ creator.first_name }}<br/>
                                             <small class="text-muted">{{ creator.short_bio|upper }}</small>
                                             <br/>
                                             {% with count=subscriber_count|get_value:creator.username %}

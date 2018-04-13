@@ -92,7 +92,6 @@ class MyUser(AbstractBaseUser):
     )
     first_name = models.CharField(max_length=30, blank=True)  # Added for rest auth library
     last_name = models.CharField(max_length=30, blank=True)  # Added for rest auth library
-    full_name = models.CharField(max_length=30, blank=True)
     mobile = models.CharField(max_length=20, blank=True)
     short_bio = models.CharField(max_length=50, blank=True)
     profile_description = models.CharField(max_length=1000, blank=True)
@@ -129,11 +128,11 @@ class MyUser(AbstractBaseUser):
 
     # REQUIRED_FIELDS = 'username'
 
-    def get_full_name(self):
-        return self.full_name
+    def get_first_name(self):
+        return self.first_name
 
     def get_short_name(self):
-        return self.full_name
+        return self.first_name
 
     def get_username(self):
         return self.username
