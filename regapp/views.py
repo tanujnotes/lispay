@@ -590,23 +590,12 @@ def login_redirect(request):
     return HttpResponseRedirect(url)
 
 
-# Use for social_links in user model
 @register.filter
-def get_item(dictionary, args):
-    if args is None or dictionary is None or dictionary is "":
-        return ""
-    arg_list = [arg.strip() for arg in args.split(',')]
+def get_value(dictionary, key):
     try:
         dictionary = ast.literal_eval(dictionary)
     except:
-        return None
-    if dictionary.get(arg_list[0]) is None or dictionary.get(arg_list[0]).get(arg_list[1]) is None:
         return ""
-    return dictionary.get(arg_list[0]).get(arg_list[1])
-
-
-@register.filter
-def get_value(dictionary, key):
     return dictionary.get(key)
 
 
