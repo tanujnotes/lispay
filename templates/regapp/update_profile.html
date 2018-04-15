@@ -81,7 +81,7 @@
                                         <div class="togglebutton">
                                             <label>
                                                 <input type="checkbox" name="is_creator" id="id_is_creator"
-                                                {% if user.is_creator %}checked{% endif %}>
+                                                       {% if user.is_creator %}checked{% endif %}>
                                                 This is a creator account
                                             </label>
                                         </div>
@@ -162,7 +162,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'facebook_details,facebook_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'facebook_username' }}"
                                                            name="facebook_username" id="id_facebook_username"
                                                            class="form-control"/>
                                                 </div>
@@ -171,7 +171,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'facebook_details,facebook_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'facebook_link' }}"
                                                            name="facebook_link" id="id_facebook_link"
                                                            class="form-control"/>
                                                 </div>
@@ -183,7 +183,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'twitter_details,twitter_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'twitter_username' }}"
                                                            name="twitter_username" id="id_twitter_username"
                                                            class="form-control"/>
                                                 </div>
@@ -192,7 +192,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'twitter_details,twitter_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'twitter_link' }}"
                                                            name="twitter_link" id="id_twitter_link"
                                                            class="form-control"/>
                                                 </div>
@@ -204,7 +204,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'instagram_details,instagram_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'instagram_username' }}"
                                                            name="instagram_username" id="id_instagram_username"
                                                            class="form-control"/>
                                                 </div>
@@ -213,7 +213,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'instagram_details,instagram_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'instagram_link' }}"
                                                            name="instagram_link" id="id_instagram_link"
                                                            class="form-control"/>
                                                 </div>
@@ -225,7 +225,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'snapchat_details,snapchat_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'snapchat_username' }}"
                                                            name="snapchat_username" id="id_snapchat_username"
                                                            class="form-control"/>
                                                 </div>
@@ -234,7 +234,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'snapchat_details,snapchat_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'snapchat_link' }}"
                                                            name="snapchat_link" id="id_snapchat_link"
                                                            class="form-control"/>
                                                 </div>
@@ -246,7 +246,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'youtube_details,youtube_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'youtube_username' }}"
                                                            name="youtube_username" id="id_youtube_username"
                                                            class="form-control"/>
                                                 </div>
@@ -255,7 +255,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'youtube_details,youtube_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'youtube_link' }}"
                                                            name="youtube_link" id="id_youtube_link"
                                                            class="form-control"/>
                                                 </div>
@@ -267,7 +267,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'googleplus_details,googleplus_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'googleplus_username' }}"
                                                            name="googleplus_username" id="id_googleplus_username"
                                                            class="form-control"/>
                                                 </div>
@@ -276,7 +276,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'googleplus_details,googleplus_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'googleplus_link' }}"
                                                            name="googleplus_link" id="id_googleplus_link"
                                                            class="form-control"/>
                                                 </div>
@@ -288,7 +288,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'linkedin_details,linkedin_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'linkedin_username' }}"
                                                            name="linkedin_username" id="id_linkedin_username"
                                                            class="form-control"/>
                                                 </div>
@@ -297,7 +297,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'linkedin_details,linkedin_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'linkedin_link' }}"
                                                            name="linkedin_link" id="id_linkedin_link"
                                                            class="form-control"/>
                                                 </div>
@@ -309,7 +309,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'blog_details,blog_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'blog_username' }}"
                                                            name="blog_username" id="id_blog_username"
                                                            class="form-control"/>
                                                 </div>
@@ -318,7 +318,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'blog_details,blog_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'blog_link' }}"
                                                            name="blog_link" id="id_blog_link"
                                                            class="form-control"/>
                                                 </div>
@@ -330,7 +330,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'website_details,website_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'website_username' }}"
                                                            name="website_username" id="id_website_username"
                                                            class="form-control"/>
                                                 </div>
@@ -339,7 +339,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'website_details,website_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'website_link' }}"
                                                            name="website_link" id="id_website_link"
                                                            class="form-control"/>
                                                 </div>
@@ -351,7 +351,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'merchandise_details,merchandise_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'merchandise_username' }}"
                                                            name="merchandise_username" id="id_merchandise_username"
                                                            class="form-control"/>
                                                 </div>
@@ -360,7 +360,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'merchandise_details,merchandise_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'merchandise_link' }}"
                                                            name="merchandise_link" id="id_merchandise_link"
                                                            class="form-control"/>
                                                 </div>
@@ -372,7 +372,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'github_details,github_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'github_username' }}"
                                                            name="github_username" id="id_github_username"
                                                            class="form-control"/>
                                                 </div>
@@ -381,7 +381,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'github_details,github_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'github_link' }}"
                                                            name="github_link" id="id_github_link"
                                                            class="form-control"/>
                                                 </div>
@@ -393,7 +393,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Username"
-                                                           value="{{ form.social_links.value|get_item:'other_details,other_username' }}"
+                                                           value="{{ form.social_links.value|get_value:'other_username' }}"
                                                            name="other_username" id="id_other_username"
                                                            class="form-control"/>
                                                 </div>
@@ -402,7 +402,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Link"
-                                                           value="{{ form.social_links.value|get_item:'other_details,other_link' }}"
+                                                           value="{{ form.social_links.value|get_value:'other_link' }}"
                                                            name="other_link" id="id_other_link"
                                                            class="form-control"/>
                                                 </div>

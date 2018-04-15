@@ -42,23 +42,23 @@
                             <h4 class="description" style="margin-top:20px;">Let {{ creator.first_name }} know on social
                                 media that now they have your support.</h4>
                             <div class="nav-align-center" style="margin-top:20px;margin-bottom:20px;">
-                                {% if creator.social_links|get_item:'facebook_details,facebook_link' %}
-                                <a href="{{ creator.social_links|get_item:'facebook_details,facebook_link' }}"
+                                {% if creator.social_links|get_value:'facebook_link' %}
+                                <a href="{{ creator.social_links|get_value:'facebook_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                     <i class="fa fa-facebook"></i></a>
                                 {% endif %}
-                                {% if creator.social_links|get_item:'twitter_details,twitter_link' %}
-                                <a href="{{ creator.social_links|get_item:'twitter_details,twitter_link' }}"
+                                {% if creator.social_links|get_value:'twitter_link' %}
+                                <a href="{{ creator.social_links|get_value:'twitter_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                     <i class="fa fa-twitter"></i></a>
                                 {% endif %}
-                                {% if creator.social_links|get_item:'instagram_details,instagram_link' %}
-                                <a href="{{ creator.social_links|get_item:'instagram_details,instagram_link' }}"
+                                {% if creator.social_links|get_value:'instagram_link' %}
+                                <a href="{{ creator.social_links|get_value:'instagram_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                     <i class="fa fa-instagram"></i></a>
                                 {% endif %}
-                                {% if creator.social_links|get_item:'snapchat_details,snapchat_link' %}
-                                <a href="{{ creator.social_links|get_item:'snapchat_details,snapchat_link' }}"
+                                {% if creator.social_links|get_value:'snapchat_link' %}
+                                <a href="{{ creator.social_links|get_value:'snapchat_link' }}"
                                    target="_blank" class="btn btn-simple btn-just-icon">
                                     <i class="fa fa-snapchat"></i></a>
                                 {% endif %}

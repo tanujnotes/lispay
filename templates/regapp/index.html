@@ -127,23 +127,23 @@
                                         <small class="text-muted">{{ featured_user.short_bio|upper }}</small>
                                     </h4>
                                     <p class="description">{{ featured_user.profile_description|slice:":200" }}...</p>
-                                    {% if featured_user.social_links|get_item:'facebook_details,facebook_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'facebook_details,facebook_link' }}"
+                                    {% if featured_user.social_links|get_value:'facebook_link' %}
+                                    <a href="{{ featured_user.social_links|get_value:'facebook_link' }}"
                                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                         <i class="fa fa-facebook"></i></a>
                                     {% endif %}
-                                    {% if featured_user.social_links|get_item:'twitter_details,twitter_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'twitter_details,twitter_link' }}"
+                                    {% if featured_user.social_links|get_value:'twitter_link' %}
+                                    <a href="{{ featured_user.social_links|get_value:'twitter_link' }}"
                                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                         <i class="fa fa-twitter"></i></a>
                                     {% endif %}
-                                    {% if featured_user.social_links|get_item:'instagram_details,instagram_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'instagram_details,instagram_link' }}"
+                                    {% if featured_user.social_links|get_value:'instagram_link' %}
+                                    <a href="{{ featured_user.social_links|get_value:'instagram_link' }}"
                                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
                                         <i class="fa fa-instagram"></i></a>
                                     {% endif %}
-                                    {% if featured_user.social_links|get_item:'youtube_details,youtube_link' %}
-                                    <a href="{{ featured_user.social_links|get_item:'youtube_details,youtube_link' }}"
+                                    {% if featured_user.social_links|get_value:'youtube_link' %}
+                                    <a href="{{ featured_user.social_links|get_value:'youtube_link' }}"
                                        target="_blank" class="btn btn-simple btn-just-icon">
                                         <i class="fa fa-youtube-play"></i></a>
                                     {% endif %}
