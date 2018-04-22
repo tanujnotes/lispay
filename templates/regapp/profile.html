@@ -103,10 +103,10 @@
                        target="_blank" class="btn btn-simple btn-just-icon">
                         <i class="fa fa-youtube-play"></i></a>
                     {% endif %}
-                    {% if user_profile.social_links|get_value:'googleplus_link' %}
-                    <a href="{{ user_profile.social_links|get_value:'googleplus_link' }}"
+                    {% if user_profile.social_links|get_value:'soundcloud_link' %}
+                    <a href="{{ user_profile.social_links|get_value:'soundcloud_link' }}"
                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
-                        <i class="fa fa-google-plus"></i></a>
+                        <i class="fa fa-soundcloud"></i></a>
                     {% endif %}
                     {% if user_profile.social_links|get_value:'linkedin_link' %}
                     <a href="{{ user_profile.social_links|get_value:'linkedin_link' }}"
@@ -117,6 +117,31 @@
                     <a href="{{ user_profile.social_links|get_value:'github_link' }}"
                        target="_blank" class="btn btn-simple btn-just-icon btn-default">
                         <i class="fa fa-github"></i></a>
+                    {% endif %}
+                    {% if user_profile.social_links|get_value:'blog_link' %}
+                    <a href="{{ user_profile.social_links|get_value:'blog_link' }}"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-rss"></i></a>
+                    {% endif %}
+                    {% if user_profile.social_links|get_value:'website_link' %}
+                    <a href="{{ user_profile.social_links|get_value:'website_link' }}"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-globe"></i></a>
+                    {% endif %}
+                    {% if user_profile.social_links|get_value:'playstore_link' %}
+                    <a href="{{ user_profile.social_links|get_value:'playstore_link' }}"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-android"></i></a>
+                    {% endif %}
+                    {% if user_profile.social_links|get_value:'appstore_link' %}
+                    <a href="{{ user_profile.social_links|get_value:'appstore_link' }}"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-apple"></i></a>
+                    {% endif %}
+                    {% if user_profile.social_links|get_value:'other_link' %}
+                    <a href="{{ user_profile.social_links|get_value:'other_link' }}"
+                       target="_blank" class="btn btn-simple btn-just-icon btn-default">
+                        <i class="fa fa-star"></i></a>
                     {% endif %}
                     <br/>
                     <br/>
