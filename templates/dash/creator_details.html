@@ -67,9 +67,6 @@
 
 
 
-
-
-
 </script>
 
 <div class="container-fluid">
@@ -112,7 +109,7 @@
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
                         <h4 class="title">Creator Details</h4>
-                        <p class="category">Fill out this form and your creator profile is ready</p>
+                        <p class="category">Fill out and save this form and your creator profile is ready.</p>
                     </div>
                     <div class="card-content">
                         <div class="row form-group">
@@ -175,7 +172,8 @@
 
                         <div class="row form-group">
                             <h4>Profile Description</h4>
-                            <p>Please write a detailed description about what you do. [Max 1000 characters]</p>
+                            <p>Please write a detailed description about what you do, why you need support and how you
+                                are going to use the money provided to you. [Max 1000 characters]</p>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -212,7 +210,7 @@
                                  it on your Lisplay page. We'll assist you with the whole process, just send us an
                                  email at support@lisplay.com">
                                 <p>Please enter a YouTube link of your work or an introduction video. The video will be
-                                    featured on your profile. <a href="#">No YouTube Video?</a>
+                                    featured on your profile. <a href="#">No YouTube video?</a>
                                 </p>
                             </div>
                         </div>
@@ -253,18 +251,22 @@
         </div>
 
         <!--Supporter Rewards-->
-        {% if user.is_creator %}
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Supporter Rewards (optional)</h4>
-                        <p class="category">Fill out rewards to be shown on your profile for your supporters</p>
+                        <h4 class="title">Membership Rewards (optional)</h4>
+                        <p class="category">You should reward your club members for their support. It's optional but
+                            highly recommended.</p>
                     </div>
                     <div class="card-content">
                         <div class="row form-group">
                             <h4>Club 2 Reward</h4>
-                            <p>Reward for your supporters in Club 2. [Max 200 characters]</p>
+                            <div class="stats" data-placement="top" title="Club 2 reward" data-toggle="popover"
+                                 data-content="You can reward your club 2 members by sending them exclusive content at
+                                 least once a month. You can also provide sneak peak of your upcoming projects.">
+                                <p>Describe reward for your Club 3 members.<a href="#"> Show example.</a></p>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -278,7 +280,11 @@
 
                         <div class="row form-group">
                             <h4>Club 3 Reward</h4>
-                            <p>Reward for your supporters in Club 3. [Max 200 characters]</p>
+                            <div class="stats" data-placement="top" title="Club 3 reward" data-toggle="popover"
+                                 data-content="You can offer your club 3 members that you'll video chat with them once
+                                 a month on Google Hangouts.">
+                                <p>Describe reward for your Club 3 members.<a href="#"> Show example.</a></p>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -292,7 +298,11 @@
 
                         <div class="row form-group">
                             <h4>Club 4 Reward</h4>
-                            <p>Reward for your supporters in Club 4. [Max 200 characters]</p>
+                            <div class="stats" data-placement="top" title="Club 4 reward" data-toggle="popover"
+                                 data-content="Club 4 members deserve special attention. You can send gifts to them and
+                                 meet them in person if it's possible.">
+                                <p>Describe reward for your Club 4 members. <a href="#"> Show example.</a></p>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -312,9 +322,8 @@
                 </div>
             </div>
         </div>
+        <!--End: Supporter Rewards-->
     </form>
-    {% endif %}
-    <!--End: Supporter Rewards-->
 </div>
 
 {% endblock %}
