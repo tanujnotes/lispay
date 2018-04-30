@@ -69,7 +69,7 @@ def get_social_details(request):
 
 def check_http(url):
     url = url.strip()
-    if url is None:
+    if not url or url is None:
         return ""
     if not url.startswith('http'):
         return "http://" + url
