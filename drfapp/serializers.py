@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = MyUser
         fields = ('username', 'first_name', 'short_bio', 'email', 'profile_description', 'picture', 'featured_image',
                   'featured_video', 'mobile', 'club_2_reward', 'club_3_reward', 'club_4_reward', 'social_links',
-                  'is_creator')
+                  'is_creator', 'featured_text')
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
