@@ -71,7 +71,7 @@ def check_http(url):
     url = url.strip()
     if url is None:
         return ""
-    if url.startswith('www.'):
+    if not url.startswith('http'):
         return "http://" + url
     return url
 

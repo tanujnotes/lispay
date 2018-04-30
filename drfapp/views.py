@@ -106,6 +106,16 @@ def update_user(request):
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
+def update_social_details(request):
+    user = MyUser.objects.get(username=request.user.username)
+    user.social_links = utils.get_social_details(request)
+    user.save()
+    serializer = UserSerializer(user, many=False)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def update_creator(request):
     first_name = request.POST.get('first_name', '')
     short_bio = request.POST.get('short_bio', '')
