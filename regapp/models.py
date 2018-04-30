@@ -101,7 +101,7 @@ class MyUser(AbstractBaseUser):
     category = models.CharField(
         max_length=30,
         choices=CATEGORY_CHOICES,
-        default="Coding",
+        default="Others",
         blank=False,
     )
     card_ids = ArrayField(models.CharField(max_length=50), blank=True, default=list)
