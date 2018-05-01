@@ -33,7 +33,7 @@ Lisplay - Sign up
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         <input type="text" name="username" id="id_username" class="form-control"
-                                               maxlength="30" pattern="[A-Za-z0-9]+" placeholder="Username..."
+                                               maxlength="30" pattern="[A-Za-z0-9]+" placeholder="Username"
                                                title="Use only lowercase letters and numbers for Username"
                                                value="{{ form.username.value|default_if_none:'' }}" required autofocus>
                                     </div>
@@ -42,7 +42,7 @@ Lisplay - Sign up
                                     <div class="input-group">
                                         <span class="input-group-addon"> <i class="fa fa-envelope-open"></i></span>
                                         <input type="email" name="email" id="id_email" class="form-control"
-                                               maxlength="75" placeholder="Email..."
+                                               maxlength="75" placeholder="Email"
                                                value="{{ form.email.value|default_if_none:'' }}" required>
                                     </div>
                                     {{ form.email.errors }}
@@ -51,7 +51,7 @@ Lisplay - Sign up
                                         <span class="input-group-addon"><i
                                                 class="fa fa-lock"></i></span>
                                         <input type="password" name="password1" id="id_password1" minlength="8"
-                                               placeholder="Password..." class="form-control" required/>
+                                               placeholder="Password" class="form-control" required/>
                                     </div>
                                     {{ form.password1.errors }}
 
@@ -59,7 +59,7 @@ Lisplay - Sign up
                                         <span class="input-group-addon"><i
                                                 class="fa fa-lock"></i></span>
                                         <input type="password" name="password2" id="id_password2" minlength="8"
-                                               placeholder="Password confirmation..."
+                                               placeholder="Password confirmation"
                                                class="form-control" required/>
                                     </div>
                                     {{ form.password2.errors }}
