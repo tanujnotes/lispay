@@ -5,13 +5,14 @@ from io import BytesIO
 import requests
 from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db.models import Sum
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 import utils
 from drfapp.serializers import UserSerializer, SubscriptionSerializer
-from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel
+from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
 from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
@@ -147,6 +148,37 @@ def update_creator(request):
     user.save()
     serializer = UserSerializer(user, many=False)
     return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def dashboard(request):
+    current_month = datetime.datetime.now().month
+    user = request.user
+
+    current_subscribers_count = SubscriptionModel.objects.filter(creator=user).filter(
+        status__in=['authenticated', 'active', 'pending', 'halted']).count()
+    this_month_revenue = PaymentModel.objects.filter(creator=user).filter(created_at__month=current_month).filter(
+        payment_status='captured').aggregate(Sum('total_amount')).get('total_amount__sum', 0.0)
+    joined_this_month = SubscriptionModel.objects.filter(creator=user).filter(
+        created_at__month=current_month).count()
+    left_this_month = SubscriptionModel.objects.filter(creator=user).filter(ended_at__month=current_month).filter(
+        status__in=['cancelled', 'completed']).count()
+    active_subscribers = SubscriptionModel.objects.filter(creator=user).filter(
+        status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
+    subscribers_cancelled = SubscriptionModel.objects.filter(creator=user).filter(
+        status='cancelled').order_by('-created_at')
+
+    active_subscribers_serializer = SubscriptionSerializer(active_subscribers, many=True)
+    cancelled_subscribers_serializer = SubscriptionSerializer(subscribers_cancelled, many=True)
+
+    return JsonResponse({'current_subscribers_count': current_subscribers_count,
+                         'this_month_revenue': this_month_revenue if this_month_revenue is not None else 0,
+                         'joined_this_month': joined_this_month,
+                         'left_this_month': left_this_month,
+                         'subscribers_active': active_subscribers_serializer.data,
+                         'subscribers_cancelled': cancelled_subscribers_serializer.data,
+                         }, safe=False)
 
 
 @api_view(['GET'])
