@@ -4,9 +4,7 @@ import hashlib
 import hmac
 import json
 import logging
-import firebase_admin
 from urllib import parse
-from firebase_admin import credentials
 
 import requests
 from django.contrib.auth.decorators import login_required
@@ -22,14 +20,10 @@ import utils
 from regapp.forms import UpdateProfileForm
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
 from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
-from userregistration.settings import BASE_DIR
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
 logger = logging.getLogger(__name__)
-
-cred = credentials.Certificate(BASE_DIR + "/firebase-adminsdk.json")
-firebase_admin.initialize_app(cred)
 
 CATEGORY_BACKGROUND = {
     "ALL": 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1652&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D',

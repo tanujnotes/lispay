@@ -2,11 +2,14 @@ import datetime
 import json
 from io import BytesIO
 
+import firebase_admin
 import requests
 from PIL import Image, ImageOps
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Sum
 from django.http import JsonResponse
+from firebase_admin import auth
+from firebase_admin import credentials
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
@@ -14,6 +17,10 @@ import utils
 from drfapp.serializers import UserSerializer, SubscriptionSerializer
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
 from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
+from userregistration.settings import BASE_DIR
+
+cred = credentials.Certificate(BASE_DIR + "/firebase-adminsdk.json")
+firebase_app = firebase_admin.initialize_app(cred)
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
@@ -33,6 +40,14 @@ def get_user(request):
     users = MyUser.objects.get(username=username)
     serializer = UserSerializer(users, many=False)
     return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def get_firebase_token(request):
+    token = request.GET.get('token', "")
+    firebase_token = auth.create_custom_token(token)
+    return JsonResponse({'response_code': 0, 'response_message': firebase_token.decode('ascii')}, safe=False)
 
 
 @api_view(['POST'])
