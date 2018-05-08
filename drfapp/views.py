@@ -45,7 +45,7 @@ def get_user(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def get_firebase_token(request):
-    token = request.GET.get('token', "")
+    token = request.GET.get('user_token', "")
     firebase_token = auth.create_custom_token(token)
     return JsonResponse({'response_code': 0, 'response_message': firebase_token.decode('ascii')}, safe=False)
 
