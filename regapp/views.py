@@ -22,12 +22,13 @@ import utils
 from regapp.forms import UpdateProfileForm
 from regapp.models import MyUser, SubsPlanModel, SubscriptionModel, DataDumpModel, PaymentModel
 from userregistration.local_settings import RAZORPAY_KEY_, RAZORPAY_SECRET_
+from userregistration.settings import BASE_DIR
 
 HEADERS = {'Content-Type': 'application/json;charset=UTF-8'}
 
 logger = logging.getLogger(__name__)
 
-cred = credentials.Certificate("firebase-adminsdk.json")
+cred = credentials.Certificate(BASE_DIR + "/firebase-adminsdk.json")
 firebase_admin.initialize_app(cred)
 
 CATEGORY_BACKGROUND = {
