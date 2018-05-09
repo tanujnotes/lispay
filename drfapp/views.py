@@ -199,11 +199,18 @@ def dashboard(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def my_subscriptions(request):
-    subscriptions = SubscriptionModel.objects.filter(subscriber=request.user).filter(
+    active_subscriptions = SubscriptionModel.objects.filter(subscriber=request.user).filter(
         status__in=['authenticated', 'active', 'pending', 'halted']).order_by('-created_at')
 
-    subscription_serializer = SubscriptionSerializer(subscriptions, many=True)
-    return JsonResponse({"subscriptions": subscription_serializer.data}, safe=False)
+    cancelled_subscriptions = SubscriptionModel.objects.filter(subscriber=request.user).filter(
+        status__in=['cancelled', 'completed']).order_by('-created_at')
+
+    active_subscription_serializer = SubscriptionSerializer(active_subscriptions, many=True)
+    cancelled_subscription_serializer = SubscriptionSerializer(cancelled_subscriptions, many=True)
+
+    return JsonResponse({"subscriptions_active": active_subscription_serializer.data,
+                         "subscriptions_cancelled": cancelled_subscription_serializer.data
+                         }, safe=False)
 
 
 @api_view(['POST'])
