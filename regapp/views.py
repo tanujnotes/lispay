@@ -383,7 +383,7 @@ def show_user_profile(request, profile_username):
                           {'user_profile': user_profile, 'message': "Please enter an amount and continue"})
 
         if not request.user.is_authenticated():
-            return HttpResponseRedirect('/accounts/login/?next=/%s/' % profile_username)
+            return HttpResponseRedirect('/accounts/signup/')
 
         # Register customer
         if not request.user.customer_id:
