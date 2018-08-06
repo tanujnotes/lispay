@@ -64,6 +64,12 @@ Lisplay - Sign up
                                     </div>
                                     {{ form.password2.errors }}
 
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-terminal"></i></span>
+                                        <input type="text" name="beta_code" id="id_beta_code" class="form-control"
+                                               maxlength="20" placeholder="Beta access code" required>
+                                    </div>
+
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="optionsCheckboxes" required>
@@ -81,6 +87,9 @@ Lisplay - Sign up
                         </div>
                         <p class="description text-center">Already a member?
                             <a href="{% url 'account_login' %}">{% trans "Login here!" %}</a>
+                        </p>
+                        <p class="description text-center">Need beta access code?
+                            <a href="mailto:tanuj@lisplay.com?Subject=Beta access code">Email us.</a>
                         </p>
                     </div>
                 </div>
