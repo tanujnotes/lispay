@@ -28,6 +28,8 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-105850928-1');
+
+
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -52,6 +54,8 @@
         width: 100%;
         color: white;
     }
+
+
     </style>
 </head>
 
@@ -134,6 +138,27 @@
         </nav>
     </div>
     <div class="copyright text-center"> &copy; 2018 Lisplay</div>
+    <div class="fb-customerchat" page_id="1641938656077432"></div>
+
+    <script>
+
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : 'APP_ID',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.11'
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 </footer>
 {% endblock %}
 
@@ -165,6 +190,8 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
+
+
 </script>
 
 </body>
