@@ -30,6 +30,7 @@
         gtag('config', 'UA-105850928-1');
 
 
+
     </script>
 
     <title>{% block title %}Lisplay{% endblock %}</title>
@@ -54,12 +55,27 @@
         width: 100%;
         color: white;
     }
-
-
     </style>
 </head>
 
 <body>
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- Your customer chat code -->
+<div class="fb-customerchat"
+     attribution=setup_tool
+     page_id="1641938656077432">
+</div>
+
 <div id="header">
     {% block header %}
     <!--<nav class="navbar navbar-transparent navbar-absolute">-->
@@ -138,27 +154,6 @@
         </nav>
     </div>
     <div class="copyright text-center"> &copy; 2018 Lisplay</div>
-    <div class="fb-customerchat" page_id="1641938656077432"></div>
-
-    <script>
-
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId            : 'APP_ID',
-          autoLogAppEvents : true,
-          xfbml            : true,
-          version          : 'v2.11'
-        });
-      };
-
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
 </footer>
 {% endblock %}
 
@@ -190,8 +185,6 @@
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
         });
-
-
 </script>
 
 </body>
