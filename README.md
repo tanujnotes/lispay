@@ -13,8 +13,8 @@ This webapp has three main django apps named -
 
 regapp: has everything related to authentication, profile creation and other static pages like home, about etc.
 
-dash: this is dashboard app. This is where creators see all the people who are paying them monthly. Shows all the relevant e.g. date of subscription, amount, cancelled subscriptions, monthly revenue etc.
+dash: this is dashboard app. This is where creators see all the people who are paying them monthly. Shows all the relevant data e.g. list of subscribers, date of subscription, amount, cancelled subscriptions, monthly revenue etc.
 
-drfapp: rest apis for mobile app using django-rest-framework.
+drfapp: rest apis using django-rest-framework for mobile app that I had started building.
 
 P.S. This is my first production level Django project built from scratch about 2 years ago so the code might stink a little bit. Stay safe.
